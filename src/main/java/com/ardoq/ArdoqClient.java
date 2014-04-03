@@ -1,9 +1,6 @@
 package com.ardoq;
 
-import com.ardoq.service.ComponentService;
-import com.ardoq.service.ReferenceService;
-import com.ardoq.service.TagService;
-import com.ardoq.service.WorkspaceService;
+import com.ardoq.service.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
@@ -53,5 +50,9 @@ public class ArdoqClient {
 
     public TagService tag() {
         return restAdapter.create(TagService.class);
+    }
+
+    public FieldService field() {
+        return restAdapter.create(FieldService.class);
     }
 }

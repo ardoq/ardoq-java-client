@@ -36,7 +36,7 @@ public class TagServiceTest {
     }
 
     @Test
-    public void getAsyncWorkspaceTest() {
+    public void getAsyncTagTest() {
         service.getAllTags(cb);
         await().atMost(4, TimeUnit.SECONDS).untilTrue(cb.done());
         assertEquals(200, cb.getResponse().getStatus());
@@ -86,7 +86,7 @@ public class TagServiceTest {
         assertEquals(204, response.getStatus());
         try {
             service.getTagById(result.getId());
-            fail("Expected the Tag to be deleted.");
+            fail("Expected the tag to be deleted.");
         } catch (RetrofitError e) {
             assertEquals(404, e.getResponse().getStatus());
         }
@@ -100,7 +100,7 @@ public class TagServiceTest {
         assertEquals(204, cb.getResponse().getStatus());
         try {
             service.getTagById(result.getId());
-            fail("Expected the Tag to be deleted.");
+            fail("Expected the tag to be deleted.");
         } catch (RetrofitError e) {
             assertEquals(404, e.getResponse().getStatus());
         }

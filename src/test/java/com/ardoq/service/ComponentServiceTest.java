@@ -87,7 +87,7 @@ public class ComponentServiceTest {
         assertEquals(204, response.getStatus());
         try {
             service.getComponentById(result.getId());
-            fail("Expected the component to be deleted.");
+            fail("Expected the Component to be deleted.");
         } catch (RetrofitError e) {
             assertEquals(404, e.getResponse().getStatus());
         }
@@ -101,7 +101,7 @@ public class ComponentServiceTest {
         assertEquals(204, cb.getResponse().getStatus());
         try {
             service.getComponentById(result.getId());
-            fail("Expected the component to be deleted.");
+            fail("Expected the Component to be deleted.");
         } catch (RetrofitError e) {
             assertEquals(404, e.getResponse().getStatus());
         }
