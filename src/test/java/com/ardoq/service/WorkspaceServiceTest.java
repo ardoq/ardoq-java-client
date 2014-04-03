@@ -18,10 +18,12 @@ import static org.junit.Assert.*;
 
 public class WorkspaceServiceTest {
     private WorkspaceService service;
+    private CallbackTest cb;
 
     @Before
     public void before() {
         service = new ArdoqClient("http://localhost:8080", System.getenv("ardoqUsername"), System.getenv("ardoqPassword")).workspace();
+        cb = new CallbackTest();
     }
 
     @Test
@@ -33,7 +35,6 @@ public class WorkspaceServiceTest {
 
     @Test
     public void getAsyncWorkspaceTest() {
-        CallbackTest cb = new CallbackTest();
         service.getAllWorkspaces(cb);
         await().atMost(4, TimeUnit.SECONDS).untilTrue(cb.done());
         assertEquals(200, cb.getResponse().getStatus());
@@ -54,7 +55,6 @@ public class WorkspaceServiceTest {
 
     @Test
     public void createWorkspaceAsyncTest() {
-        CallbackTest cb = new CallbackTest();
         service.createWorkspace(new Workspace("myWorkspace", "5326fad1e4b0e15cf6c876ae", "Hello world!"), cb);
         await().atMost(4, TimeUnit.SECONDS).untilTrue(cb.done());
         assertEquals(201, cb.getResponse().getStatus());
@@ -70,7 +70,6 @@ public class WorkspaceServiceTest {
 
     @Test
     public void updateWorkspaceAsyncTest() {
-        CallbackTest cb = new CallbackTest();
         Workspace result = service.createWorkspace(new Workspace("myWorkspace", "5326fad1e4b0e15cf6c876ae", "Hello world!"));
         result.setName("updatedName");
         service.updateWorkspace(result.getId(), result, cb);
@@ -93,7 +92,6 @@ public class WorkspaceServiceTest {
 
     @Test
     public void deleteWorkspaceAsyncTest() {
-        CallbackTest cb = new CallbackTest();
         Workspace result = service.createWorkspace(new Workspace("myWorkspace", "5326fad1e4b0e15cf6c876ae", "Hello world!"));
         service.deleteWorkspace(result.getId(), cb);
         await().atMost(4, TimeUnit.SECONDS).untilTrue(cb.done());
@@ -118,7 +116,6 @@ public class WorkspaceServiceTest {
 
     @Test
     public void branchWorkspaceAsyncTest() {
-        CallbackTest cb = new CallbackTest();
         Workspace result = service.createWorkspace(new Workspace("myWorkspace", "5326fad1e4b0e15cf6c876ae", "Hello world!"));
         service.branchWorkspace(result.getId(), new WorkspaceBranchRequest("myBranch"), cb);
         await().atMost(4, TimeUnit.SECONDS).untilTrue(cb.done());

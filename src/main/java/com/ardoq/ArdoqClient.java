@@ -1,6 +1,7 @@
 package com.ardoq;
 
 import com.ardoq.service.ComponentService;
+import com.ardoq.service.ReferenceService;
 import com.ardoq.service.WorkspaceService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -43,5 +44,9 @@ public class ArdoqClient {
 
     public ComponentService component() {
         return restAdapter.create(ComponentService.class);
+    }
+
+    public ReferenceService reference() {
+        return restAdapter.create(ReferenceService.class);
     }
 }

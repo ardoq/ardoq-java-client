@@ -18,12 +18,14 @@ import static org.junit.Assert.*;
 public class ComponentServiceTest {
     private ComponentService service;
     private Workspace workspace;
+    private CallbackTest cb;
 
     @Before
     public void before() {
         ArdoqClient client = new ArdoqClient("http://localhost:8080", System.getenv("ardoqUsername"), System.getenv("ardoqPassword"));
         service = client.component();
         workspace = client.workspace().createWorkspace(new Workspace("myWorkspace", "5326fad1e4b0e15cf6c876ae", "Hello world!"));
+        cb = new CallbackTest();
     }
 
     @Test
@@ -35,7 +37,6 @@ public class ComponentServiceTest {
 
     @Test
     public void getAsyncComponentTest() {
-        CallbackTest cb = new CallbackTest();
         service.getAllComponents(cb);
         await().atMost(4, TimeUnit.SECONDS).untilTrue(cb.done());
         assertEquals(200, cb.getResponse().getStatus());
@@ -56,7 +57,6 @@ public class ComponentServiceTest {
 
     @Test
     public void createComponentAsyncTest() {
-        CallbackTest cb = new CallbackTest();
         service.createComponent(new Component("MyComponent", workspace.getId(), "myDescription"), cb);
         await().atMost(4, TimeUnit.SECONDS).untilTrue(cb.done());
         assertEquals(201, cb.getResponse().getStatus());
@@ -73,7 +73,6 @@ public class ComponentServiceTest {
 
     @Test
     public void updateComponentAsyncTest() {
-        CallbackTest cb = new CallbackTest();
         Component component = service.createComponent(new Component("MyComponent", workspace.getId(), "myDescription"));
         component.setDescription("Updated description");
         service.updateComponent(component.getId(), component, cb);
@@ -96,7 +95,6 @@ public class ComponentServiceTest {
 
     @Test
     public void deleteComponentAsyncTest() {
-        CallbackTest cb = new CallbackTest();
         Component result = service.createComponent(new Component("MyComponent", workspace.getId(), "myDescription"));
         service.deleteComponent(result.getId(), cb);
         await().atMost(4, TimeUnit.SECONDS).untilTrue(cb.done());

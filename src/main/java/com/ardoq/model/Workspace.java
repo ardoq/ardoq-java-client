@@ -28,6 +28,49 @@ public class Workspace {
         this.description = description;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Workspace workspace = (Workspace) o;
+
+        if (_version != null ? !_version.equals(workspace._version) : workspace._version != null) return false;
+        if (componentModel != null ? !componentModel.equals(workspace.componentModel) : workspace.componentModel != null)
+            return false;
+        if (components != null ? !components.equals(workspace.components) : workspace.components != null) return false;
+        if (created != null ? !created.equals(workspace.created) : workspace.created != null) return false;
+        if (createdBy != null ? !createdBy.equals(workspace.createdBy) : workspace.createdBy != null) return false;
+        if (description != null ? !description.equals(workspace.description) : workspace.description != null)
+            return false;
+        if (id != null ? !id.equals(workspace.id) : workspace.id != null) return false;
+        if (lastUpdated != null ? !lastUpdated.equals(workspace.lastUpdated) : workspace.lastUpdated != null)
+            return false;
+        if (name != null ? !name.equals(workspace.name) : workspace.name != null) return false;
+        if (references != null ? !references.equals(workspace.references) : workspace.references != null) return false;
+        if (tags != null ? !tags.equals(workspace.tags) : workspace.tags != null) return false;
+        if (type != null ? !type.equals(workspace.type) : workspace.type != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (componentModel != null ? componentModel.hashCode() : 0);
+        result = 31 * result + (created != null ? created.hashCode() : 0);
+        result = 31 * result + (createdBy != null ? createdBy.hashCode() : 0);
+        result = 31 * result + (lastUpdated != null ? lastUpdated.hashCode() : 0);
+        result = 31 * result + (_version != null ? _version.hashCode() : 0);
+        result = 31 * result + (components != null ? components.hashCode() : 0);
+        result = 31 * result + (references != null ? references.hashCode() : 0);
+        result = 31 * result + (tags != null ? tags.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        return result;
+    }
+
     public String getId() {
         return id;
     }
