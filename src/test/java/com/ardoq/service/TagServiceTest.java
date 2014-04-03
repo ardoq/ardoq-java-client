@@ -2,6 +2,7 @@ package com.ardoq.service;
 
 import com.ardoq.ArdoqClient;
 import com.ardoq.CallbackTest;
+import com.ardoq.TestUtils;
 import com.ardoq.model.Tag;
 import com.ardoq.model.Workspace;
 import org.junit.Before;
@@ -16,7 +17,7 @@ import static com.jayway.awaitility.Awaitility.await;
 import static org.junit.Assert.*;
 
 public class TagServiceTest {
-    private final Tag testTag = new Tag("myTag", "5326fad1e4b0e15cf6c876ae", "Hello world!");
+    private Tag testTag;
     private TagService service;
     private Workspace workspace;
     private CallbackTest cb;
@@ -25,7 +26,8 @@ public class TagServiceTest {
     public void before() {
         ArdoqClient client = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqUsername"), System.getenv("ardoqPassword"));
         service = client.tag();
-        workspace = client.workspace().createWorkspace(new Workspace("myWorkspace", "5326fad1e4b0e15cf6c876ae", "Hello world!"));
+        workspace = client.workspace().createWorkspace(new Workspace("myWorkspace", TestUtils.getTestPropery("modelId"), "Hello world!"));
+        testTag = new Tag("myTag", workspace.getId(), "Hello world!");
         cb = new CallbackTest();
     }
 

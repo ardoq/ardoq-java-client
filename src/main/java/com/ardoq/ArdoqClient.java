@@ -55,4 +55,8 @@ public class ArdoqClient {
     public FieldService field() {
         return restAdapter.create(FieldService.class);
     }
+
+    public AttachmentService attachment() {
+        return restAdapter.create(AttachmentService.class);
+    }
 }

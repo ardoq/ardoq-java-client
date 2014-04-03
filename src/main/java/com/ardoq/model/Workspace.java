@@ -21,6 +21,7 @@ public class Workspace {
     private Collection<String> tags;
     private String type;
     private String description;
+    private Origin origin;
 
     public Workspace(String name, String componentModel, String description) {
         this.name = name;
@@ -47,6 +48,7 @@ public class Workspace {
         if (lastUpdated != null ? !lastUpdated.equals(workspace.lastUpdated) : workspace.lastUpdated != null)
             return false;
         if (name != null ? !name.equals(workspace.name) : workspace.name != null) return false;
+        if (origin != null ? !origin.equals(workspace.origin) : workspace.origin != null) return false;
         if (references != null ? !references.equals(workspace.references) : workspace.references != null) return false;
         if (tags != null ? !tags.equals(workspace.tags) : workspace.tags != null) return false;
         if (type != null ? !type.equals(workspace.type) : workspace.type != null) return false;
@@ -68,6 +70,7 @@ public class Workspace {
         result = 31 * result + (tags != null ? tags.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (origin != null ? origin.hashCode() : 0);
         return result;
     }
 
@@ -165,5 +168,13 @@ public class Workspace {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Origin getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(Origin origin) {
+        this.origin = origin;
     }
 }

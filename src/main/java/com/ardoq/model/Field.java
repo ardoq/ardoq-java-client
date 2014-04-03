@@ -30,6 +30,44 @@ public class Field {
         this.type = type;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Field field = (Field) o;
+
+        if (_version != null ? !_version.equals(field._version) : field._version != null) return false;
+        if (componentType != null ? !componentType.equals(field.componentType) : field.componentType != null)
+            return false;
+        if (created != null ? !created.equals(field.created) : field.created != null) return false;
+        if (createdBy != null ? !createdBy.equals(field.createdBy) : field.createdBy != null) return false;
+        if (description != null ? !description.equals(field.description) : field.description != null) return false;
+        if (id != null ? !id.equals(field.id) : field.id != null) return false;
+        if (label != null ? !label.equals(field.label) : field.label != null) return false;
+        if (lastUpdated != null ? !lastUpdated.equals(field.lastUpdated) : field.lastUpdated != null) return false;
+        if (model != null ? !model.equals(field.model) : field.model != null) return false;
+        if (name != null ? !name.equals(field.name) : field.name != null) return false;
+        if (type != field.type) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (created != null ? created.hashCode() : 0);
+        result = 31 * result + (createdBy != null ? createdBy.hashCode() : 0);
+        result = 31 * result + (lastUpdated != null ? lastUpdated.hashCode() : 0);
+        result = 31 * result + (_version != null ? _version.hashCode() : 0);
+        result = 31 * result + (model != null ? model.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (label != null ? label.hashCode() : 0);
+        result = 31 * result + (componentType != null ? componentType.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        return result;
+    }
 
     public String getId() {
         return id;

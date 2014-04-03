@@ -2,6 +2,7 @@ package com.ardoq.service;
 
 import com.ardoq.ArdoqClient;
 import com.ardoq.CallbackTest;
+import com.ardoq.TestUtils;
 import com.ardoq.model.Component;
 import com.ardoq.model.Workspace;
 import org.junit.Before;
@@ -25,7 +26,7 @@ public class ComponentServiceTest {
     public void before() {
         ArdoqClient client = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqUsername"), System.getenv("ardoqPassword"));
         service = client.component();
-        workspace = client.workspace().createWorkspace(new Workspace("myWorkspace", "5326fad1e4b0e15cf6c876ae", "Hello world!"));
+        workspace = client.workspace().createWorkspace(new Workspace("myWorkspace", TestUtils.getTestPropery("modelId"), "Hello world!"));
         cb = new CallbackTest();
         testComponent = new Component("MyComponent", workspace.getId(), "myDescription");
     }

@@ -2,6 +2,7 @@ package com.ardoq.service;
 
 import com.ardoq.ArdoqClient;
 import com.ardoq.CallbackTest;
+import com.ardoq.TestUtils;
 import com.ardoq.model.AggregatedWorkspace;
 import com.ardoq.model.Workspace;
 import com.ardoq.model.WorkspaceBranch;
@@ -18,16 +19,17 @@ import static com.jayway.awaitility.Awaitility.await;
 import static org.junit.Assert.*;
 
 public class WorkspaceServiceTest {
-    private final String aggregatedWorkspaceId = "523ff4a8e4b083a8e6cbf3e9";
+    private String aggregatedWorkspaceId;
     private Workspace testWorkspace;
     private WorkspaceService service;
     private CallbackTest cb;
 
     @Before
     public void before() {
+        aggregatedWorkspaceId = TestUtils.getTestPropery("aggregatedWorkspaceId");
         service = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqUsername"), System.getenv("ardoqPassword")).workspace();
         cb = new CallbackTest();
-        testWorkspace = new Workspace("myWorkspace", "5326fad1e4b0e15cf6c876ae", "Hello world!");
+        testWorkspace = new Workspace("myWorkspace", TestUtils.getTestPropery("modelId"), "Hello world!");
     }
 
     @Test
@@ -113,6 +115,8 @@ public class WorkspaceServiceTest {
         Workspace result = service.createWorkspace(testWorkspace);
         Workspace myBranch = service.branchWorkspace(result.getId(), new WorkspaceBranchRequest("myBranch"));
         assertEquals("myBranch", myBranch.getName());
+        assertEquals(result.getId(), myBranch.getOrigin().getId());
+        assertEquals(result.get_version(), myBranch.getOrigin().get_version());
         List<WorkspaceBranch> branches = service.getBranches(result.getId());
         assertEquals(1, branches.size());
         assertEquals(myBranch.getName(), branches.get(0).getBranchName());

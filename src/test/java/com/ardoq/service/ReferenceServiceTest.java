@@ -2,6 +2,7 @@ package com.ardoq.service;
 
 import com.ardoq.ArdoqClient;
 import com.ardoq.CallbackTest;
+import com.ardoq.TestUtils;
 import com.ardoq.model.Component;
 import com.ardoq.model.Reference;
 import com.ardoq.model.Workspace;
@@ -29,7 +30,7 @@ public class ReferenceServiceTest {
     public void before() {
         ArdoqClient client = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqUsername"), System.getenv("ardoqPassword"));
         service = client.reference();
-        workspace = client.workspace().createWorkspace(new Workspace("myWorkspace", "5326fad1e4b0e15cf6c876ae", "Hello world!"));
+        workspace = client.workspace().createWorkspace(new Workspace("myWorkspace", TestUtils.getTestPropery("modelId"), "Hello world!"));
         source = client.component().createComponent(new Component("Source", workspace.getId(), ""));
         target = client.component().createComponent(new Component("Target", workspace.getId(), ""));
         testReference = new Reference(workspace.getId(), source.getId(), target.getId(), 2);

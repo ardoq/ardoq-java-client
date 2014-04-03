@@ -2,6 +2,7 @@ package com.ardoq.service;
 
 import com.ardoq.ArdoqClient;
 import com.ardoq.CallbackTest;
+import com.ardoq.TestUtils;
 import com.ardoq.model.Component;
 import com.ardoq.model.Field;
 import com.ardoq.model.FieldType;
@@ -18,7 +19,6 @@ import static com.jayway.awaitility.Awaitility.await;
 import static org.junit.Assert.*;
 
 public class FieldServiceTest {
-    private String modelId = "5326fad1e4b0e15cf6c876ae";
     private FieldService service;
     private Workspace workspace;
     private Component component;
@@ -28,6 +28,7 @@ public class FieldServiceTest {
     @Before
     public void before() {
         ArdoqClient client = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqUsername"), System.getenv("ardoqPassword"));
+        String modelId = TestUtils.getTestPropery("modelId");
         service = client.field();
         workspace = client.workspace().createWorkspace(new Workspace("myWorkspace", modelId, "Hello world!"));
         component = client.component().createComponent(new Component("Component", workspace.getId(), ""));
