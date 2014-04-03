@@ -19,13 +19,15 @@ public class ComponentServiceTest {
     private ComponentService service;
     private Workspace workspace;
     private CallbackTest cb;
+    private Component testComponent;
 
     @Before
     public void before() {
-        ArdoqClient client = new ArdoqClient("http://localhost:8080", System.getenv("ardoqUsername"), System.getenv("ardoqPassword"));
+        ArdoqClient client = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqUsername"), System.getenv("ardoqPassword"));
         service = client.component();
         workspace = client.workspace().createWorkspace(new Workspace("myWorkspace", "5326fad1e4b0e15cf6c876ae", "Hello world!"));
         cb = new CallbackTest();
+        testComponent = new Component("MyComponent", workspace.getId(), "myDescription");
     }
 
     @Test
@@ -51,20 +53,20 @@ public class ComponentServiceTest {
 
     @Test
     public void createComponentTest() {
-        Component component = service.createComponent(new Component("MyComponent", workspace.getId(), "myDescription"));
+        Component component = service.createComponent(testComponent);
         assertNotNull(component.getId());
     }
 
     @Test
     public void createComponentAsyncTest() {
-        service.createComponent(new Component("MyComponent", workspace.getId(), "myDescription"), cb);
+        service.createComponent(testComponent, cb);
         await().atMost(4, TimeUnit.SECONDS).untilTrue(cb.done());
         assertEquals(201, cb.getResponse().getStatus());
     }
 
     @Test
     public void updateComponentTest() {
-        Component component = service.createComponent(new Component("MyComponent", workspace.getId(), "myDescription"));
+        Component component = service.createComponent(testComponent);
         component.setDescription("Updated description");
         Component updatedComponent = service.updateComponent(component.getId(), component);
         assertEquals("Updated description", updatedComponent.getDescription());
@@ -73,7 +75,7 @@ public class ComponentServiceTest {
 
     @Test
     public void updateComponentAsyncTest() {
-        Component component = service.createComponent(new Component("MyComponent", workspace.getId(), "myDescription"));
+        Component component = service.createComponent(testComponent);
         component.setDescription("Updated description");
         service.updateComponent(component.getId(), component, cb);
         await().atMost(4, TimeUnit.SECONDS).untilTrue(cb.done());
@@ -82,7 +84,7 @@ public class ComponentServiceTest {
 
     @Test
     public void deleteComponentTest() {
-        Component result = service.createComponent(new Component("MyComponent", workspace.getId(), "myDescription"));
+        Component result = service.createComponent(testComponent);
         Response response = service.deleteComponent(result.getId());
         assertEquals(204, response.getStatus());
         try {
@@ -95,7 +97,7 @@ public class ComponentServiceTest {
 
     @Test
     public void deleteComponentAsyncTest() {
-        Component result = service.createComponent(new Component("MyComponent", workspace.getId(), "myDescription"));
+        Component result = service.createComponent(testComponent);
         service.deleteComponent(result.getId(), cb);
         await().atMost(4, TimeUnit.SECONDS).untilTrue(cb.done());
         assertEquals(204, cb.getResponse().getStatus());

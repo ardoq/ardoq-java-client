@@ -23,14 +23,16 @@ public class ReferenceServiceTest {
     private Workspace workspace;
     private Component source;
     private Component target;
+    private Reference testReference;
 
     @Before
     public void before() {
-        ArdoqClient client = new ArdoqClient("http://localhost:8080", System.getenv("ardoqUsername"), System.getenv("ardoqPassword"));
+        ArdoqClient client = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqUsername"), System.getenv("ardoqPassword"));
         service = client.reference();
         workspace = client.workspace().createWorkspace(new Workspace("myWorkspace", "5326fad1e4b0e15cf6c876ae", "Hello world!"));
         source = client.component().createComponent(new Component("Source", workspace.getId(), ""));
         target = client.component().createComponent(new Component("Target", workspace.getId(), ""));
+        testReference = new Reference(workspace.getId(), source.getId(), target.getId(), 2);
     }
 
     @Test
@@ -57,7 +59,7 @@ public class ReferenceServiceTest {
 
     @Test
     public void createReferenceTest() {
-        Reference reference = service.createReference(new Reference(workspace.getId(), source.getId(), target.getId(), 2));
+        Reference reference = service.createReference(testReference);
         assertNotNull(reference.getId());
     }
 
@@ -65,7 +67,7 @@ public class ReferenceServiceTest {
     @Test
     public void createReferenceAsyncTest() {
         CallbackTest cb = new CallbackTest();
-        service.createReference(new Reference(workspace.getId(), source.getId(), target.getId(), 2), cb);
+        service.createReference(testReference, cb);
         await().atMost(4, TimeUnit.SECONDS).untilTrue(cb.done());
         assertEquals(201, cb.getResponse().getStatus());
     }
@@ -73,7 +75,7 @@ public class ReferenceServiceTest {
 
     @Test
     public void updateReferenceTest() {
-        Reference reference = service.createReference(new Reference(workspace.getId(), source.getId(), target.getId(), 2));
+        Reference reference = service.createReference(testReference);
         reference.setSource(reference.getTarget());
         reference.setTarget(reference.getSource());
         Reference updatedReference = service.updateReference(reference.getId(), reference);
@@ -84,7 +86,7 @@ public class ReferenceServiceTest {
     @Test
     public void updateReferenceAsyncTest() {
         CallbackTest cb = new CallbackTest();
-        Reference reference = service.createReference(new Reference(workspace.getId(), source.getId(), target.getId(), 2));
+        Reference reference = service.createReference(testReference);
         reference.setSource(reference.getTarget());
         service.updateReference(reference.getId(), reference, cb);
         await().atMost(4, TimeUnit.SECONDS).untilTrue(cb.done());
@@ -93,7 +95,7 @@ public class ReferenceServiceTest {
 
     @Test
     public void deleteReferenceTest() {
-        Reference result = service.createReference(new Reference(workspace.getId(), source.getId(), target.getId(), 2));
+        Reference result = service.createReference(testReference);
         Response response = service.deleteReference(result.getId());
         assertEquals(204, response.getStatus());
         try {
@@ -107,7 +109,7 @@ public class ReferenceServiceTest {
     @Test
     public void deleteReferenceAsyncTest() {
         CallbackTest cb = new CallbackTest();
-        Reference result = service.createReference(new Reference(workspace.getId(), source.getId(), target.getId(), 2));
+        Reference result = service.createReference(testReference);
         service.deleteReference(result.getId(), cb);
         await().atMost(4, TimeUnit.SECONDS).untilTrue(cb.done());
         assertEquals(204, cb.getResponse().getStatus());

@@ -23,14 +23,16 @@ public class FieldServiceTest {
     private Workspace workspace;
     private Component component;
     private CallbackTest cb;
+    private Field testField;
 
     @Before
     public void before() {
-        ArdoqClient client = new ArdoqClient("http://localhost:8080", System.getenv("ardoqUsername"), System.getenv("ardoqPassword"));
+        ArdoqClient client = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqUsername"), System.getenv("ardoqPassword"));
         service = client.field();
         workspace = client.workspace().createWorkspace(new Workspace("myWorkspace", modelId, "Hello world!"));
         component = client.component().createComponent(new Component("Component", workspace.getId(), ""));
         cb = new CallbackTest();
+        testField = new Field("maintainer", "maintainer", modelId, component.getType(), FieldType.EMAIL);
     }
 
     @Test
@@ -56,20 +58,20 @@ public class FieldServiceTest {
 
     @Test
     public void createFieldTest() {
-        Field result = service.createField(new Field("maintainer", "maintainer", modelId, component.getType(), FieldType.EMAIL));
+        Field result = service.createField(testField);
         assertNotNull(result.getId());
     }
 
     @Test
     public void createFieldAsyncTest() {
-        service.createField(new Field("maintainer", "maintainer", modelId, component.getType(), FieldType.EMAIL), cb);
+        service.createField(testField, cb);
         await().atMost(4, TimeUnit.SECONDS).untilTrue(cb.done());
         assertEquals(201, cb.getResponse().getStatus());
     }
 
     @Test
     public void updateFieldTest() {
-        Field result = service.createField(new Field("maintainer", "maintainer", modelId, component.getType(), FieldType.EMAIL));
+        Field result = service.createField(testField);
         result.setName("updatedName");
         Field updatedField = service.updateField(result.getId(), result);
         assertEquals("updatedName", updatedField.getName());
@@ -77,7 +79,7 @@ public class FieldServiceTest {
 
     @Test
     public void updateFieldAsyncTest() {
-        Field result = service.createField(new Field("maintainer", "maintainer", modelId, component.getType(), FieldType.EMAIL));
+        Field result = service.createField(testField);
         result.setName("updatedName");
         service.updateField(result.getId(), result, cb);
         await().atMost(4, TimeUnit.SECONDS).untilTrue(cb.done());
@@ -86,7 +88,7 @@ public class FieldServiceTest {
 
     @Test
     public void deleteFieldTest() {
-        Field result = service.createField(new Field("maintainer", "maintainer", modelId, component.getType(), FieldType.EMAIL));
+        Field result = service.createField(testField);
         Response response = service.deleteField(result.getId());
         assertEquals(204, response.getStatus());
         try {
@@ -99,7 +101,7 @@ public class FieldServiceTest {
 
     @Test
     public void deleteFieldAsyncTest() {
-        Field result = service.createField(new Field("maintainer", "maintainer", modelId, component.getType(), FieldType.EMAIL));
+        Field result = service.createField(testField);
         service.deleteField(result.getId(), cb);
         await().atMost(4, TimeUnit.SECONDS).untilTrue(cb.done());
         assertEquals(204, cb.getResponse().getStatus());

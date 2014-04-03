@@ -2,6 +2,7 @@ package com.ardoq.service;
 
 import com.ardoq.ArdoqClient;
 import com.ardoq.CallbackTest;
+import com.ardoq.model.AggregatedWorkspace;
 import com.ardoq.model.Workspace;
 import com.ardoq.model.WorkspaceBranch;
 import com.ardoq.model.WorkspaceBranchRequest;
@@ -17,13 +18,16 @@ import static com.jayway.awaitility.Awaitility.await;
 import static org.junit.Assert.*;
 
 public class WorkspaceServiceTest {
+    private final String aggregatedWorkspaceId = "523ff4a8e4b083a8e6cbf3e9";
+    private Workspace testWorkspace;
     private WorkspaceService service;
     private CallbackTest cb;
 
     @Before
     public void before() {
-        service = new ArdoqClient("http://localhost:8080", System.getenv("ardoqUsername"), System.getenv("ardoqPassword")).workspace();
+        service = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqUsername"), System.getenv("ardoqPassword")).workspace();
         cb = new CallbackTest();
+        testWorkspace = new Workspace("myWorkspace", "5326fad1e4b0e15cf6c876ae", "Hello world!");
     }
 
     @Test
@@ -49,20 +53,20 @@ public class WorkspaceServiceTest {
 
     @Test
     public void createWorkspaceTest() {
-        Workspace result = service.createWorkspace(new Workspace("myWorkspace", "5326fad1e4b0e15cf6c876ae", "Hello world!"));
+        Workspace result = service.createWorkspace(testWorkspace);
         assertNotNull(result.getId());
     }
 
     @Test
     public void createWorkspaceAsyncTest() {
-        service.createWorkspace(new Workspace("myWorkspace", "5326fad1e4b0e15cf6c876ae", "Hello world!"), cb);
+        service.createWorkspace(testWorkspace, cb);
         await().atMost(4, TimeUnit.SECONDS).untilTrue(cb.done());
         assertEquals(201, cb.getResponse().getStatus());
     }
 
     @Test
     public void updateWorkspaceTest() {
-        Workspace result = service.createWorkspace(new Workspace("myWorkspace", "5326fad1e4b0e15cf6c876ae", "Hello world!"));
+        Workspace result = service.createWorkspace(testWorkspace);
         result.setName("updatedName");
         Workspace updatedWorkspace = service.updateWorkspace(result.getId(), result);
         assertEquals("updatedName", updatedWorkspace.getName());
@@ -70,7 +74,7 @@ public class WorkspaceServiceTest {
 
     @Test
     public void updateWorkspaceAsyncTest() {
-        Workspace result = service.createWorkspace(new Workspace("myWorkspace", "5326fad1e4b0e15cf6c876ae", "Hello world!"));
+        Workspace result = service.createWorkspace(testWorkspace);
         result.setName("updatedName");
         service.updateWorkspace(result.getId(), result, cb);
         await().atMost(4, TimeUnit.SECONDS).untilTrue(cb.done());
@@ -79,7 +83,7 @@ public class WorkspaceServiceTest {
 
     @Test
     public void deleteWorkspaceTest() {
-        Workspace result = service.createWorkspace(new Workspace("myWorkspace", "5326fad1e4b0e15cf6c876ae", "Hello world!"));
+        Workspace result = service.createWorkspace(testWorkspace);
         Response response = service.deleteWorkspace(result.getId());
         assertEquals(204, response.getStatus());
         try {
@@ -92,7 +96,7 @@ public class WorkspaceServiceTest {
 
     @Test
     public void deleteWorkspaceAsyncTest() {
-        Workspace result = service.createWorkspace(new Workspace("myWorkspace", "5326fad1e4b0e15cf6c876ae", "Hello world!"));
+        Workspace result = service.createWorkspace(testWorkspace);
         service.deleteWorkspace(result.getId(), cb);
         await().atMost(4, TimeUnit.SECONDS).untilTrue(cb.done());
         assertEquals(204, cb.getResponse().getStatus());
@@ -106,7 +110,7 @@ public class WorkspaceServiceTest {
 
     @Test
     public void branchWorkspaceTest() {
-        Workspace result = service.createWorkspace(new Workspace("myWorkspace", "5326fad1e4b0e15cf6c876ae", "Hello world!"));
+        Workspace result = service.createWorkspace(testWorkspace);
         Workspace myBranch = service.branchWorkspace(result.getId(), new WorkspaceBranchRequest("myBranch"));
         assertEquals("myBranch", myBranch.getName());
         List<WorkspaceBranch> branches = service.getBranches(result.getId());
@@ -116,13 +120,28 @@ public class WorkspaceServiceTest {
 
     @Test
     public void branchWorkspaceAsyncTest() {
-        Workspace result = service.createWorkspace(new Workspace("myWorkspace", "5326fad1e4b0e15cf6c876ae", "Hello world!"));
+        Workspace result = service.createWorkspace(testWorkspace);
         service.branchWorkspace(result.getId(), new WorkspaceBranchRequest("myBranch"), cb);
         await().atMost(4, TimeUnit.SECONDS).untilTrue(cb.done());
         assertEquals(201, cb.getResponse().getStatus());
 
         cb = new CallbackTest();
         service.getBranches(result.getId(), cb);
+        await().atMost(4, TimeUnit.SECONDS).untilTrue(cb.done());
+        assertEquals(200, cb.getResponse().getStatus());
+    }
+
+    @Test
+    public void getAggregatedWorkspaceTest() {
+        AggregatedWorkspace aggregatedWorkspace = service.getAggregatedWorkspace(aggregatedWorkspaceId);
+        assertFalse(aggregatedWorkspace.getComponents().isEmpty());
+        assertFalse(aggregatedWorkspace.getReferences().isEmpty());
+        assertFalse(aggregatedWorkspace.getTags().isEmpty());
+    }
+
+    @Test
+    public void getAggregatedWorkspaceAsyncTest() {
+        service.getAggregatedWorkspace(aggregatedWorkspaceId, cb);
         await().atMost(4, TimeUnit.SECONDS).untilTrue(cb.done());
         assertEquals(200, cb.getResponse().getStatus());
     }

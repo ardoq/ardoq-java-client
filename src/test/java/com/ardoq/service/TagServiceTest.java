@@ -16,13 +16,14 @@ import static com.jayway.awaitility.Awaitility.await;
 import static org.junit.Assert.*;
 
 public class TagServiceTest {
+    private final Tag testTag = new Tag("myTag", "5326fad1e4b0e15cf6c876ae", "Hello world!");
     private TagService service;
     private Workspace workspace;
     private CallbackTest cb;
 
     @Before
     public void before() {
-        ArdoqClient client = new ArdoqClient("http://localhost:8080", System.getenv("ardoqUsername"), System.getenv("ardoqPassword"));
+        ArdoqClient client = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqUsername"), System.getenv("ardoqPassword"));
         service = client.tag();
         workspace = client.workspace().createWorkspace(new Workspace("myWorkspace", "5326fad1e4b0e15cf6c876ae", "Hello world!"));
         cb = new CallbackTest();
@@ -64,7 +65,7 @@ public class TagServiceTest {
 
     @Test
     public void updateTagTest() {
-        Tag result = service.createTag(new Tag("myTag", "5326fad1e4b0e15cf6c876ae", "Hello world!"));
+        Tag result = service.createTag(testTag);
         result.setName("updatedName");
         Tag updatedTag = service.updateTag(result.getId(), result);
         assertEquals("updatedName", updatedTag.getName());
@@ -72,7 +73,7 @@ public class TagServiceTest {
 
     @Test
     public void updateTagAsyncTest() {
-        Tag result = service.createTag(new Tag("myTag", "5326fad1e4b0e15cf6c876ae", "Hello world!"));
+        Tag result = service.createTag(testTag);
         result.setName("updatedName");
         service.updateTag(result.getId(), result, cb);
         await().atMost(4, TimeUnit.SECONDS).untilTrue(cb.done());
@@ -81,7 +82,7 @@ public class TagServiceTest {
 
     @Test
     public void deleteTagTest() {
-        Tag result = service.createTag(new Tag("myTag", "5326fad1e4b0e15cf6c876ae", "Hello world!"));
+        Tag result = service.createTag(testTag);
         Response response = service.deleteTag(result.getId());
         assertEquals(204, response.getStatus());
         try {
@@ -94,7 +95,7 @@ public class TagServiceTest {
 
     @Test
     public void deleteTagAsyncTest() {
-        Tag result = service.createTag(new Tag("myTag", "5326fad1e4b0e15cf6c876ae", "Hello world!"));
+        Tag result = service.createTag(testTag);
         service.deleteTag(result.getId(), cb);
         await().atMost(4, TimeUnit.SECONDS).untilTrue(cb.done());
         assertEquals(204, cb.getResponse().getStatus());

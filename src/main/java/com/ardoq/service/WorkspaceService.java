@@ -1,5 +1,6 @@
 package com.ardoq.service;
 
+import com.ardoq.model.AggregatedWorkspace;
 import com.ardoq.model.Workspace;
 import com.ardoq.model.WorkspaceBranch;
 import com.ardoq.model.WorkspaceBranchRequest;
@@ -28,6 +29,12 @@ public interface WorkspaceService {
 
     @GET("/api/workspace/{id}/branch")
     void getBranches(@Path("id") String id, Callback<List<WorkspaceBranch>> callback);
+
+    @GET("/api/workspace/{id}/aggregated")
+    AggregatedWorkspace getAggregatedWorkspace(@Path("id") String id);
+
+    @GET("/api/workspace/{id}/aggregated")
+    void getAggregatedWorkspace(@Path("id") String id, Callback<AggregatedWorkspace> callback);
 
     @POST("/api/workspace")
     Workspace createWorkspace(@Body Workspace workspace);
