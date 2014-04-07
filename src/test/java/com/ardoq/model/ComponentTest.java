@@ -1,7 +1,7 @@
 package com.ardoq.model;
 
-import com.ardoq.ComponentAdapter;
-import com.ardoq.Iso8601Adapter;
+import com.ardoq.adapter.ComponentAdapter;
+import com.ardoq.adapter.Iso8601Adapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package com.ardoq;
+package com.ardoq.adapter;
 
 import com.google.gson.*;
 
