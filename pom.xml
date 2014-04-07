@@ -8,55 +8,46 @@
     <artifactId>client</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <aws-maven.version>5.0.0.RELEASE</aws-maven.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.8.1</version>
+            </plugin>
+        </plugins>
         <extensions>
             <extension>
                 <groupId>org.springframework.build</groupId>
                 <artifactId>aws-maven</artifactId>
-                <version>5.0.0.RELEASE</version>
+                <version>${aws-maven.version}</version>
             </extension>
         </extensions>
     </build>
 
-    <repositories>
-        <repository>
-            <id>maven-s3-release-repo</id>
-            <name>S3 Release Repository</name>
-            <url>s3://ardoq-maven-releases/release</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>maven-s3-snapshot-repo</id>
-            <name>S3 Snapshot Repository</name>
-            <url>s3://ardoq-maven-releases/snapshot</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-
     <distributionManagement>
         <repository>
-            <id>maven-s3-release-repo</id>
+            <id>aws-release</id>
             <name>AWS Release Repository</name>
-            <url>s3://ardoq-maven-releases/release</url>
+            <url>s3://maven.ardoq.com/release</url>
         </repository>
         <snapshotRepository>
-            <id>maven-s3-snapshot-repo</id>
+            <id>aws-snapshot</id>
             <name>AWS Snapshot Repository</name>
-            <url>s3://ardoq-maven-releases/snapshot</url>
+            <url>s3://maven.ardoq.com/snapshot</url>
         </snapshotRepository>
     </distributionManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.9</version>
+        </dependency>
         <dependency>
             <groupId>com.squareup.retrofit</groupId>
             <artifactId>retrofit</artifactId>

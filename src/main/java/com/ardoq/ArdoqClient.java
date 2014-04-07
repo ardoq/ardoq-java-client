@@ -4,7 +4,7 @@ import com.ardoq.model.Component;
 import com.ardoq.service.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.sun.org.apache.xml.internal.security.utils.Base64;
+import org.apache.commons.codec.binary.Base64;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
@@ -19,7 +19,7 @@ public class ArdoqClient {
         RequestInterceptor requestInterceptor = new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade requestFacade) {
-                String pwd = Base64.encode((username + ":" + password).getBytes());
+                String pwd = Base64.encodeBase64String((username + ":" + password).getBytes());
                 requestFacade.addHeader("Authorization", "Basic " + pwd);
                 if (org != null) {
                     requestFacade.addQueryParam("org", org);
