@@ -8,6 +8,16 @@
     <artifactId>client</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <build>
+        <extensions>
+            <extension>
+                <groupId>org.springframework.build</groupId>
+                <artifactId>aws-maven</artifactId>
+                <version>5.0.0.RELEASE</version>
+            </extension>
+        </extensions>
+    </build>
+
     <repositories>
         <repository>
             <id>maven-s3-release-repo</id>
@@ -36,12 +46,12 @@
     <distributionManagement>
         <repository>
             <id>maven-s3-release-repo</id>
-            <name>S3 Release Repository</name>
+            <name>AWS Release Repository</name>
             <url>s3://ardoq-maven-releases/release</url>
         </repository>
         <snapshotRepository>
             <id>maven-s3-snapshot-repo</id>
-            <name>S3 Snapshot Repository</name>
+            <name>AWS Snapshot Repository</name>
             <url>s3://ardoq-maven-releases/snapshot</url>
         </snapshotRepository>
     </distributionManagement>
