@@ -9,4 +9,11 @@ public class WorkspaceBranchRequest {
     public WorkspaceBranchRequest(String branchName) {
         this.branchName = branchName;
     }
+
+    @Override
+    public String toString() {
+        return "WorkspaceBranchRequest{" +
+                "branchName='" + branchName + '\'' +
+                '}';
+    }
 }

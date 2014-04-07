@@ -148,4 +148,20 @@ public class Tag {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "Tag{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", created=" + created +
+                ", createdBy='" + createdBy + '\'' +
+                ", lastUpdated=" + lastUpdated +
+                ", _version=" + _version +
+                ", rootWorkspace='" + rootWorkspace + '\'' +
+                ", components=" + components +
+                ", references=" + references +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

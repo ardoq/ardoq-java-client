@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Component {
     @SerializedName("_id")
@@ -23,6 +25,7 @@ public class Component {
     private String parent;
     private String type;
     private String description;
+    private Map<String, Object> _fields = new HashMap<String, Object>();
 
     public Component(String name, String rootWorkspace, String description) {
         this.name = name;
@@ -44,6 +47,7 @@ public class Component {
         if (createdBy != null ? !createdBy.equals(component.createdBy) : component.createdBy != null) return false;
         if (description != null ? !description.equals(component.description) : component.description != null)
             return false;
+        if (_fields != null ? !_fields.equals(component._fields) : component._fields != null) return false;
         if (id != null ? !id.equals(component.id) : component.id != null) return false;
         if (lastUpdated != null ? !lastUpdated.equals(component.lastUpdated) : component.lastUpdated != null)
             return false;
@@ -75,6 +79,7 @@ public class Component {
         result = 31 * result + (parent != null ? parent.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (_fields != null ? _fields.hashCode() : 0);
         return result;
     }
 
@@ -193,5 +198,34 @@ public class Component {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Map<String, Object> getFields() {
+        return _fields;
+    }
+
+    public void setFields(Map<String, Object> fields) {
+        this._fields = fields;
+    }
+
+    @Override
+    public String toString() {
+        return "Component{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", model='" + model + '\'' +
+                ", state='" + state + '\'' +
+                ", created=" + created +
+                ", createdBy='" + createdBy + '\'' +
+                ", lastUpdated=" + lastUpdated +
+                ", version='" + version + '\'' +
+                ", _version=" + _version +
+                ", rootWorkspace='" + rootWorkspace + '\'' +
+                ", children=" + children +
+                ", parent='" + parent + '\'' +
+                ", type='" + type + '\'' +
+                ", description='" + description + '\'' +
+                ", _fields=" + _fields +
+                '}';
     }
 }

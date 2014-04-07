@@ -177,4 +177,23 @@ public class Workspace {
     public void setOrigin(Origin origin) {
         this.origin = origin;
     }
+
+    @Override
+    public String toString() {
+        return "Workspace{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", componentModel='" + componentModel + '\'' +
+                ", created=" + created +
+                ", createdBy='" + createdBy + '\'' +
+                ", lastUpdated=" + lastUpdated +
+                ", _version=" + _version +
+                ", components=" + components +
+                ", references=" + references +
+                ", tags=" + tags +
+                ", type='" + type + '\'' +
+                ", description='" + description + '\'' +
+                ", origin=" + origin +
+                '}';
+    }
 }

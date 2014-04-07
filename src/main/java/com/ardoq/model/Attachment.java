@@ -81,4 +81,18 @@ public class Attachment {
     public Long getSize() {
         return size;
     }
+
+    @Override
+    public String toString() {
+        return "Attachment{" +
+                "id='" + id + '\'' +
+                ", created=" + created +
+                ", createdBy='" + createdBy + '\'' +
+                ", lastUpdated=" + lastUpdated +
+                ", contentType='" + contentType + '\'' +
+                ", filename='" + filename + '\'' +
+                ", uri='" + uri + '\'' +
+                ", size=" + size +
+                '}';
+    }
 }

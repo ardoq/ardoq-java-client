@@ -144,4 +144,20 @@ public class Reference {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "Reference{" +
+                "id='" + id + '\'' +
+                ", created=" + created +
+                ", createdBy='" + createdBy + '\'' +
+                ", lastUpdated=" + lastUpdated +
+                ", _version=" + _version +
+                ", rootWorkspace='" + rootWorkspace + '\'' +
+                ", type=" + type +
+                ", source='" + source + '\'' +
+                ", target='" + target + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

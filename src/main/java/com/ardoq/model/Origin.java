@@ -11,4 +11,12 @@ public class Origin {
     public Integer get_version() {
         return _version;
     }
+
+    @Override
+    public String toString() {
+        return "Origin{" +
+                "id='" + id + '\'' +
+                ", _version=" + _version +
+                '}';
+    }
 }

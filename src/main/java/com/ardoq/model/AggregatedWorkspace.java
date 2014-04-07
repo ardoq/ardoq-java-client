@@ -110,4 +110,22 @@ public class AggregatedWorkspace {
     public String getDescription() {
         return description;
     }
+
+    @Override
+    public String toString() {
+        return "AggregatedWorkspace{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", componentModel='" + componentModel + '\'' +
+                ", created=" + created +
+                ", createdBy='" + createdBy + '\'' +
+                ", lastUpdated=" + lastUpdated +
+                ", _version=" + _version +
+                ", components=" + components +
+                ", references=" + references +
+                ", tags=" + tags +
+                ", type='" + type + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

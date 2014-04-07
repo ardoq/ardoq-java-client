@@ -1,5 +1,6 @@
 package com.ardoq;
 
+import com.ardoq.model.Component;
 import com.ardoq.service.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -11,6 +12,7 @@ import retrofit.converter.GsonConverter;
 import java.util.Date;
 
 public class ArdoqClient {
+    private String org;
     private RestAdapter restAdapter;
 
     public ArdoqClient(final String endpoint, final String username, final String password) {
@@ -19,21 +21,28 @@ public class ArdoqClient {
             public void intercept(RequestFacade requestFacade) {
                 String pwd = Base64.encode((username + ":" + password).getBytes());
                 requestFacade.addHeader("Authorization", "Basic " + pwd);
+                if (org != null) {
+                    requestFacade.addQueryParam("org", org);
+                }
             }
         };
 
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Date.class, new Iso8601Adapter())
+                .registerTypeAdapter(Component.class, new ComponentAdapter())
                 .create();
 
-        RestAdapter restAdapter = new RestAdapter.Builder()
+        this.restAdapter = new RestAdapter.Builder()
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setEndpoint(endpoint)
                 .setConverter(new GsonConverter(gson))
                 .setRequestInterceptor(requestInterceptor)
                 .build();
+    }
 
-        this.restAdapter = restAdapter;
+    public ArdoqClient setOrganization(String org) {
+        this.org = org;
+        return this;
     }
 
     public WorkspaceService workspace() {

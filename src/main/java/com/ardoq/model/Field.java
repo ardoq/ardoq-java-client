@@ -156,4 +156,21 @@ public class Field {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "Field{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", created=" + created +
+                ", createdBy='" + createdBy + '\'' +
+                ", lastUpdated=" + lastUpdated +
+                ", _version=" + _version +
+                ", model='" + model + '\'' +
+                ", type=" + type +
+                ", label='" + label + '\'' +
+                ", componentType='" + componentType + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

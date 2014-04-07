@@ -60,4 +60,15 @@ public class WorkspaceBranch {
     public String getBranchName() {
         return branchName;
     }
+
+    @Override
+    public String toString() {
+        return "WorkspaceBranch{" +
+                "id='" + id + '\'' +
+                ", created=" + created +
+                ", createdBy='" + createdBy + '\'' +
+                ", workspaceId='" + workspaceId + '\'' +
+                ", branchName='" + branchName + '\'' +
+                '}';
+    }
 }
