@@ -34,6 +34,11 @@ public class Component {
         this.parent = null;
     }
 
+    public Component(String name, String rootWorkspace, String description, String parent) {
+        this(name, rootWorkspace, description);
+        this.setParent(parent);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -81,11 +86,6 @@ public class Component {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (_fields != null ? _fields.hashCode() : 0);
         return result;
-    }
-
-    public Component(String name, String rootWorkspace, String description, String parent) {
-        this(name, rootWorkspace, description);
-        this.setParent(parent);
     }
 
     public String getId() {
