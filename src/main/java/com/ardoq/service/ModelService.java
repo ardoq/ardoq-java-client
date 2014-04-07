@@ -2,7 +2,12 @@ package com.ardoq.service;
 
 import com.ardoq.model.Model;
 
-public interface ModelService {
+import java.util.List;
 
-    Model getModelByWorkspace();
+public interface ModelService {
+    List<Model> getAllModels();
+
+    Model getModelById(String id);
+
+    Model getModelByName(String name);
 }

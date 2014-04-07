@@ -70,4 +70,8 @@ public class ArdoqClient {
     public AttachmentService attachment() {
         return restAdapter.create(AttachmentService.class);
     }
+
+    public SimpleModelService model() {
+        return new SimpleModelService(restAdapter.create(DeprecatedModelService.class));
+    }
 }
