@@ -14,14 +14,12 @@ public class SimpleModelService implements ModelService {
 
     @Override
     public List<Model> getAllModels() {
-        List<Model> allModels = deprecatedModelService.getAllModels();
-        return allModels;
+        return deprecatedModelService.getAllModels();
     }
 
     @Override
     public Model getModelById(String id) {
-        Model modelById = deprecatedModelService.getModelById(id);
-        return modelById;
+        return deprecatedModelService.getModelById(id);
     }
 
     @Override

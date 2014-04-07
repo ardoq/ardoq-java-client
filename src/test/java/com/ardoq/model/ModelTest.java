@@ -12,19 +12,21 @@ import java.util.Date;
 import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class ModelTest {
 
     @Test
-    public void dynamicFieldsDeSerializationTest() {
+    public void modelDeSerializationTest() {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Date.class, new Iso8601Adapter())
                 .registerTypeAdapter(Model.class, new ModelAdapter())
                 .create();
 
-        Model o = gson.fromJson(getTestComponentAsJson(), Model.class);
-        assertEquals(5, o.getReferenceTypes().size());
-        assertEquals(2, (Object) o.getReferenceTypeByName("Implicit"));
+        Model model = gson.fromJson(getTestComponentAsJson(), Model.class);
+        assertEquals(5, model.getReferenceTypes().size());
+        assertEquals(2, (Object) model.getReferenceTypeByName("Implicit"));
+        assertFalse(model.getComponentTypes().isEmpty());
     }
 
     public String getTestComponentAsJson() {

@@ -17,7 +17,7 @@ import java.util.Date;
 
 public class ArdoqClient {
     private String org;
-    private RestAdapter restAdapter;
+    private final RestAdapter restAdapter;
 
     public ArdoqClient(final String endpoint, final String username, final String password) {
         RequestInterceptor requestInterceptor = new RequestInterceptor() {

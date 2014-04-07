@@ -40,4 +40,8 @@ public class Model {
     public Map<String, Integer> getReferenceTypes() {
         return referenceTypes;
     }
+
+    public String getComponentTypeByName(String name) {
+        return this.componentTypes.get(name);
+    }
 }
