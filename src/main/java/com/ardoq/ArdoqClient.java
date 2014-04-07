@@ -2,7 +2,9 @@ package com.ardoq;
 
 import com.ardoq.adapter.ComponentAdapter;
 import com.ardoq.adapter.Iso8601Adapter;
+import com.ardoq.adapter.ModelAdapter;
 import com.ardoq.model.Component;
+import com.ardoq.model.Model;
 import com.ardoq.service.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -32,6 +34,7 @@ public class ArdoqClient {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Date.class, new Iso8601Adapter())
                 .registerTypeAdapter(Component.class, new ComponentAdapter())
+                .registerTypeAdapter(Model.class, new ModelAdapter())
                 .create();
 
         this.restAdapter = new RestAdapter.Builder()
