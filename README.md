@@ -60,7 +60,7 @@ List<String> referenceIds = Arrays.asList(reference.getId());
 client.tag().createTag(new Tag("Customer", workspace.getId(), "", componentIds, referenceIds));
 ```
 
-Running this simple example let's Ardoq visualize the components and theire relationships.
+Running this simple example let's Ardoq visualize the components and their relationships.
 
 ![Components](https://s3-eu-west-1.amazonaws.com/ardoq-resources/public/comps.png)  
 ######*Component landscape*
