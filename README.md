@@ -37,20 +37,24 @@ ArdoqClient client = new ArdoqClient("hostname", "username", "password").setOrga
 ```
 ###Starting a small project
 ```java
-ArdoqClient client = new ArdoqClient("app.ardoq.com", "username", "password");
-Model model = client.model().getModelByName("Application Service");
-Workspace testWorkspace = new Workspace("workspace-name", model.getId(), "Description");
-Workspace workspace = client.workspace().createWorkspace(testWorkspace);
-
+ArdoqClient client = new ArdoqClient(host, ardoqUsername, ardoqPassword);
+Model model = client.model().getModelByName("Application service");
+Workspace workspace = client.workspace().createWorkspace(new Workspace("demo-workspace", model.getId(), "Description"));
 ComponentService componentService = client.component();
-Component parent = componentService.createComponent(new Component("name", workspace.getId(), "myDescription"));
-Component childA = componentService.createComponent(new Component("a", workspace.getId(), "myDescription", parent.getId()));
-Component childB = componentService.createComponent(new Component("b", workspace.getId(), "myDescription", parent.getId()));
 
-Reference ref = new Reference(workspace.getId(), childA.getId(), childB.getId(), model.getReferenceTypeByName("Synchronous"));
-client.reference().createReference(ref);
-...
-Tag tag = client.tag().createTag(new Tag("REST", workspace.getId(), "description", components, references));
+Component webshop = componentService.createComponent(new Component("Webshop", workspace.getId(), "Webshop description"));
+Component webShopCreateOrder = componentService.createComponent(new Component("createOrder", workspace.getId(), "Order from cart", webshop.getId()));
+
+Component erp = componentService.createComponent(new Component("ERP", workspace.getId(), ""));
+Component erpCreateOrder = componentService.createComponent(new Component("createOrder", workspace.getId(), "", erp.getId()));
+//Create a Synchronous integration between the Webshop:createOrder and ERP:createOrder services
+Reference createOrderRef = new Reference(workspace.getId(), "Order from cart", webShopCreateOrder.getId(), erpCreateOrder.getId(), model.getReferenceTypeByName("Synchronous"));
+createOrderRef.setReturnValue("Created order");
+Reference reference = client.reference().createReference(createOrderRef);
+
+List<String> componentIds = Arrays.asList(webShopCreateOrder.getId(), erpCreateOrder.getId());
+List<String> referenceIds = Arrays.asList(reference.getId());
+client.tag().createTag(new Tag("Customer", workspace.getId(), "", componentIds, referenceIds));
 ```
 ####Models
 The model API is not stable yet, so you have to create your Model in the UI and refer to the id.
