@@ -18,6 +18,7 @@ public class Reference {
     private String source;
     private String target;
     private String description;
+    private String returnValue;
 
     public Reference(String rootWorkspace, String source, String target, int type) {
         this.rootWorkspace = rootWorkspace;
@@ -41,6 +42,8 @@ public class Reference {
         if (id != null ? !id.equals(reference.id) : reference.id != null) return false;
         if (lastUpdated != null ? !lastUpdated.equals(reference.lastUpdated) : reference.lastUpdated != null)
             return false;
+        if (returnValue != null ? !returnValue.equals(reference.returnValue) : reference.returnValue != null)
+            return false;
         if (rootWorkspace != null ? !rootWorkspace.equals(reference.rootWorkspace) : reference.rootWorkspace != null)
             return false;
         if (source != null ? !source.equals(reference.source) : reference.source != null) return false;
@@ -62,6 +65,7 @@ public class Reference {
         result = 31 * result + (source != null ? source.hashCode() : 0);
         result = 31 * result + (target != null ? target.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (returnValue != null ? returnValue.hashCode() : 0);
         return result;
     }
 
@@ -145,6 +149,14 @@ public class Reference {
         this.description = description;
     }
 
+    public String getReturnValue() {
+        return returnValue;
+    }
+
+    public void setReturnValue(String returnValue) {
+        this.returnValue = returnValue;
+    }
+
     @Override
     public String toString() {
         return "Reference{" +
@@ -158,6 +170,7 @@ public class Reference {
                 ", source='" + source + '\'' +
                 ", target='" + target + '\'' +
                 ", description='" + description + '\'' +
+                ", returnValue='" + returnValue + '\'' +
                 '}';
     }
 }
