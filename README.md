@@ -56,6 +56,10 @@ List<String> componentIds = Arrays.asList(webShopCreateOrder.getId(), erpCreateO
 List<String> referenceIds = Arrays.asList(reference.getId());
 client.tag().createTag(new Tag("Customer", workspace.getId(), "", componentIds, referenceIds));
 ```
+
+Running this simple example let's Ardoq visualize the components and theire relationships.
+
+
 ####Models
 The model API is not stable yet, so you have to create your Model in the UI and refer to the id.
 ####More examples
