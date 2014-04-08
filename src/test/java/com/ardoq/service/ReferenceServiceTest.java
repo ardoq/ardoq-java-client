@@ -33,7 +33,7 @@ public class ReferenceServiceTest {
         workspace = client.workspace().createWorkspace(new Workspace("myWorkspace", TestUtils.getTestPropery("modelId"), "Hello world!"));
         source = client.component().createComponent(new Component("Source", workspace.getId(), ""));
         target = client.component().createComponent(new Component("Target", workspace.getId(), ""));
-        testReference = new Reference(workspace.getId(), source.getId(), target.getId(), 2);
+        testReference = new Reference(workspace.getId(), "", source.getId(), target.getId(), 2);
     }
 
     @Test

@@ -20,8 +20,9 @@ public class Reference {
     private String description;
     private String returnValue;
 
-    public Reference(String rootWorkspace, String source, String target, int type) {
+    public Reference(String rootWorkspace, String description, String source, String target, int type) {
         this.rootWorkspace = rootWorkspace;
+        this.description = description;
         this.source = source;
         this.target = target;
         this.type = type;
