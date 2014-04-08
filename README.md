@@ -59,7 +59,12 @@ client.tag().createTag(new Tag("Customer", workspace.getId(), "", componentIds, 
 
 Running this simple example let's Ardoq visualize the components and theire relationships.
 
-
+![Components](https://s3-eu-west-1.amazonaws.com/ardoq-resources/public/comps.png)  
+######*Component landscape*
+![Sequence diagram](https://s3-eu-west-1.amazonaws.com/ardoq-resources/public/sequence_diagram.png)
+######*Sequence diagram*
+![Relationships](https://s3-eu-west-1.amazonaws.com/ardoq-resources/public/rels.png)
+######*Relationship diagram*
 ####Models
 The model API is not stable yet, so you have to create your Model in the UI and refer to the id.
 ####More examples
