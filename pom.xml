@@ -6,7 +6,7 @@
 
     <groupId>com.ardoq.api</groupId>
     <artifactId>client</artifactId>
-    <version>0.5.0</version>
+    <version>0.5.1</version>
 
     <properties>
         <aws-maven.version>5.0.0.RELEASE</aws-maven.version>
@@ -27,6 +27,12 @@
                 <version>${aws-maven.version}</version>
             </extension>
         </extensions>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
 
     <distributionManagement>

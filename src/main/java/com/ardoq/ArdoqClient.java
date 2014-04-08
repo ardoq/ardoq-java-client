@@ -13,18 +13,23 @@ import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
+import java.io.IOException;
 import java.util.Date;
+import java.util.Properties;
 
 public class ArdoqClient {
     private String org;
     private final RestAdapter restAdapter;
 
     public ArdoqClient(final String endpoint, final String username, final String password) {
+        final String finalVersion = getVersion();
+
         RequestInterceptor requestInterceptor = new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade requestFacade) {
                 String pwd = Base64.encodeBase64String((username + ":" + password).getBytes());
                 requestFacade.addHeader("Authorization", "Basic " + pwd);
+                requestFacade.addHeader("User-Agent", "ardoq-java-client-" + finalVersion);
                 if (org != null) {
                     requestFacade.addQueryParam("org", org);
                 }
@@ -43,6 +48,18 @@ public class ArdoqClient {
                 .setConverter(new GsonConverter(gson))
                 .setRequestInterceptor(requestInterceptor)
                 .build();
+    }
+
+    private String getVersion() {
+        String version;
+        Properties properties = new Properties();
+        try {
+            properties.load(ArdoqClient.class.getResourceAsStream("/version.properties"));
+            version = properties.getProperty("client-version");
+        } catch (IOException e) {
+            version = "Unknown";
+        }
+        return version;
     }
 
     public ArdoqClient setOrganization(String org) {
