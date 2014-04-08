@@ -14,7 +14,7 @@ Add the ardoq maven repository to your pom.xml
     </repositories>
 ```
 
-Add `ardoq-java-client` to your dependencies
+Add `ardoq-java-client` to your dependencies.
 
 ```xml
     <dependencies>
@@ -27,6 +27,9 @@ Add `ardoq-java-client` to your dependencies
         ...
     </dependencies>
 ```
+
+**NOTE** This repository is not browsable so your IDE won't pick it up automatically. Use the mvn cli to download it `mvn install`
+
 ###Usage
 ```java
 ArdoqClient client = new ArdoqClient("hostname", "username", "password");
