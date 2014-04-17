@@ -24,6 +24,7 @@ public class Component {
     private Collection<String> children;
     private String parent;
     private String type;
+    private String typeId;
     private String description;
     private Map<String, Object> _fields = new HashMap<String, Object>();
 
@@ -34,9 +35,18 @@ public class Component {
         this.parent = null;
     }
 
-    public Component(String name, String rootWorkspace, String description, String parent) {
+    public Component(String name, String rootWorkspace, String description, String typeId) {
+        this.name = name;
+        this.rootWorkspace = rootWorkspace;
+        this.description = description;
+        this.parent = null;
+        this.typeId = typeId;
+    }
+
+    public Component(String name, String rootWorkspace, String description, String typeId, String parent) {
         this(name, rootWorkspace, description);
         this.setParent(parent);
+        this.typeId = typeId;
     }
 
     @Override
@@ -46,13 +56,13 @@ public class Component {
 
         Component component = (Component) o;
 
+        if (_fields != null ? !_fields.equals(component._fields) : component._fields != null) return false;
         if (_version != null ? !_version.equals(component._version) : component._version != null) return false;
         if (children != null ? !children.equals(component.children) : component.children != null) return false;
         if (created != null ? !created.equals(component.created) : component.created != null) return false;
         if (createdBy != null ? !createdBy.equals(component.createdBy) : component.createdBy != null) return false;
         if (description != null ? !description.equals(component.description) : component.description != null)
             return false;
-        if (_fields != null ? !_fields.equals(component._fields) : component._fields != null) return false;
         if (id != null ? !id.equals(component.id) : component.id != null) return false;
         if (lastUpdated != null ? !lastUpdated.equals(component.lastUpdated) : component.lastUpdated != null)
             return false;
@@ -63,6 +73,7 @@ public class Component {
             return false;
         if (state != null ? !state.equals(component.state) : component.state != null) return false;
         if (type != null ? !type.equals(component.type) : component.type != null) return false;
+        if (typeId != null ? !typeId.equals(component.typeId) : component.typeId != null) return false;
         if (version != null ? !version.equals(component.version) : component.version != null) return false;
 
         return true;
@@ -83,6 +94,7 @@ public class Component {
         result = 31 * result + (children != null ? children.hashCode() : 0);
         result = 31 * result + (parent != null ? parent.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (typeId != null ? typeId.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (_fields != null ? _fields.hashCode() : 0);
         return result;
@@ -208,6 +220,14 @@ public class Component {
         this._fields = fields;
     }
 
+    public String getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
+    }
+
     @Override
     public String toString() {
         return "Component{" +
@@ -224,6 +244,7 @@ public class Component {
                 ", children=" + children +
                 ", parent='" + parent + '\'' +
                 ", type='" + type + '\'' +
+                ", typeId='" + typeId + '\'' +
                 ", description='" + description + '\'' +
                 ", _fields=" + _fields +
                 '}';

@@ -27,7 +27,7 @@ public class WorkspaceServiceTest {
     @Before
     public void before() {
         aggregatedWorkspaceId = TestUtils.getTestPropery("aggregatedWorkspaceId");
-        service = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqUsername"), System.getenv("ardoqPassword")).workspace();
+        service = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqToken")).workspace();
         cb = new CallbackTest();
         testWorkspace = new Workspace("myWorkspace", TestUtils.getTestPropery("modelId"), "Hello world!");
     }

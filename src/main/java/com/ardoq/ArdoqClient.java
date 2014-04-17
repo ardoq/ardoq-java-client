@@ -21,28 +21,53 @@ public class ArdoqClient {
     private String org;
     private final RestAdapter restAdapter;
 
-    public ArdoqClient(final String endpoint, final String username, final String password) {
-        final String finalVersion = getVersion();
-
+    public ArdoqClient(final String endpoint, final String token) {
+        if (endpoint == null || token == null) {
+            throw new IllegalArgumentException("Endpoint and token must be set correctly!");
+        }
         RequestInterceptor requestInterceptor = new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade requestFacade) {
-                String pwd = Base64.encodeBase64String((username + ":" + password).getBytes());
-                requestFacade.addHeader("Authorization", "Basic " + pwd);
-                requestFacade.addHeader("User-Agent", "ardoq-java-client-" + finalVersion);
+                requestFacade.addHeader("Authorization", "Token token=" + token.trim());
+                requestFacade.addHeader("User-Agent", "ardoq-java-client-" + getVersion());
                 if (org != null) {
                     requestFacade.addQueryParam("org", org);
                 }
             }
         };
 
+        this.restAdapter = initAdapter(endpoint, requestInterceptor);
+
+    }
+
+    public ArdoqClient(final String endpoint, final String username, final String password) {
+        if (endpoint == null || username == null || password == null) {
+            throw new IllegalArgumentException("Endpoint, username and password must be set correctly!");
+        }
+
+        RequestInterceptor requestInterceptor = new RequestInterceptor() {
+            @Override
+            public void intercept(RequestFacade requestFacade) {
+                String pwd = Base64.encodeBase64String((username + ":" + password).getBytes());
+                requestFacade.addHeader("Authorization", "Basic " + pwd);
+                requestFacade.addHeader("User-Agent", "ardoq-java-client-" + getVersion());
+                if (org != null) {
+                    requestFacade.addQueryParam("org", org);
+                }
+            }
+        };
+
+        this.restAdapter = initAdapter(endpoint, requestInterceptor);
+    }
+
+    private RestAdapter initAdapter(String endpoint, RequestInterceptor requestInterceptor) {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Date.class, new Iso8601Adapter())
                 .registerTypeAdapter(Component.class, new ComponentAdapter())
                 .registerTypeAdapter(Model.class, new ModelAdapter())
                 .create();
 
-        this.restAdapter = new RestAdapter.Builder()
+        return new RestAdapter.Builder()
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setEndpoint(endpoint)
                 .setConverter(new GsonConverter(gson))

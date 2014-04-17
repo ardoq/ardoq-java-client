@@ -37,12 +37,15 @@ public class ModelAdapter implements JsonDeserializer<Model> {
 
     private Map<String, Integer> getReferenceTypes(JsonObject jsonObject) {
         Map<String, Integer> references = new HashMap<String, Integer>();
-        JsonObject document = jsonObject.getAsJsonObject("referenceTypes");
-        if (document != null) {
-            Set<Map.Entry<String, JsonElement>> entries = document.entrySet();
-            for (Map.Entry<String, JsonElement> entry : entries) {
-                JsonObject value = (JsonObject) entry.getValue();
-                references.put(value.get("name").getAsString(), value.get("id").getAsInt());
+        JsonElement referenceTypes = jsonObject.get("referenceTypes");
+        if (referenceTypes instanceof JsonObject) {
+            JsonObject document = (JsonObject) referenceTypes;
+            if (document != null) {
+                Set<Map.Entry<String, JsonElement>> entries = document.entrySet();
+                for (Map.Entry<String, JsonElement> entry : entries) {
+                    JsonObject value = (JsonObject) entry.getValue();
+                    references.put(value.get("name").getAsString(), value.get("id").getAsInt());
+                }
             }
         }
         return references;
