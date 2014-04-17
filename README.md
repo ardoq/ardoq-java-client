@@ -32,7 +32,10 @@ Add `ardoq-java-client` to your dependencies.
 
 ###Usage
 ```java
+//Basic auth
 ArdoqClient client = new ArdoqClient("hostname", "username", "password");
+//Token
+ArdoqClient client = new ArdoqClient("hostname", "token");
 ```
 The client will operate on the default organization (Personal). To change this
 ```java

@@ -28,7 +28,7 @@ public class ReferenceServiceTest {
 
     @Before
     public void before() {
-        ArdoqClient client = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqUsername"), System.getenv("ardoqPassword"));
+        ArdoqClient client = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqUsername"), System.getenv("ardoqPassword")).setOrganization(TestUtils.getTestPropery("organization"));
         service = client.reference();
         workspace = client.workspace().createWorkspace(new Workspace("myWorkspace", TestUtils.getTestPropery("modelId"), "Hello world!"));
         source = client.component().createComponent(new Component("Source", workspace.getId(), ""));

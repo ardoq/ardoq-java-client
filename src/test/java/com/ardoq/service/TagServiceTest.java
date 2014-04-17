@@ -24,7 +24,7 @@ public class TagServiceTest {
 
     @Before
     public void before() {
-        ArdoqClient client = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqUsername"), System.getenv("ardoqPassword"));
+        ArdoqClient client = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqUsername"), System.getenv("ardoqPassword")).setOrganization(TestUtils.getTestPropery("organization"));
         service = client.tag();
         workspace = client.workspace().createWorkspace(new Workspace("myWorkspace", TestUtils.getTestPropery("modelId"), "Hello world!"));
         testTag = new Tag("myTag", workspace.getId(), "Hello world!");

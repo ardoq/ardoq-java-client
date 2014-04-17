@@ -34,7 +34,7 @@ public class AttachmentServiceTest {
         mimeType = TestUtils.getTestPropery("mimeType");
         filename = TestUtils.getTestPropery("filename");
         workspaceId = TestUtils.getTestPropery("workspaceIdWithAttachments");
-        ArdoqClient client = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqUsername"), System.getenv("ardoqPassword")).setOrganization("ardoq");
+        ArdoqClient client = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqUsername"), System.getenv("ardoqPassword")).setOrganization(TestUtils.getTestPropery("organization"));
         service = client.attachment();
         workspace = client.workspace().createWorkspace(new Workspace("myWorkspace", TestUtils.getTestPropery("modelId"), "Hello world!"));
         cb = new CallbackTest();

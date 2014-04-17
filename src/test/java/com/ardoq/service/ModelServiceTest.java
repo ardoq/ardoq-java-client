@@ -14,7 +14,7 @@ public class ModelServiceTest {
 
     @Before
     public void before() {
-        ArdoqClient client = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqUsername"), System.getenv("ardoqPassword"));
+        ArdoqClient client = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqUsername"), System.getenv("ardoqPassword")).setOrganization(TestUtils.getTestPropery("organization"));
         service = client.model();
         modelId = TestUtils.getTestPropery("modelId");
 
