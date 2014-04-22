@@ -17,10 +17,23 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Properties;
 
+/**
+ * ArdoqClient connects to your Ardoq installation via it's REST-apis.
+ *
+ * You can connect with token authentication or username and password.
+ *
+ * @author Erik Bakstad
+ *
+ */
 public class ArdoqClient {
     private String org;
     private final RestAdapter restAdapter;
 
+    /**
+     * Connects to your Ardoq installation with token authentication.
+     * @param endpoint The Ardoq installation you wish to connect to (e.g. https://app.ardoq.com)
+     * @param token The token generated via Profile -> APIS token that you wish to authenticate with
+     */
     public ArdoqClient(final String endpoint, final String token) {
         if (endpoint == null || token == null) {
             throw new IllegalArgumentException("Endpoint and token must be set correctly!");
@@ -40,6 +53,16 @@ public class ArdoqClient {
 
     }
 
+    /**
+     * Connects to Ardoq with username and password
+     *
+     * **We Strongly suggest that you connect with a token instead**
+     *
+     *
+     * @param endpoint The Ardoq installation you wish to connect to (e.g. https://app.ardoq.com)
+     * @param username Your username
+     * @param password Your password
+     */
     public ArdoqClient(final String endpoint, final String username, final String password) {
         if (endpoint == null || username == null || password == null) {
             throw new IllegalArgumentException("Endpoint, username and password must be set correctly!");
@@ -87,11 +110,21 @@ public class ArdoqClient {
         return version;
     }
 
+    /**
+     * Sets the organization you wish to work on. If you have a private organization account, please use this!
+     *
+     * @param org The organization account, default is the global Ardoq account (Personal)
+     * @return this ArdoqClient
+     */
     public ArdoqClient setOrganization(String org) {
         this.org = org;
         return this;
     }
 
+    /**
+     * Creates a workspaceService that allows you to do operations with our Workspace API
+     * @return WorkspaceService
+     */
     public WorkspaceService workspace() {
         return restAdapter.create(WorkspaceService.class);
     }

@@ -7,6 +7,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Represents an Ardoq component or also called a page.
+ *
+ * Use the ComponentService to update.
+ * @see com.ardoq.service.ComponentService
+ *
+ * NB! Every updates or modifications done via ComponentService results in a new Immutable instance.
+ *
+ */
 public class Component {
     @SerializedName("_id")
     private String id;

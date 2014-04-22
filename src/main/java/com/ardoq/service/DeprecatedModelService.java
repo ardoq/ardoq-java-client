@@ -7,6 +7,11 @@ import retrofit.http.Path;
 
 import java.util.List;
 
+/**
+ * Handles our models. Will change in the future.
+ *
+ * @deprecated
+ */
 public interface DeprecatedModelService {
 
     @GET("/api/model")

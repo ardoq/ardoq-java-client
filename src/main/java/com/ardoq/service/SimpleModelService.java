@@ -5,6 +5,14 @@ import com.ardoq.model.Model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * SimpleModelService let's you retrieve Models.
+ * @see com.ardoq.service.DeprecatedModelService
+ *
+ * @see com.ardoq.model.Model
+ *
+ * **A word of caution, the model API and logic is under upgrade and will be updated in the future.**
+ */
 public class SimpleModelService implements ModelService {
     private final DeprecatedModelService deprecatedModelService;
 
