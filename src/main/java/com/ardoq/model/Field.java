@@ -3,6 +3,7 @@ package com.ardoq.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
+import java.util.List;
 
 public class Field {
 
@@ -19,10 +20,10 @@ public class Field {
     private String model;
     private FieldType type;
     private String label;
-    private String componentType;
+    private List<String> componentType;
     private String description;
 
-    public Field(String name, String label, String modelId, String componentType, FieldType type) {
+    public Field(String name, String label, String modelId, List<String> componentType, FieldType type) {
         this.name = name;
         this.label = label;
         this.model = modelId;
@@ -141,11 +142,11 @@ public class Field {
         this.label = label;
     }
 
-    public String getComponentType() {
+    public List<String> getComponentType() {
         return componentType;
     }
 
-    public void setComponentType(String componentType) {
+    public void setComponentType(List<String> componentType) {
         this.componentType = componentType;
     }
 

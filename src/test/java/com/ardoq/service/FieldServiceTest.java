@@ -12,6 +12,7 @@ import org.junit.Test;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -33,7 +34,9 @@ public class FieldServiceTest {
         workspace = client.workspace().createWorkspace(new Workspace("myWorkspace", modelId, "Hello world!"));
         component = client.component().createComponent(new Component("Component", workspace.getId(), ""));
         cb = new CallbackTest();
-        testField = new Field("maintainer", "maintainer", modelId, component.getType(), FieldType.EMAIL);
+        ArrayList<String> componentTypes = new ArrayList<String>();
+        componentTypes.add(component.getType());
+        testField = new Field("maintainer", "maintainer", modelId, componentTypes, FieldType.EMAIL);
     }
 
     @Test
