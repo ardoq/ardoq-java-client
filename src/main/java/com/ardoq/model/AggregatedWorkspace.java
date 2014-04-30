@@ -5,6 +5,15 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Collection;
 import java.util.Date;
 
+/**
+ * AggregatedWorkspace represents the aggregated data related to a Workspace, except Attachments.
+ * Use the getAggregatedWorkspace in WorkspaceService to retrieve it.
+ *
+ * @see com.ardoq.service.WorkspaceService
+ * @see com.ardoq.model.Component
+ * @see com.ardoq.model.Reference
+ * @see com.ardoq.model.Tag
+ */
 public class AggregatedWorkspace {
     @SerializedName("_id")
     private String id;
@@ -91,14 +100,26 @@ public class AggregatedWorkspace {
         return _version;
     }
 
+    /**
+     * Returns all components (pages) in the workspace.
+     * @return A list of all components
+     */
     public Collection<Component> getComponents() {
         return components;
     }
 
+    /**
+     * Returns all references between components (pages) in the workspace.
+     * @return a list of all references
+     */
     public Collection<Reference> getReferences() {
         return references;
     }
 
+    /**
+     * Returns all tags belonging to this workspace.
+     * @return a list of all tags
+     */
     public Collection<Tag> getTags() {
         return tags;
     }

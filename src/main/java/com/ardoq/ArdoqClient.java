@@ -28,6 +28,7 @@ import java.util.Properties;
 public class ArdoqClient {
     private String org;
     private final RestAdapter restAdapter;
+    private RestAdapter.LogLevel logLevel = RestAdapter.LogLevel.FULL;
 
     /**
      * Connects to your Ardoq installation with token authentication.
@@ -83,6 +84,11 @@ public class ArdoqClient {
         this.restAdapter = initAdapter(endpoint, requestInterceptor);
     }
 
+    public void setLogLevel(RestAdapter.LogLevel level)
+    {
+        this.logLevel = level;
+    }
+
     private RestAdapter initAdapter(String endpoint, RequestInterceptor requestInterceptor) {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Date.class, new Iso8601Adapter())
@@ -91,7 +97,7 @@ public class ArdoqClient {
                 .create();
 
         return new RestAdapter.Builder()
-                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLogLevel(this.logLevel)
                 .setEndpoint(endpoint)
                 .setConverter(new GsonConverter(gson))
                 .setRequestInterceptor(requestInterceptor)

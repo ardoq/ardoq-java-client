@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
+/**
+ * Represents an attachment stored on a workspace.
+ */
 public class Attachment {
     @SerializedName("_id")
     private String id;

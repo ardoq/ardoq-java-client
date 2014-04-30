@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
-public class Reference {
+public class Reference implements BasicModel{
     @SerializedName("_id")
     private String id;
     private Date created;

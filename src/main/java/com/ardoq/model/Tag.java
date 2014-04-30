@@ -4,9 +4,10 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
-public class Tag {
+public class Tag implements BasicModel{
     @SerializedName("_id")
     private String id;
     private String name;
@@ -31,6 +32,26 @@ public class Tag {
         this(name, rootWorkspace, description);
         setComponents(components);
         setReferences(references);
+    }
+
+    public void addReference(String refId){
+        if (null == this.references){
+            this.references = new LinkedList<String>();
+        }
+        if (!this.references.contains(refId))
+        {
+            this.references.add(refId);
+        }
+    }
+
+    public void addComponent(String compId){
+        if (null == this.components){
+            this.components = new LinkedList<String>();
+        }
+        if (!this.components.contains(compId))
+        {
+            this.components.add(compId);
+        }
     }
 
     @Override
