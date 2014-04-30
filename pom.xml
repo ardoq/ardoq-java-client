@@ -72,8 +72,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-<<<<<<< HEAD
-=======
     <reporting>
         <plugins>
             <plugin>
@@ -103,6 +101,4 @@
             </plugin>
         </plugins>
     </reporting>
-
->>>>>>> 12531c8... Added some documentation examples to API.
 </project>
