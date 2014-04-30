@@ -86,9 +86,9 @@
                             <docletArtifact>
                                 <groupId>com.ardoq.javadoc</groupId>
                                 <artifactId>ardoq-doclet</artifactId>
-                                <version>0.5.2</version>
+                                <version>0.5.3</version>
                             </docletArtifact>
-                            <additionalparam>-ardoqToken 19a563c2083a48aa87e6928d269b8ab1 -ardoqHost http://localhost:8080 -sourceControl https://github.com/ardoq/ardoq-java-client/tree/master/src/main/java -projectDir ../../../ -targetClasses ../../../target/classes -workspaceName "Ardoq  Java Client JavaDoc"</additionalparam>
+                            <additionalparam>-ardoqToken ${env.ardoqToken} -projectDir "${project.build.directory}/../" -targetClasses ${project.build.outputDirectory} -workspaceName "ardoq-java-${project.name}" -ardoqOrganization shared -sourceControl https://github.com/ardoq/ardoq-java-client/tree/master/src/main/java/</additionalparam>
                             <useStandardDocletOptions>false</useStandardDocletOptions>
                         </configuration>
                     <reports>

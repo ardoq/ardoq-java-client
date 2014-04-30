@@ -9,7 +9,7 @@ Add the ardoq maven repository to your pom.xml
     <repositories>
         <repository>
             <id>ardoq.com</id>
-            <url>http://maven.ardoq.com/snapshot/</url>
+            <url>http://maven.ardoq.com/release/</url>
         </repository>
     </repositories>
 ```
@@ -22,7 +22,7 @@ Add `ardoq-java-client` to your dependencies.
         <dependency>
             <groupId>com.ardoq.api</groupId>
             <artifactId>client</artifactId>
-            <version>0.7.0</version>
+            <version>0.8.2</version>
         </dependency>
         ...
     </dependencies>
