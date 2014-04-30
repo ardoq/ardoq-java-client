@@ -158,7 +158,7 @@ public class SyncUtil
         this.tags.put(tag.getName(), tag);
         boolean found = false;
         for (Tag t : this.updatedTags){
-            if (!t.getName().equals(tag.getName()))
+            if (t.getName().equals(tag.getName()))
             {
                 found = true;
             }
