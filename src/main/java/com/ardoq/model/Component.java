@@ -9,14 +9,14 @@ import java.util.Map;
 
 /**
  * Represents an Ardoq component or also called a page.
- *
+ * <p/>
  * Use the ComponentService to update.
- *
+ * <p/>
  * NB! Every updates or modifications done via ComponentService results in a new Immutable instance.
  *
  * @see com.ardoq.service.ComponentService
  */
-public class Component implements BasicModel{
+public class Component implements BasicModel {
     @SerializedName("_id")
     private String id;
     private String name;

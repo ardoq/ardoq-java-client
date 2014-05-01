@@ -30,12 +30,10 @@ public interface ComponentService {
     /**
      * Updates a component and returns a NEW immutable component.
      *
-     * @see com.ardoq.model.Component
-     *
-     *
-     * @param id The ID of the component to update
+     * @param id        The ID of the component to update
      * @param component The component's data that you wish to update
      * @return
+     * @see com.ardoq.model.Component
      */
     @PUT("/api/component/{id}")
     Component updateComponent(@Path("id") String id, @Body Component component);

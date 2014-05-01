@@ -102,6 +102,7 @@ public class AggregatedWorkspace {
 
     /**
      * Returns all components (pages) in the workspace.
+     *
      * @return A list of all components
      */
     public Collection<Component> getComponents() {
@@ -110,6 +111,7 @@ public class AggregatedWorkspace {
 
     /**
      * Returns all references between components (pages) in the workspace.
+     *
      * @return a list of all references
      */
     public Collection<Reference> getReferences() {
@@ -118,6 +120,7 @@ public class AggregatedWorkspace {
 
     /**
      * Returns all tags belonging to this workspace.
+     *
      * @return a list of all tags
      */
     public Collection<Tag> getTags() {

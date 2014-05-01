@@ -35,6 +35,13 @@
         </resources>
     </build>
 
+    <repositories>
+        <repository>
+            <id>ardoq.com</id>
+            <url>http://maven.ardoq.com/release/</url>
+        </repository>
+    </repositories>
+
     <distributionManagement>
         <repository>
             <id>aws-release</id>

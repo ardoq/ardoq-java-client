@@ -19,11 +19,10 @@ import java.util.Properties;
 
 /**
  * ArdoqClient connects to your Ardoq installation via it's REST-apis.
- *
+ * <p/>
  * You can connect with token authentication or username and password.
  *
  * @author Erik Bakstad
- *
  */
 public class ArdoqClient {
     private String org;
@@ -32,8 +31,9 @@ public class ArdoqClient {
 
     /**
      * Connects to your Ardoq installation with token authentication.
+     *
      * @param endpoint The Ardoq installation you wish to connect to (e.g. https://app.ardoq.com)
-     * @param token The token generated via Profile -> APIS token that you wish to authenticate with
+     * @param token    The token generated via Profile -> APIS token that you wish to authenticate with
      */
     public ArdoqClient(final String endpoint, final String token) {
         if (endpoint == null || token == null) {
@@ -56,9 +56,8 @@ public class ArdoqClient {
 
     /**
      * Connects to Ardoq with username and password
-     *
+     * <p/>
      * **We Strongly suggest that you connect with a token instead**
-     *
      *
      * @param endpoint The Ardoq installation you wish to connect to (e.g. https://app.ardoq.com)
      * @param username Your username
@@ -84,8 +83,7 @@ public class ArdoqClient {
         this.restAdapter = initAdapter(endpoint, requestInterceptor);
     }
 
-    public void setLogLevel(RestAdapter.LogLevel level)
-    {
+    public void setLogLevel(RestAdapter.LogLevel level) {
         this.logLevel = level;
     }
 
@@ -129,6 +127,7 @@ public class ArdoqClient {
 
     /**
      * Creates a workspaceService that allows you to do operations with our Workspace API
+     *
      * @return WorkspaceService
      */
     public WorkspaceService workspace() {

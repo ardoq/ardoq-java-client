@@ -7,7 +7,10 @@ import java.util.Date;
  */
 public interface BasicModel {
     public String getId();
+
     public Integer get_version();
+
     public Date getCreated();
+
     public Date getLastUpdated();
 }

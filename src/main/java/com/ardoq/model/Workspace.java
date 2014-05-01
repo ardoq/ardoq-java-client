@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Collection;
 import java.util.Date;
 
-public class Workspace implements BasicModel{
+public class Workspace implements BasicModel {
     @SerializedName("_id")
     private String id;
     private String name;
