@@ -41,7 +41,7 @@ public class SimpleModelService implements ModelService {
         }
 
         if (result.size() > 1 || result.isEmpty()) {
-            throw new IllegalArgumentException("No unique workspace with that name exist!");
+            throw new IllegalArgumentException("No unique (single) model with the name "+name+" exist!");
         } else {
             return result.get(0);
         }
