@@ -252,7 +252,7 @@ public class SyncUtil {
         Set<String> refsToDelete = getObjectsToDelete(this.referenceMap.keySet());
         for (String id : refsToDelete) {
             Reference ref = this.referenceMap.get(id);
-            if (ref != null && !deletedComponents.contains(ref.getSource()) && !deletedComponents.contains(ref.getTarget())) {
+            if (id != null && id.trim().length() > 0 && ref != null && !deletedComponents.contains(ref.getSource()) && !deletedComponents.contains(ref.getTarget())) {
                 try {
                     this.referenceService.deleteReference(id);
                 } catch (Exception ite) {
