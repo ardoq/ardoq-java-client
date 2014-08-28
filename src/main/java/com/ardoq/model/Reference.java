@@ -19,6 +19,8 @@ public class Reference implements BasicModel {
     private String target;
     private String description;
     private String returnValue;
+    private String targetWorkspace;
+
 
     public Reference(String rootWorkspace, String description, String source, String target, int type) {
         this.rootWorkspace = rootWorkspace;
@@ -49,6 +51,7 @@ public class Reference implements BasicModel {
             return false;
         if (source != null ? !source.equals(reference.source) : reference.source != null) return false;
         if (target != null ? !target.equals(reference.target) : reference.target != null) return false;
+        if (targetWorkspace != null ? !targetWorkspace.equals(reference.targetWorkspace) : reference.targetWorkspace != null) return false;
         if (type != null ? !type.equals(reference.type) : reference.type != null) return false;
 
         return true;
@@ -65,6 +68,7 @@ public class Reference implements BasicModel {
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (source != null ? source.hashCode() : 0);
         result = 31 * result + (target != null ? target.hashCode() : 0);
+        result = 31 * result + (targetWorkspace != null ? targetWorkspace.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (returnValue != null ? returnValue.hashCode() : 0);
         return result;
@@ -142,6 +146,14 @@ public class Reference implements BasicModel {
         this.target = target;
     }
 
+    public void setTargetWorkspace(String targetWorkspace) {
+        this.targetWorkspace = targetWorkspace;
+    }
+
+    public String getTargetWorkspace() {
+        return targetWorkspace;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -170,6 +182,7 @@ public class Reference implements BasicModel {
                 ", type=" + type +
                 ", source='" + source + '\'' +
                 ", target='" + target + '\'' +
+                ", targetWorkspace='" + targetWorkspace + '\'' +
                 ", description='" + description + '\'' +
                 ", returnValue='" + returnValue + '\'' +
                 '}';
