@@ -8,14 +8,18 @@ import com.ardoq.model.Model;
 import com.ardoq.service.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.squareup.okhttp.OkHttpClient;
 import org.apache.commons.codec.binary.Base64;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
+import retrofit.client.Client;
+import retrofit.client.OkClient;
 import retrofit.converter.GsonConverter;
 
 import java.io.IOException;
 import java.util.Date;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 /**
  * ArdoqClient connects to your Ardoq installation via it's REST-apis.
@@ -29,17 +33,11 @@ public class ArdoqClient {
     private final RestAdapter restAdapter;
     private RestAdapter.LogLevel logLevel = RestAdapter.LogLevel.FULL;
 
-    /**
-     * Connects to your Ardoq installation with token authentication.
-     *
-     * @param endpoint The Ardoq installation you wish to connect to (e.g. https://app.ardoq.com)
-     * @param token    The token generated via Profile -> APIS token that you wish to authenticate with
-     */
-    public ArdoqClient(final String endpoint, final String token) {
+    private RequestInterceptor getRequestInterceptor(String endpoint, final String token) {
         if (endpoint == null || token == null) {
             throw new IllegalArgumentException("Endpoint and token must be set correctly!");
         }
-        RequestInterceptor requestInterceptor = new RequestInterceptor() {
+        return new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade requestFacade) {
                 requestFacade.addHeader("Authorization", "Token token=" + token.trim());
@@ -49,9 +47,36 @@ public class ArdoqClient {
                 }
             }
         };
+    }
 
-        this.restAdapter = initAdapter(endpoint, requestInterceptor);
+    /**
+     * Connects to your Ardoq installation with token authentication.
+     *
+     * @param endpoint The Ardoq installation you wish to connect to (e.g. https://app.ardoq.com)
+     * @param token    The token generated via Profile -> APIS token that you wish to authenticate with
+     */
+    public ArdoqClient(final String endpoint, final String token) {
+        this.restAdapter = initAdapter(endpoint, getRequestInterceptor(endpoint, token));
+    }
 
+    /**
+     * Connects to your Ardoq installation with token authentication.
+     *
+     * @param endpoint The Ardoq installation you wish to connect to (e.g. https://app.ardoq.com)
+     * @param token    The token generated via Profile -> APIS token that you wish to authenticate with
+     * @param connectionTimeoutSeconds HttpClient connection timeout in seconds (defaults to 15s)
+     * @param readTimeoutSeconds HttpClient read timeout in seconds (defaults to 20s)
+     */
+    public ArdoqClient(final String endpoint, final String token, final long connectionTimeoutSeconds, final long readTimeoutSeconds) {
+        OkHttpClient client = getOkHttpClient(connectionTimeoutSeconds, readTimeoutSeconds);
+        this.restAdapter = initAdapter(endpoint, getRequestInterceptor(endpoint, token), new OkClient(client));
+    }
+
+    private OkHttpClient getOkHttpClient(long connectionTimeoutSeconds, long readTimeoutSeconds) {
+        OkHttpClient client = new OkHttpClient();
+        client.setReadTimeout(readTimeoutSeconds, TimeUnit.SECONDS);
+        client.setConnectTimeout(connectionTimeoutSeconds, TimeUnit.SECONDS);
+        return client;
     }
 
     /**
@@ -64,11 +89,31 @@ public class ArdoqClient {
      * @param password Your password
      */
     public ArdoqClient(final String endpoint, final String username, final String password) {
+        this.restAdapter = initAdapter(endpoint, getRequestInterceptorBasicAuth(endpoint, username, password));
+    }
+
+    /**
+     * Connects to Ardoq with username and password
+     * <p/>
+     * **We Strongly suggest that you connect with a token instead**
+     *
+     * @param endpoint The Ardoq installation you wish to connect to (e.g. https://app.ardoq.com)
+     * @param username Your username
+     * @param password Your password
+     * @param connectionTimeoutSeconds HttpClient connection timeout in seconds (defaults to 15s)
+     * @param readTimeoutSeconds HttpClient read timeout in seconds (defaults to 20s)
+     */
+    public ArdoqClient(final String endpoint, final String username, final String password, final long connectionTimeoutSeconds, final long readTimeoutSeconds) {
+        OkHttpClient client = getOkHttpClient(connectionTimeoutSeconds, readTimeoutSeconds);
+        this.restAdapter = initAdapter(endpoint, getRequestInterceptorBasicAuth(endpoint, username, password), new OkClient(client));
+    }
+
+    private RequestInterceptor getRequestInterceptorBasicAuth(String endpoint, final String username, final String password) {
         if (endpoint == null || username == null || password == null) {
             throw new IllegalArgumentException("Endpoint, username and password must be set correctly!");
         }
 
-        RequestInterceptor requestInterceptor = new RequestInterceptor() {
+        return new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade requestFacade) {
                 String pwd = Base64.encodeBase64String((username + ":" + password).getBytes());
@@ -79,15 +124,13 @@ public class ArdoqClient {
                 }
             }
         };
-
-        this.restAdapter = initAdapter(endpoint, requestInterceptor);
     }
 
     public void setLogLevel(RestAdapter.LogLevel level) {
         this.logLevel = level;
     }
 
-    private RestAdapter initAdapter(String endpoint, RequestInterceptor requestInterceptor) {
+    private RestAdapter.Builder builderDefaults(String endpoint, RequestInterceptor requestInterceptor) {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Date.class, new Iso8601Adapter())
                 .registerTypeAdapter(Component.class, new ComponentAdapter())
@@ -98,8 +141,15 @@ public class ArdoqClient {
                 .setLogLevel(this.logLevel)
                 .setEndpoint(endpoint)
                 .setConverter(new GsonConverter(gson))
-                .setRequestInterceptor(requestInterceptor)
-                .build();
+                .setRequestInterceptor(requestInterceptor);
+    }
+
+    private RestAdapter initAdapter(String endpoint, RequestInterceptor requestInterceptor, Client client) {
+        return builderDefaults(endpoint, requestInterceptor).setClient(client).build();
+    }
+
+    private RestAdapter initAdapter(String endpoint, RequestInterceptor requestInterceptor) {
+        return builderDefaults(endpoint, requestInterceptor).build();
     }
 
     private String getVersion() {

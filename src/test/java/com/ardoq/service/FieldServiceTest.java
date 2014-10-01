@@ -28,7 +28,7 @@ public class FieldServiceTest {
 
     @Before
     public void before() {
-        ArdoqClient client = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqUsername"), System.getenv("ardoqPassword")).setOrganization(TestUtils.getTestPropery("organization"));
+        ArdoqClient client = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqUsername"), System.getenv("ardoqPassword"), 10, 10).setOrganization(TestUtils.getTestPropery("organization"));
         String modelId = TestUtils.getTestPropery("modelId");
         service = client.field();
         workspace = client.workspace().createWorkspace(new Workspace("myWorkspace", modelId, "Hello world!"));

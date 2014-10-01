@@ -42,7 +42,7 @@ public class WorkspaceServiceTest {
     @Test
     public void getAsyncWorkspaceTest() {
         service.getAllWorkspaces(cb);
-        await().atMost(4, TimeUnit.SECONDS).untilTrue(cb.done());
+        await().atMost(20, TimeUnit.SECONDS).untilTrue(cb.done());
         assertEquals(200, cb.getResponse().getStatus());
 
         cb = new CallbackTest();

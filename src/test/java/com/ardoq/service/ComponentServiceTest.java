@@ -24,7 +24,7 @@ public class ComponentServiceTest {
 
     @Before
     public void before() {
-        ArdoqClient client = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqUsername"), System.getenv("ardoqPassword")).setOrganization(TestUtils.getTestPropery("organization"));
+        ArdoqClient client = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqUsername"), System.getenv("ardoqPassword"), 30, 30).setOrganization(TestUtils.getTestPropery("organization"));
         service = client.component();
         workspace = client.workspace().createWorkspace(new Workspace("myWorkspace", TestUtils.getTestPropery("modelId"), "Hello world!"));
         cb = new CallbackTest();
@@ -41,7 +41,7 @@ public class ComponentServiceTest {
     @Test
     public void getAsyncComponentTest() {
         service.getAllComponents(cb);
-        await().atMost(4, TimeUnit.SECONDS).untilTrue(cb.done());
+        await().atMost(30, TimeUnit.SECONDS).untilTrue(cb.done());
         assertEquals(200, cb.getResponse().getStatus());
 
         cb = new CallbackTest();
