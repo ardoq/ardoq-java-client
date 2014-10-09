@@ -59,6 +59,22 @@ public class Component implements BasicModel {
     }
 
     @Override
+    public Object clone()  {
+        Component c = new Component(name,rootWorkspace,description, typeId, parent);
+        c.setModel(new String(model));
+        c.setId(new String(id));
+        c.setState(new String(state));
+        c.setCreated(new Date(created.getTime()));
+        c.setCreatedBy(new String(createdBy));
+        c.setLastUpdated(new Date(lastUpdated.getTime()));
+        c.setRootWorkspace(new String(rootWorkspace));
+        c.setChildren(children);
+        c.setType(new String(type));
+        c.setFields(new HashMap<String, Object>(_fields));
+        return c;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

@@ -8,18 +8,20 @@ import com.ardoq.model.Model;
 import com.ardoq.service.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.squareup.okhttp.OkHttpClient;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
+import retrofit.client.ApacheClient;
 import retrofit.client.Client;
-import retrofit.client.OkClient;
 import retrofit.converter.GsonConverter;
 
 import java.io.IOException;
 import java.util.Date;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 /**
  * ArdoqClient connects to your Ardoq installation via it's REST-apis.
@@ -38,7 +40,6 @@ public class ArdoqClient {
             throw new IllegalArgumentException("Endpoint and token must be set correctly!");
         }
         return new RequestInterceptor() {
-            @Override
             public void intercept(RequestFacade requestFacade) {
                 requestFacade.addHeader("Authorization", "Token token=" + token.trim());
                 requestFacade.addHeader("User-Agent", "ardoq-java-client-" + getVersion());
@@ -68,14 +69,16 @@ public class ArdoqClient {
      * @param readTimeoutSeconds HttpClient read timeout in seconds (defaults to 20s)
      */
     public ArdoqClient(final String endpoint, final String token, final long connectionTimeoutSeconds, final long readTimeoutSeconds) {
-        OkHttpClient client = getOkHttpClient(connectionTimeoutSeconds, readTimeoutSeconds);
-        this.restAdapter = initAdapter(endpoint, getRequestInterceptor(endpoint, token), new OkClient(client));
+        ApacheClient client = getOkHttpClient(connectionTimeoutSeconds, readTimeoutSeconds);
+        this.restAdapter = initAdapter(endpoint, getRequestInterceptor(endpoint, token), client);
     }
 
-    private OkHttpClient getOkHttpClient(long connectionTimeoutSeconds, long readTimeoutSeconds) {
-        OkHttpClient client = new OkHttpClient();
-        client.setReadTimeout(readTimeoutSeconds, TimeUnit.SECONDS);
-        client.setConnectTimeout(connectionTimeoutSeconds, TimeUnit.SECONDS);
+    private ApacheClient getOkHttpClient(long connectionTimeoutSeconds, long readTimeoutSeconds) {
+        HttpParams params = new BasicHttpParams();
+        HttpConnectionParams.setConnectionTimeout(params, (int)connectionTimeoutSeconds*1000);
+        HttpConnectionParams.setSoTimeout(params, (int)readTimeoutSeconds*1000);
+        DefaultHttpClient httpClient = new DefaultHttpClient(params);
+        ApacheClient client = new ApacheClient(httpClient);
         return client;
     }
 
@@ -104,8 +107,8 @@ public class ArdoqClient {
      * @param readTimeoutSeconds HttpClient read timeout in seconds (defaults to 20s)
      */
     public ArdoqClient(final String endpoint, final String username, final String password, final long connectionTimeoutSeconds, final long readTimeoutSeconds) {
-        OkHttpClient client = getOkHttpClient(connectionTimeoutSeconds, readTimeoutSeconds);
-        this.restAdapter = initAdapter(endpoint, getRequestInterceptorBasicAuth(endpoint, username, password), new OkClient(client));
+        ApacheClient client = getOkHttpClient(connectionTimeoutSeconds, readTimeoutSeconds);
+        this.restAdapter = initAdapter(endpoint, getRequestInterceptorBasicAuth(endpoint, username, password), client);
     }
 
     private RequestInterceptor getRequestInterceptorBasicAuth(String endpoint, final String username, final String password) {
@@ -114,7 +117,6 @@ public class ArdoqClient {
         }
 
         return new RequestInterceptor() {
-            @Override
             public void intercept(RequestFacade requestFacade) {
                 String pwd = Base64.encodeBase64String((username + ":" + password).getBytes());
                 requestFacade.addHeader("Authorization", "Basic " + pwd);

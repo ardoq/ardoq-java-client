@@ -315,7 +315,8 @@ public class SyncUtil {
                     if (newValue.getClass().getSimpleName().indexOf("Map") > -1) {
                         Map newVal = (Map) newValue;
                         Map oldVal = (Map) oldValue;
-                        isDifferent = addIfFoundAndCheckDifferent(newVal, oldVal);
+                        boolean mapDifferent = addIfFoundAndCheckDifferent(newVal, oldVal);
+                        isDifferent = isDifferent || mapDifferent;
                     } else if (!newValue.equals(oldValue)) {
                         isDifferent = true;
                     }
