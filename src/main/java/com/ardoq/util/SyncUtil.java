@@ -335,10 +335,16 @@ public class SyncUtil {
         for (Object key : oldMap.keySet()) {
             Object val = newMap.get(key);
             Object oldVal = oldMap.get(key);
+            //TODO: Check arrayt list v.s. gson array
             if (val != null && oldVal != null && !oldVal.equals(val)) {
                 isDifferent = true;
             } else if (null != oldVal && val == null) {
                 newMap.put(key, oldVal);
+            }
+        }
+        for (Object key : newMap.keySet()) {
+            if (!oldMap.containsKey(key)) {
+                isDifferent = true;
             }
         }
         return isDifferent;
