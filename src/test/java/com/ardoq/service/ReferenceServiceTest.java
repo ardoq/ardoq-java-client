@@ -79,6 +79,7 @@ public class ReferenceServiceTest {
         Reference reference = service.createReference(testReference);
         reference.setSource(reference.getTarget());
         reference.setTarget(reference.getSource());
+        reference.setOrder(Integer.valueOf(-1));
         Reference updatedReference = service.updateReference(reference.getId(), reference);
         assertEquals(reference.getTarget(), updatedReference.getSource());
         assertEquals(reference.get_version(), (Integer) (updatedReference.get_version() - 1));

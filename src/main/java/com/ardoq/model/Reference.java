@@ -20,6 +20,7 @@ public class Reference implements BasicModel {
     private String description;
     private String returnValue;
     private String targetWorkspace;
+    private Integer order;
 
 
     public Reference(String rootWorkspace, String description, String source, String target, int type) {
@@ -45,13 +46,15 @@ public class Reference implements BasicModel {
         if (id != null ? !id.equals(reference.id) : reference.id != null) return false;
         if (lastUpdated != null ? !lastUpdated.equals(reference.lastUpdated) : reference.lastUpdated != null)
             return false;
+        if (order != null ? !order.equals(reference.order) : reference.order != null) return false;
         if (returnValue != null ? !returnValue.equals(reference.returnValue) : reference.returnValue != null)
             return false;
         if (rootWorkspace != null ? !rootWorkspace.equals(reference.rootWorkspace) : reference.rootWorkspace != null)
             return false;
         if (source != null ? !source.equals(reference.source) : reference.source != null) return false;
         if (target != null ? !target.equals(reference.target) : reference.target != null) return false;
-        if (targetWorkspace != null ? !targetWorkspace.equals(reference.targetWorkspace) : reference.targetWorkspace != null) return false;
+        if (targetWorkspace != null ? !targetWorkspace.equals(reference.targetWorkspace) : reference.targetWorkspace != null)
+            return false;
         if (type != null ? !type.equals(reference.type) : reference.type != null) return false;
 
         return true;
@@ -68,9 +71,10 @@ public class Reference implements BasicModel {
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (source != null ? source.hashCode() : 0);
         result = 31 * result + (target != null ? target.hashCode() : 0);
-        result = 31 * result + (targetWorkspace != null ? targetWorkspace.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (returnValue != null ? returnValue.hashCode() : 0);
+        result = 31 * result + (targetWorkspace != null ? targetWorkspace.hashCode() : 0);
+        result = 31 * result + (order != null ? order.hashCode() : 0);
         return result;
     }
 
@@ -170,6 +174,14 @@ public class Reference implements BasicModel {
         this.returnValue = returnValue;
     }
 
+    public Integer getOrder() {
+        return order;
+    }
+
+    public void setOrder(Integer order) {
+        this.order = order;
+    }
+
     @Override
     public String toString() {
         return "Reference{" +
@@ -182,9 +194,10 @@ public class Reference implements BasicModel {
                 ", type=" + type +
                 ", source='" + source + '\'' +
                 ", target='" + target + '\'' +
-                ", targetWorkspace='" + targetWorkspace + '\'' +
                 ", description='" + description + '\'' +
                 ", returnValue='" + returnValue + '\'' +
+                ", targetWorkspace='" + targetWorkspace + '\'' +
+                ", order=" + order +
                 '}';
     }
 }
