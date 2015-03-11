@@ -71,7 +71,7 @@
         <dependency>
             <groupId>com.squareup.retrofit</groupId>
             <artifactId>retrofit</artifactId>
-            <version>1.6.1</version>
+            <version>1.9.0</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -121,12 +121,16 @@
                                 <artifactId>ardoq-doclet</artifactId>
                                 <version>0.6.0</version>
                             </docletArtifact>
-                            <additionalparam>-ardoqToken ${env.ardoqToken} -ardoqHost http://localhost:8080 -projectDir "${project.build.directory}/../" -targetClasses ${project.build.outputDirectory} -workspaceName "ardoq-java-${project.name}" -ardoqOrganization ardoq -sourceControl https://github.com/ardoq/ardoq-java-client/tree/master/src/main/java/ -ignoreMethods</additionalparam>
+                            <additionalparam>-ardoqToken ${env.ardoqToken} -ardoqHost http://localhost:8080 -projectDir
+                                "${project.build.directory}/../" -targetClasses ${project.build.outputDirectory}
+                                -workspaceName "ardoq-java-${project.name}" -ardoqOrganization ardoq -sourceControl
+                                https://github.com/ardoq/ardoq-java-client/tree/master/src/main/java/ -ignoreMethods
+                            </additionalparam>
                             <useStandardDocletOptions>false</useStandardDocletOptions>
                         </configuration>
-                    <reports>
-                       <report>javadoc</report>
-                    </reports>
+                        <reports>
+                            <report>javadoc</report>
+                        </reports>
                     </reportSet>
                 </reportSets>
             </plugin>

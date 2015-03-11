@@ -10,13 +10,11 @@ public class CallbackTest implements Callback {
     private AtomicBoolean done = new AtomicBoolean(false);
     private Response response;
 
-    @Override
     public void success(Object o, Response response) {
         done.set(true);
         this.response = response;
     }
 
-    @Override
     public void failure(RetrofitError retrofitError) {
     }
 

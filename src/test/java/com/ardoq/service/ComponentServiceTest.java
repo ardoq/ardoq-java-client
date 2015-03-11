@@ -41,7 +41,7 @@ public class ComponentServiceTest {
     @Test
     public void getAsyncComponentTest() {
         service.getAllComponents(cb);
-        await().atMost(30, TimeUnit.SECONDS).untilTrue(cb.done());
+        await().atMost(40, TimeUnit.SECONDS).untilTrue(cb.done());
         assertEquals(200, cb.getResponse().getStatus());
 
         cb = new CallbackTest();
