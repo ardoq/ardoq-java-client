@@ -22,7 +22,7 @@ Add `ardoq-java-client` to your dependencies.
         <dependency>
             <groupId>com.ardoq.api</groupId>
             <artifactId>client</artifactId>
-            <version>0.9.0</version>
+            <version>0.9.4</version>
         </dependency>
         ...
     </dependencies>
@@ -36,6 +36,10 @@ Add `ardoq-java-client` to your dependencies.
 ArdoqClient client = new ArdoqClient("hostname", "username", "password");
 //Token
 ArdoqClient client = new ArdoqClient("hostname", "token");
+
+//Custom proxy settings
+RequestConfig config = RequestConfig.custom().setProxy(new HttpHost("127.0.0.1", 9090)).build();
+ArdoqClient client = new ArdoqClient("hostname", "token", config);
 ```
 The client will operate on the default organization (Personal). To change this
 ```java
