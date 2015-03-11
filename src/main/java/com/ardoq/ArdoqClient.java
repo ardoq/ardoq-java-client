@@ -9,10 +9,9 @@ import com.ardoq.service.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.commons.codec.binary.Base64;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.client.ApacheClient;
@@ -63,23 +62,35 @@ public class ArdoqClient {
     /**
      * Connects to your Ardoq installation with token authentication.
      *
-     * @param endpoint The Ardoq installation you wish to connect to (e.g. https://app.ardoq.com)
-     * @param token    The token generated via Profile -> APIS token that you wish to authenticate with
+     * @param endpoint                 The Ardoq installation you wish to connect to (e.g. https://app.ardoq.com)
+     * @param token                    The token generated via Profile -> APIS token that you wish to authenticate with
      * @param connectionTimeoutSeconds HttpClient connection timeout in seconds (defaults to 15s)
-     * @param readTimeoutSeconds HttpClient read timeout in seconds (defaults to 20s)
+     * @param readTimeoutSeconds       HttpClient read timeout in seconds (defaults to 20s)
      */
     public ArdoqClient(final String endpoint, final String token, final long connectionTimeoutSeconds, final long readTimeoutSeconds) {
-        ApacheClient client = getOkHttpClient(connectionTimeoutSeconds, readTimeoutSeconds);
+        ApacheClient client = getHttpClient(connectionTimeoutSeconds, readTimeoutSeconds);
         this.restAdapter = initAdapter(endpoint, getRequestInterceptor(endpoint, token), client);
     }
 
-    private ApacheClient getOkHttpClient(long connectionTimeoutSeconds, long readTimeoutSeconds) {
-        HttpParams params = new BasicHttpParams();
-        HttpConnectionParams.setConnectionTimeout(params, (int)connectionTimeoutSeconds*1000);
-        HttpConnectionParams.setSoTimeout(params, (int)readTimeoutSeconds*1000);
-        DefaultHttpClient httpClient = new DefaultHttpClient(params);
-        ApacheClient client = new ApacheClient(httpClient);
-        return client;
+    /**
+     * Connects to your Ardoq installation with token authentication and a custom request configuration.
+     *
+     * @param endpoint             The Ardoq installation you wish to connect to (e.g. https://app.ardoq.com)
+     * @param token                The token generated via Profile -> APIS token that you wish to authenticate with
+     * @param defaultRequestConfig User provided org.apache.http.client.config.RequestConfig (for setting i.e. proxy settings etc.)
+     */
+    public ArdoqClient(final String endpoint, final String token, final RequestConfig defaultRequestConfig) {
+        ApacheClient client = new ApacheClient(HttpClientBuilder.create().setDefaultRequestConfig(defaultRequestConfig).build());
+        this.restAdapter = initAdapter(endpoint, getRequestInterceptor(endpoint, token), client);
+    }
+
+    private ApacheClient getHttpClient(long connectionTimeoutSeconds, long readTimeoutSeconds) {
+        RequestConfig config = RequestConfig.custom()
+                .setConnectTimeout(coereceToInt(connectionTimeoutSeconds * 1000))
+                .setConnectionRequestTimeout(coereceToInt(readTimeoutSeconds * 100))
+                .build();
+        CloseableHttpClient build = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
+        return new ApacheClient(build);
     }
 
     /**
@@ -96,19 +107,34 @@ public class ArdoqClient {
     }
 
     /**
+     * Connects to Ardoq with username and password and a custom request configuration
+     * <p/>
+     * **We Strongly suggest that you connect with a token instead**
+     *
+     * @param endpoint             The Ardoq installation you wish to connect to (e.g. https://app.ardoq.com)
+     * @param username             Your username
+     * @param password             Your password
+     * @param defaultRequestConfig User provided org.apache.http.client.config.RequestConfig (for setting i.e. proxy settings etc.)
+     */
+    public ArdoqClient(final String endpoint, final String username, final String password, final RequestConfig defaultRequestConfig) {
+        ApacheClient client = new ApacheClient(HttpClientBuilder.create().setDefaultRequestConfig(defaultRequestConfig).build());
+        this.restAdapter = initAdapter(endpoint, getRequestInterceptorBasicAuth(endpoint, username, password), client);
+    }
+
+    /**
      * Connects to Ardoq with username and password
      * <p/>
      * **We Strongly suggest that you connect with a token instead**
      *
-     * @param endpoint The Ardoq installation you wish to connect to (e.g. https://app.ardoq.com)
-     * @param username Your username
-     * @param password Your password
+     * @param endpoint                 The Ardoq installation you wish to connect to (e.g. https://app.ardoq.com)
+     * @param username                 Your username
+     * @param password                 Your password
      * @param connectionTimeoutSeconds HttpClient connection timeout in seconds (defaults to 15s)
-     * @param readTimeoutSeconds HttpClient read timeout in seconds (defaults to 20s)
+     * @param readTimeoutSeconds       HttpClient read timeout in seconds (defaults to 20s)
      */
     public ArdoqClient(final String endpoint, final String username, final String password, final long connectionTimeoutSeconds, final long readTimeoutSeconds) {
-        ApacheClient client = getOkHttpClient(connectionTimeoutSeconds, readTimeoutSeconds);
-        this.restAdapter = initAdapter(endpoint, getRequestInterceptorBasicAuth(endpoint, username, password), client);
+        ApacheClient httpClient = getHttpClient(connectionTimeoutSeconds, readTimeoutSeconds);
+        this.restAdapter = initAdapter(endpoint, getRequestInterceptorBasicAuth(endpoint, username, password), httpClient);
     }
 
     private RequestInterceptor getRequestInterceptorBasicAuth(String endpoint, final String username, final String password) {
@@ -126,6 +152,14 @@ public class ArdoqClient {
                 }
             }
         };
+    }
+
+    private static int coereceToInt(long l) {
+        if (l < Integer.MIN_VALUE || l > Integer.MAX_VALUE) {
+            throw new IllegalArgumentException
+                    (l + " cannot be cast to int without changing its value.");
+        }
+        return (int) l;
     }
 
     public void setLogLevel(RestAdapter.LogLevel level) {
