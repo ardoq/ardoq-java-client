@@ -53,10 +53,10 @@ Workspace workspace = client.workspace().createWorkspace(new Workspace("demo-wor
 ComponentService componentService = client.component();
 
 Component webshop = componentService.createComponent(new Component("Webshop", workspace.getId(), "Webshop description"));
-Component webShopCreateOrder = componentService.createComponent(new Component("createOrder", workspace.getId(), "Order from cart", webshop.getId()));
+Component webShopCreateOrder = componentService.createComponent(new Component("createOrder", workspace.getId(), "Order from cart", model.getComponentTypeByName("service"), webshop.getId()));
 
 Component erp = componentService.createComponent(new Component("ERP", workspace.getId(), ""));
-Component erpCreateOrder = componentService.createComponent(new Component("createOrder", workspace.getId(), "", erp.getId()));
+Component erpCreateOrder = componentService.createComponent(new Component("createOrder", workspace.getId(), "", model.getComponentTypeByName("service"), erp.getId()));
 //Create a Synchronous integration between the Webshop:createOrder and ERP:createOrder services
 Reference createOrderRef = new Reference(workspace.getId(), "Order from cart", webShopCreateOrder.getId(), erpCreateOrder.getId(), model.getReferenceTypeByName("Synchronous"));
 createOrderRef.setReturnValue("Created order");
