@@ -10,6 +10,7 @@ import org.junit.Test;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -26,7 +27,8 @@ public class ComponentServiceTest {
     public void before() {
         ArdoqClient client = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqUsername"), System.getenv("ardoqPassword"), 30, 30).setOrganization(TestUtils.getTestPropery("organization"));
         service = client.component();
-        workspace = client.workspace().createWorkspace(new Workspace("myWorkspace", TestUtils.getTestPropery("modelId"), "Hello world!"));
+        workspace = client.workspace().createWorkspace(new Workspace("myWorkspace",
+                TestUtils.getTestPropery("modelId"), "Hello world!"));
         cb = new CallbackTest();
         testComponent = new Component("MyComponent", workspace.getId(), "myDescription");
     }
@@ -108,6 +110,43 @@ public class ComponentServiceTest {
         } catch (RetrofitError e) {
             assertEquals(404, e.getResponse().getStatus());
         }
+    }
+
+    @Test
+    public void fieldSearchTest() {
+        testComponent.setFields(new HashMap<String, Object>() {{
+            this.put("myField", "testSearch");
+        }});
+
+        Component createdComponent = service.createComponent(testComponent);
+        List<Component> results = service.findComponentsByFields(new HashMap<String, String>() {{
+            this.put("myField", "testSearch");
+            this.put("rootWorkspace", testComponent.getRootWorkspace());
+        }});
+
+        assertEquals(1, results.size());
+        assertEquals(results.get(0).getId(), createdComponent.getId());
+    }
+
+    @Test
+    public void fieldSearchEmptyResultTest() {
+        testComponent.setFields(new HashMap<String, Object>() {{
+            this.put("myField", "testSearch");
+        }});
+        service.createComponent(testComponent);
+        List<Component> results = service.findComponentsByFields(new HashMap<String, String>() {{
+            this.put("missingField", "test");
+            this.put("rootWorkspace", testComponent.getRootWorkspace());
+        }});
+        assertEquals(0, results.size());
+    }
+
+    @Test
+    public void findComponentInWorkspaceByNameTest() {
+        Component component = service.createComponent(testComponent);
+        List<Component> results = service.findComponentsInWorkspaceByName(component.getRootWorkspace(), component.getName());
+        assertEquals(1, results.size());
+        assertEquals(component.getName(), results.get(0).getName());
     }
 
 }

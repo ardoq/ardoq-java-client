@@ -27,7 +27,9 @@ public class WorkspaceServiceTest {
     @Before
     public void before() {
         aggregatedWorkspaceId = TestUtils.getTestPropery("aggregatedWorkspaceId");
-        service = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqToken")).setOrganization(TestUtils.getTestPropery("organization")).workspace();
+        //service = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqToken")).setOrganization(TestUtils.getTestPropery("organization")).workspace();
+
+        service = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqToken")).setOrganization("ardoq").workspace();
         cb = new CallbackTest();
         testWorkspace = new Workspace("myWorkspace", TestUtils.getTestPropery("modelId"), "Hello world!");
     }
@@ -148,5 +150,14 @@ public class WorkspaceServiceTest {
         service.getAggregatedWorkspace(aggregatedWorkspaceId, cb);
         await().atMost(4, TimeUnit.SECONDS).untilTrue(cb.done());
         assertEquals(200, cb.getResponse().getStatus());
+    }
+
+    @Test
+    public void findWorkspacesByNameTest() {
+        Workspace result = service.createWorkspace(testWorkspace);
+        List<Workspace> results = service.findWorkspacesByName(result.getName());
+        for (Workspace workspace : results) {
+            assertEquals(result.getName(), workspace.getName());
+        }
     }
 }

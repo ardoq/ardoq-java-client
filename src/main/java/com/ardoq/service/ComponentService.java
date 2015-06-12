@@ -6,6 +6,7 @@ import retrofit.client.Response;
 import retrofit.http.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ComponentService {
 
@@ -20,6 +21,27 @@ public interface ComponentService {
 
     @GET("/api/component/{id}")
     void getComponentById(@Path("id") String id, Callback<Component> callback);
+
+    /**
+     * Find components by one or more fields. A field matches if the field equals the query (partial matches are not returned).
+     * If multiple fields are passed it will return components where all fields match.
+     *
+     * @param fields Map<String,String> fieldName -> expectedFieldValue
+     */
+    @GET("/api/component/fieldsearch")
+    List<Component> findComponentsByFields(@QueryMap Map<String, String> fields);
+
+    @GET("/api/component/fieldsearch")
+    List<Component> findComponentsByFields(@QueryMap Map<String, String> fields, Callback<Component> callback);
+
+    @GET("/api/component/search")
+    List<Component> findComponentsInWorkspaceByName(@Query("workspace") String workspaceId,
+                                                    @Query("name") String name);
+
+    @GET("/api/component/search")
+    List<Component> findComponentsInWorkspaceByName(@Query("workspace") String workspaceId,
+                                                    @Query("name") String name,
+                                                    Callback<Component> callback);
 
     @POST("/api/component")
     Component createComponent(@Body Component component);
