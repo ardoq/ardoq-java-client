@@ -20,9 +20,9 @@ Add `ardoq-java-client` to your dependencies.
     <dependencies>
         ...
         <dependency>
-            <groupId>com.ardoq.api</groupId>
-            <artifactId>client</artifactId>
-            <version>0.9.5</version>
+            <groupId>com.ardoq</groupId>
+            <artifactId>java-api-client</artifactId>
+            <version>0.9.6</version>
         </dependency>
         ...
     </dependencies>
