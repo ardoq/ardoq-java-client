@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.ardoq.api</groupId>
-    <artifactId>client</artifactId>
-    <version>0.9.6-SNAPSHOT</version>
+    <groupId>com.ardoq</groupId>
+    <artifactId>java-api-client</artifactId>
+    <version>0.9.6</version>
 
     <properties>
         <aws-maven.version>5.0.0.RELEASE</aws-maven.version>
