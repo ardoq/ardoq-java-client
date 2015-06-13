@@ -4,16 +4,6 @@ ardoq-java-client
 Small Java wrapper for the [Ardoq](http://ardoq.com) REST-api.
 
 ###Install
-Add the ardoq maven repository to your pom.xml
-```xml
-    <repositories>
-        <repository>
-            <id>ardoq.com</id>
-            <url>http://maven.ardoq.com/release/</url>
-        </repository>
-    </repositories>
-```
-
 Add `ardoq-java-client` to your dependencies.
 
 ```xml
@@ -22,13 +12,11 @@ Add `ardoq-java-client` to your dependencies.
         <dependency>
             <groupId>com.ardoq</groupId>
             <artifactId>java-api-client</artifactId>
-            <version>0.9.6</version>
+            <version>0.9.7-SNAPSHOT</version>
         </dependency>
         ...
     </dependencies>
 ```
-
-**NOTE** This repository is not browsable so your IDE won't pick it up automatically. Use the mvn cli to download it `mvn install`
 
 ###Usage
 ```java
@@ -82,6 +70,6 @@ The api is pretty straight forward. For more examples, please refer to the [test
 
 ###License
 
-Copyright © 2014 Ardoq AS
+Copyright © 2015 Ardoq AS
 
 Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.
