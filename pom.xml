@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <name>Ardoq Java Client</name>
     <description>Java client to Ardoq public API</description>
@@ -7,7 +9,7 @@
 
     <groupId>com.ardoq</groupId>
     <artifactId>java-api-client</artifactId>
-    <version>0.9.7</version>
+    <version>0.9.7-SNAPSHOT</version>
     <licenses>
         <license>
             <name>Eclipse Public License, Version 1.0 or (at your option) any later version</name>
@@ -32,8 +34,7 @@
         <connection>scm:git:git@github.com:ardoq/ardoq-java-client.git</connection>
         <developerConnection>scm:git:git@github.com:ardoq/ardoq-java-client.git</developerConnection>
         <url>git@github.com:ardoq/ardoq-java-client.git</url>
-      <tag>java-api-client-0.9.7</tag>
-  </scm>
+    </scm>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
