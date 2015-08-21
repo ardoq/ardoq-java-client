@@ -26,7 +26,7 @@ public interface ComponentService {
      * Find components by one or more fields. A field matches if the field equals the query (partial matches are not returned).
      * If multiple fields are passed it will return components where all fields match.
      *
-     * @param fields Map<String,String> fieldName -> expectedFieldValue
+     * @param fields Map&lt;String,String&gt; fieldName -&gt; expectedFieldValue
      */
     @GET("/api/component/fieldsearch")
     List<Component> findComponentsByFields(@QueryMap Map<String, String> fields);
@@ -54,7 +54,7 @@ public interface ComponentService {
      *
      * @param id        The ID of the component to update
      * @param component The component's data that you wish to update
-     * @return
+     * @return updated and synced component
      * @see com.ardoq.model.Component
      */
     @PUT("/api/component/{id}")

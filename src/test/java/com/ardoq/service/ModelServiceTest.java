@@ -1,15 +1,16 @@
 package com.ardoq.service;
 
-import com.ardoq.ArdoqClient;
-import com.ardoq.TestUtils;
-import com.ardoq.model.Model;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import com.ardoq.ArdoqClient;
+import com.ardoq.TestUtils;
+import com.ardoq.model.Model;
 
 public class ModelServiceTest {
-    private ModelService service;
+    private SimpleModelService service;
     private String modelId;
 
     @Before
@@ -20,10 +21,16 @@ public class ModelServiceTest {
 
     }
 
-    @Test
     public void getModelByNameTest() {
         Model modelById = service.getModelById(modelId);
         Model modelByName = service.getModelByName(modelById.getName());
         assertEquals(modelById.getId(), modelByName.getId());
     }
+
+    @Test
+    public void createModelTest() throws Exception {
+        Model m = service.findOrCreate("Maven",getClass().getResourceAsStream("/mavenModel.json"));
+        System.out.println(m);
+    }
+
 }

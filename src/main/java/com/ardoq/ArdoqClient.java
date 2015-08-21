@@ -24,7 +24,6 @@ import java.util.Properties;
 
 /**
  * ArdoqClient connects to your Ardoq installation via it's REST-apis.
- * <p/>
  * You can connect with token authentication or username and password.
  *
  * @author Erik Bakstad
@@ -53,7 +52,7 @@ public class ArdoqClient {
      * Connects to your Ardoq installation with token authentication.
      *
      * @param endpoint The Ardoq installation you wish to connect to (e.g. https://app.ardoq.com)
-     * @param token    The token generated via Profile -> APIS token that you wish to authenticate with
+     * @param token    The token generated via Profile -&gt; APIS token that you wish to authenticate with
      */
     public ArdoqClient(final String endpoint, final String token) {
         this.restAdapter = initAdapter(endpoint, getRequestInterceptor(endpoint, token));
@@ -63,7 +62,7 @@ public class ArdoqClient {
      * Connects to your Ardoq installation with token authentication.
      *
      * @param endpoint                 The Ardoq installation you wish to connect to (e.g. https://app.ardoq.com)
-     * @param token                    The token generated via Profile -> APIS token that you wish to authenticate with
+     * @param token                    The token generated via Profile -&gt; APIS token that you wish to authenticate with
      * @param connectionTimeoutSeconds HttpClient connection timeout in seconds (defaults to 15s)
      * @param readTimeoutSeconds       HttpClient read timeout in seconds (defaults to 20s)
      */
@@ -76,7 +75,7 @@ public class ArdoqClient {
      * Connects to your Ardoq installation with token authentication and a custom request configuration.
      *
      * @param endpoint             The Ardoq installation you wish to connect to (e.g. https://app.ardoq.com)
-     * @param token                The token generated via Profile -> APIS token that you wish to authenticate with
+     * @param token                The token generated via Profile -&gt; APIS token that you wish to authenticate with
      * @param defaultRequestConfig User provided org.apache.http.client.config.RequestConfig (for setting i.e. proxy settings etc.)
      */
     public ArdoqClient(final String endpoint, final String token, final RequestConfig defaultRequestConfig) {
@@ -95,9 +94,8 @@ public class ArdoqClient {
 
     /**
      * Connects to Ardoq with username and password
-     * <p/>
      * **We Strongly suggest that you connect with a token instead**
-     *
+     * 
      * @param endpoint The Ardoq installation you wish to connect to (e.g. https://app.ardoq.com)
      * @param username Your username
      * @param password Your password
@@ -108,9 +106,8 @@ public class ArdoqClient {
 
     /**
      * Connects to Ardoq with username and password and a custom request configuration
-     * <p/>
      * **We Strongly suggest that you connect with a token instead**
-     *
+     * 
      * @param endpoint             The Ardoq installation you wish to connect to (e.g. https://app.ardoq.com)
      * @param username             Your username
      * @param password             Your password
@@ -123,9 +120,8 @@ public class ArdoqClient {
 
     /**
      * Connects to Ardoq with username and password
-     * <p/>
      * **We Strongly suggest that you connect with a token instead**
-     *
+     * 
      * @param endpoint                 The Ardoq installation you wish to connect to (e.g. https://app.ardoq.com)
      * @param username                 Your username
      * @param password                 Your password
@@ -241,6 +237,6 @@ public class ArdoqClient {
     }
 
     public SimpleModelService model() {
-        return new SimpleModelService(restAdapter.create(DeprecatedModelService.class));
+        return new SimpleModelService(restAdapter.create(ModelService.class));
     }
 }

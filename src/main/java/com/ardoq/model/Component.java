@@ -8,11 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Represents an Ardoq component or also called a page.
- * <p/>
- * Use the ComponentService to update.
- * <p/>
- * NB! Every updates or modifications done via ComponentService results in a new Immutable instance.
+ * <p>Represents an Ardoq component or also called a page.</p>
+ * <p>Use the ComponentService to update.</p>
+ * <p>NB! Every updates or modifications done via ComponentService results in a new Immutable instance.</p>
  *
  * @see com.ardoq.service.ComponentService
  */
