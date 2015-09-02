@@ -11,7 +11,6 @@ import java.util.Map;
 public class ComponentAdapter implements JsonDeserializer<Component>, JsonSerializer<Component> {
 
 
-    @Override
     public Component deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         Gson gson = gson();
         Component component = gson.fromJson(jsonElement, Component.class);
@@ -23,7 +22,6 @@ public class ComponentAdapter implements JsonDeserializer<Component>, JsonSerial
         return component;
     }
 
-    @Override
     public JsonElement serialize(Component component, Type type, JsonSerializationContext jsonSerializationContext) {
         Map<String, Object> fields = component.getFields();
         JsonElement jsonElement = gson().toJsonTree(component, Component.class);

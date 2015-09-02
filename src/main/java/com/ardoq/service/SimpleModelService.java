@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openqa.selenium.io.IOUtils;
+import org.apache.commons.io.IOUtils;
 
 import com.ardoq.model.Model;
 
@@ -69,7 +69,7 @@ public class SimpleModelService {
         }catch(IllegalArgumentException ignore){
         }
 
-        String modelStr = IOUtils.readFully(modelJson);
+        String modelStr = IOUtils.toString(modelJson,"UTF-8");
         return modelService.createModel(new TypedString(modelStr));
     }
 

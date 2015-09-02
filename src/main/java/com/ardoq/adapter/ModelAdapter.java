@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class ModelAdapter implements JsonDeserializer<Model> {
-    @Override
+
     public Model deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         JsonObject jsonObject = jsonElement.getAsJsonObject();
         Map<String, Integer> referenceTypes = getReferenceTypes(jsonObject);

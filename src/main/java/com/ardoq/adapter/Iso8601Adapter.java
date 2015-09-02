@@ -9,13 +9,12 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class Iso8601Adapter implements JsonDeserializer<Date>, JsonSerializer<Date> {
-    @Override
+
     public Date deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         Calendar calendar = DatatypeConverter.parseDateTime(jsonElement.getAsString());
         return calendar.getTime();
     }
 
-    @Override
     public JsonElement serialize(Date date, Type type, JsonSerializationContext jsonSerializationContext) {
         GregorianCalendar gregorianCalendar = new GregorianCalendar();
         gregorianCalendar.setTime(date);
