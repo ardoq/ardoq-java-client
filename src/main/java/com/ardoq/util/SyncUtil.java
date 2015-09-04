@@ -286,7 +286,8 @@ public class SyncUtil {
     }
 
     public Workspace updateWorkspaceIfDifferent(Workspace newWorkspace) {
-        if (this.isDifferent(this.workspace, newWorkspace)) {
+        Workspace existingWorkspace = this.workspaceService.getWorkspaceById(this.workspace.getId());
+        if (this.isDifferent(existingWorkspace, newWorkspace)) {
             this.workspace = this.workspaceService.updateWorkspace(this.workspace.getId(), newWorkspace);
         }
         return this.workspace;
