@@ -22,6 +22,7 @@ public class Workspace implements BasicModel {
     private String type;
     private String description;
     private Origin origin;
+    private Collection<String> views;
 
     public Workspace(String name, String componentModel, String description) {
         this.name = name;
@@ -52,6 +53,7 @@ public class Workspace implements BasicModel {
         if (references != null ? !references.equals(workspace.references) : workspace.references != null) return false;
         if (tags != null ? !tags.equals(workspace.tags) : workspace.tags != null) return false;
         if (type != null ? !type.equals(workspace.type) : workspace.type != null) return false;
+        if (views != null ? !views.equals(workspace.views) : workspace.views != null) return false;
 
         return true;
     }
@@ -71,6 +73,7 @@ public class Workspace implements BasicModel {
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (origin != null ? origin.hashCode() : 0);
+        result = 31 * result + (views !=null ? views.hashCode() : 0);
         return result;
     }
 
@@ -178,6 +181,14 @@ public class Workspace implements BasicModel {
         this.origin = origin;
     }
 
+    public Collection<String> getViews() {
+        return views;
+    }
+
+    public void setViews(Collection<String> views) {
+        this.views = views;
+    }
+
     @Override
     public String toString() {
         return "Workspace{" +
@@ -194,6 +205,7 @@ public class Workspace implements BasicModel {
                 ", type='" + type + '\'' +
                 ", description='" + description + '\'' +
                 ", origin=" + origin +
+                ", views=" + views +
                 '}';
     }
 }
