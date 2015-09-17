@@ -7,7 +7,7 @@
 
     <groupId>com.ardoq</groupId>
     <artifactId>java-api-client</artifactId>
-    <version>0.9.8-SNAPSHOT</version>
+    <version>0.9.8</version>
     <licenses>
         <license>
             <name>Eclipse Public License, Version 1.0 or (at your option) any later version</name>
@@ -24,6 +24,12 @@
         <developer>
             <name>Magnulf Pilskog</name>
             <email>magnulf@ardoq.com</email>
+            <organization>Ardoq AS</organization>
+            <organizationUrl>http://ardoq.com</organizationUrl>
+        </developer>
+        <developer>
+            <name>Kristian Helgesen</name>
+            <email>kristian@ardoq.com</email>
             <organization>Ardoq AS</organization>
             <organizationUrl>http://ardoq.com</organizationUrl>
         </developer>
