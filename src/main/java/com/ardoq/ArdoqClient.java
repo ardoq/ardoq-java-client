@@ -31,7 +31,6 @@ import java.util.Properties;
 public class ArdoqClient {
     private String org;
     private final RestAdapter restAdapter;
-    private RestAdapter.LogLevel logLevel = RestAdapter.LogLevel.FULL;
 
     private RequestInterceptor getRequestInterceptor(String endpoint, final String token) {
         if (endpoint == null || token == null) {
@@ -95,7 +94,7 @@ public class ArdoqClient {
     /**
      * Connects to Ardoq with username and password
      * **We Strongly suggest that you connect with a token instead**
-     * 
+     *
      * @param endpoint The Ardoq installation you wish to connect to (e.g. https://app.ardoq.com)
      * @param username Your username
      * @param password Your password
@@ -107,7 +106,7 @@ public class ArdoqClient {
     /**
      * Connects to Ardoq with username and password and a custom request configuration
      * **We Strongly suggest that you connect with a token instead**
-     * 
+     *
      * @param endpoint             The Ardoq installation you wish to connect to (e.g. https://app.ardoq.com)
      * @param username             Your username
      * @param password             Your password
@@ -121,7 +120,7 @@ public class ArdoqClient {
     /**
      * Connects to Ardoq with username and password
      * **We Strongly suggest that you connect with a token instead**
-     * 
+     *
      * @param endpoint                 The Ardoq installation you wish to connect to (e.g. https://app.ardoq.com)
      * @param username                 Your username
      * @param password                 Your password
@@ -159,7 +158,7 @@ public class ArdoqClient {
     }
 
     public void setLogLevel(RestAdapter.LogLevel level) {
-        this.logLevel = level;
+        this.restAdapter.setLogLevel(level);
     }
 
     private RestAdapter.Builder builderDefaults(String endpoint, RequestInterceptor requestInterceptor) {
@@ -170,7 +169,7 @@ public class ArdoqClient {
                 .create();
 
         return new RestAdapter.Builder()
-                .setLogLevel(this.logLevel)
+                .setLogLevel(RestAdapter.LogLevel.NONE)
                 .setEndpoint(endpoint)
                 .setConverter(new GsonConverter(gson))
                 .setRequestInterceptor(requestInterceptor);
