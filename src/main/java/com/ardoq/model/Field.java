@@ -18,17 +18,23 @@ public class Field implements BasicModel {
     private Date lastUpdated;
     private Integer _version;
     private String model;
+    private String defaultValue;
     private FieldType type;
     private String label;
     private List<String> componentType;
     private String description;
 
     public Field(String name, String label, String modelId, List<String> componentType, FieldType type) {
+        this(name, label, modelId, componentType, type, "");
+    }
+
+    public Field(String name, String label, String modelId, List<String> componentType, FieldType type,String defaultValue) {
         this.name = name;
         this.label = label;
         this.model = modelId;
         this.componentType = componentType;
         this.type = type;
+        this.defaultValue = defaultValue;
     }
 
     @Override
@@ -140,6 +146,14 @@ public class Field implements BasicModel {
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    public String getDefaultValue() {
+        return defaultValue;
+    }
+
+    public void setDefaultValue(String defaultValue) {
+        this.defaultValue = defaultValue;
     }
 
     public List<String> getComponentType() {

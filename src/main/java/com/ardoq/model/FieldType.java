@@ -18,5 +18,7 @@ public enum FieldType {
     @SerializedName("url")
     URL,
     @SerializedName("email")
-    EMAIL
+    EMAIL,
+    @SerializedName("SelectMultipleList")
+    SELECTMULTIPLE
 }
