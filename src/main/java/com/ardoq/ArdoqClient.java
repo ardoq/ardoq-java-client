@@ -212,7 +212,7 @@ public class ArdoqClient {
      * @return WorkspaceService
      */
     public WorkspaceService workspace() {
-        return restAdapter.create(WorkspaceService.class);
+        return new SimpleWorkspaceService(restAdapter.create(WorkspaceService.class));
     }
 
     public ComponentService component() {

@@ -62,4 +62,8 @@ public interface WorkspaceService {
 
     @GET("/api/workspace/search")
     List<Workspace> findWorkspacesByName(@Query("name") String workspaceName);
+
+    Workspace createWorkspaceWithModel(String workspaceName, String modelID, String description);
+
+    Workspace createWorkspaceFromTemplate(String workspaceName, String templateID, String decription);
 }

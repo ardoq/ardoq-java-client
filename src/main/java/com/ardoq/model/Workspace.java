@@ -10,6 +10,7 @@ public class Workspace implements BasicModel {
     private String id;
     private String name;
     private String componentModel;
+    private String componentTemplate;
     private Date created;
     @SerializedName("created-by")
     private String createdBy;
@@ -24,10 +25,25 @@ public class Workspace implements BasicModel {
     private Origin origin;
     private Collection<String> views;
 
+    public Workspace(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
     public Workspace(String name, String componentModel, String description) {
         this.name = name;
         this.componentModel = componentModel;
         this.description = description;
+    }
+
+    public Workspace withComponentModel(String componentModel) {
+        this.setComponentModel(componentModel);
+        return this;
+    }
+
+    public Workspace withComponentTemplate(String componentTemplate) {
+        this.setComponentTemplate(componentTemplate);
+        return this;
     }
 
     @Override
@@ -39,6 +55,8 @@ public class Workspace implements BasicModel {
 
         if (_version != null ? !_version.equals(workspace._version) : workspace._version != null) return false;
         if (componentModel != null ? !componentModel.equals(workspace.componentModel) : workspace.componentModel != null)
+            return false;
+        if (componentTemplate != null ? !componentTemplate.equals(workspace.componentTemplate) : workspace.componentTemplate != null)
             return false;
         if (components != null ? !components.equals(workspace.components) : workspace.components != null) return false;
         if (created != null ? !created.equals(workspace.created) : workspace.created != null) return false;
@@ -99,6 +117,14 @@ public class Workspace implements BasicModel {
 
     public void setComponentModel(String componentModel) {
         this.componentModel = componentModel;
+    }
+
+    public String getComponentTemplate() {
+        return componentTemplate;
+    }
+
+    public void setComponentTemplate(String componentTemplate) {
+        this.componentTemplate = componentTemplate;
     }
 
     public Date getCreated() {

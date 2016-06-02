@@ -20,9 +20,12 @@ public interface ModelService {
     @GET("/api/model/{id}")
     Model getModelById(@Path("id") String id);
 
-    Model getModelByName(String name);
+    @GET("/api/model/{id}")
+    Model getTemplateById(@Path("id") String id);
 
-    Model findOrCreate(String name, String modelJson);
+    Model getTemplateByName(String name);
+
+    Model findOrCreateTemplate(String name, String modelJson);
 
     @POST("/api/model")
     @Headers("Content-Type: application/json")

@@ -36,7 +36,7 @@ public class AttachmentServiceTest {
         workspaceId = TestUtils.getTestPropery("workspaceIdWithAttachments");
         ArdoqClient client = new ArdoqClient(System.getenv("ardoqHost"), System.getenv("ardoqUsername"), System.getenv("ardoqPassword")).setOrganization(TestUtils.getTestPropery("organization"));
         service = client.attachment();
-        workspace = client.workspace().createWorkspace(new Workspace("myWorkspace", TestUtils.getTestPropery("modelId"), "Hello world!"));
+        workspace = client.workspace().createWorkspace(new Workspace("myWorkspace", "Hello world!").withComponentModel(TestUtils.getTestPropery("modelId")));
         cb = new CallbackTest();
     }
 

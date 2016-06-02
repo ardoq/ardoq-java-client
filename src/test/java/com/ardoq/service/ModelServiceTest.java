@@ -23,13 +23,13 @@ public class ModelServiceTest {
 
     public void getModelByNameTest() {
         Model modelById = service.getModelById(modelId);
-        Model modelByName = service.getModelByName(modelById.getName());
+        Model modelByName = service.getTemplateByName(modelById.getName());
         assertEquals(modelById.getId(), modelByName.getId());
     }
 
     @Test
     public void createModelTest() throws Exception {
-        Model m = service.findOrCreate("Maven",getClass().getResourceAsStream("/mavenModel.json"));
+        Model m = service.findOrCreateTemplate("Maven",getClass().getResourceAsStream("/mavenModel.json"));
         System.out.println(m);
     }
 

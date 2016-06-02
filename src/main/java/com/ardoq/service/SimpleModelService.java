@@ -35,7 +35,11 @@ public class SimpleModelService {
         return modelService.getModelById(id);
     }
 
-    public Model getModelByName(String name) {
+    public Model getTemplateById(String id) {
+        return modelService.getModelById(id);
+    }
+
+    public Model getTemplateByName(String name) {
         List<Model> allModels = modelService.getAllModels();
         List<Model> result = new ArrayList<Model>();
         for (Model m : allModels) {
@@ -53,6 +57,7 @@ public class SimpleModelService {
         }
     }
 
+
     /**
      * Tries to lookup the model by name, and returns it if it's found.
      * If not, it is created from the provided JSON input stream.
@@ -62,9 +67,9 @@ public class SimpleModelService {
      * @return model
      * @throws IOException
      */
-    public Model findOrCreate(String name, InputStream modelJson) throws IOException {
+    public Model findOrCreateTemplate(String name, InputStream modelJson) throws IOException {
         try{
-            Model m = getModelByName(name);
+            Model m = getTemplateByName(name);
             return m;
         }catch(IllegalArgumentException ignore){
         }

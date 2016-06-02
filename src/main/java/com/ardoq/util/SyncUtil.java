@@ -1,12 +1,28 @@
 package com.ardoq.util;
 
-import com.ardoq.ArdoqClient;
-import com.ardoq.model.*;
-import com.ardoq.service.*;
-import com.google.gson.Gson;
-import retrofit.RestAdapter;
+import java.util.AbstractMap;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Set;
 
-import java.util.*;
+import com.ardoq.ArdoqClient;
+import com.ardoq.model.AggregatedWorkspace;
+import com.ardoq.model.BasicModel;
+import com.ardoq.model.Component;
+import com.ardoq.model.Model;
+import com.ardoq.model.Reference;
+import com.ardoq.model.Tag;
+import com.ardoq.model.Workspace;
+import com.ardoq.service.AttachmentService;
+import com.ardoq.service.ComponentService;
+import com.ardoq.service.ReferenceService;
+import com.ardoq.service.TagService;
+import com.ardoq.service.WorkspaceService;
+import com.google.gson.Gson;
+
+import retrofit.RestAdapter;
 
 /**
  * Created by magnulf on 23.04.14.
@@ -46,28 +62,18 @@ public class SyncUtil {
     private int deletedRefs = 0;
 
 
-    public SyncUtil(ArdoqClient client, String workspaceName, String modelName) {
+    public SyncUtil(ArdoqClient client, Workspace workspace) {
         this.client = client;
         this.client.setLogLevel(RestAdapter.LogLevel.NONE);
-        this.model = client.model().getModelByName(modelName);
         this.workspaceService = client.workspace();
         this.componentService = client.component();
         this.referenceService = client.reference();
         this.attachmentService = client.attachment();
         this.tagService = client.tag();
 
-        for (Workspace ws : this.workspaceService.getAllWorkspaces()) {
-            if (ws.getName().equals(workspaceName) && ws.getComponentModel().equalsIgnoreCase(model.getId())) {
-                this.workspace = ws;
-                break;
-            }
-        }
-
-        if (null == this.workspace) {
-            this.workspace = workspaceService.createWorkspace(new Workspace(workspaceName, model.getId(), ""));
-        } else {
-            loadCurrentAggregatedWorkspace();
-        }
+        this.model = client.model().getModelById(workspace.getComponentModel());
+        this.workspace = workspace;
+        loadCurrentAggregatedWorkspace();
     }
 
     private void loadCurrentAggregatedWorkspace() {
