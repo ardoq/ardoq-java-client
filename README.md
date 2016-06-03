@@ -36,8 +36,10 @@ ArdoqClient client = new ArdoqClient("hostname", "username", "password").setOrga
 ###Starting a small project
 ```java
 ArdoqClient client = new ArdoqClient(host, ardoqUsername, ardoqPassword);
-Model model = client.model().getModelByName("Application service");
-Workspace workspace = client.workspace().createWorkspace(new Workspace("demo-workspace", model.getId(), "Description"));
+Model template = client.model().getTemplateByName("Application service");
+Workspace workspace = client.workspace().createWorkspace(new Workspace("demo-workspace", template.getId(), "Description"));
+Model model = client.model().getModelById(workspace.getComponentModel());
+
 ComponentService componentService = client.component();
 
 Component webshop = componentService.createComponent(new Component("Webshop", workspace.getId(), "Webshop description"));
@@ -57,7 +59,7 @@ client.tag().createTag(new Tag("Customer", workspace.getId(), "", componentIds, 
 
 Running this simple example let's Ardoq visualize the components and their relationships.
 
-![Components](https://s3-eu-west-1.amazonaws.com/ardoq-resources/public/comps.png)  
+![Components](https://s3-eu-west-1.amazonaws.com/ardoq-resources/public/comps.png)
 ######*Component landscape*
 ![Sequence diagram](https://s3-eu-west-1.amazonaws.com/ardoq-resources/public/sequence_diagram.png)
 ######*Sequence diagram*

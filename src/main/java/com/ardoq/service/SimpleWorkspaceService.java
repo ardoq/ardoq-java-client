@@ -91,6 +91,6 @@ public class SimpleWorkspaceService implements WorkspaceService{
     }
 
     public Workspace createWorkspaceFromTemplate(String workspaceName, String templateID, String decription) {
-        return workspaceService.createWorkspace(new Workspace(workspaceName,decription).withComponentTemplate(templateID));
+        return workspaceService.createWorkspace(new Workspace(workspaceName,templateID,decription));
     }
 }

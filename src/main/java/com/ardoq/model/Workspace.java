@@ -30,19 +30,14 @@ public class Workspace implements BasicModel {
         this.description = description;
     }
 
-    public Workspace(String name, String componentModel, String description) {
+    public Workspace(String name, String componentTemplate, String description) {
         this.name = name;
-        this.componentModel = componentModel;
+        this.componentTemplate = componentTemplate;
         this.description = description;
     }
 
     public Workspace withComponentModel(String componentModel) {
         this.setComponentModel(componentModel);
-        return this;
-    }
-
-    public Workspace withComponentTemplate(String componentTemplate) {
-        this.setComponentTemplate(componentTemplate);
         return this;
     }
 
@@ -221,6 +216,7 @@ public class Workspace implements BasicModel {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", componentModel='" + componentModel + '\'' +
+                ", componentTemplate='" + componentTemplate + '\'' +
                 ", created=" + created +
                 ", createdBy='" + createdBy + '\'' +
                 ", lastUpdated=" + lastUpdated +
