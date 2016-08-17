@@ -1,6 +1,7 @@
 package com.ardoq.service;
 
 import com.ardoq.model.AggregatedWorkspace;
+import com.ardoq.model.Component;
 import com.ardoq.model.Workspace;
 import com.ardoq.model.WorkspaceBranch;
 import com.ardoq.model.WorkspaceBranchRequest;
@@ -66,4 +67,10 @@ public interface WorkspaceService {
     Workspace createWorkspaceWithModel(String workspaceName, String modelID, String description);
 
     Workspace createWorkspaceFromTemplate(String workspaceName, String templateID, String decription);
+
+    @GET("/api/workspace/{id}/component")
+    List<Component> getAllComponents(@Path("id") String id);
+
+    @GET("/api/workspace/{id}/component")
+    void getAllComponents(@Path("id") String id, Callback<List<Component>> callback);
 }

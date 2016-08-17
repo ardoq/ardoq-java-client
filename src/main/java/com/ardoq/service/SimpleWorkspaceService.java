@@ -3,6 +3,7 @@ package com.ardoq.service;
 import java.util.List;
 
 import com.ardoq.model.AggregatedWorkspace;
+import com.ardoq.model.Component;
 import com.ardoq.model.Workspace;
 import com.ardoq.model.WorkspaceBranch;
 import com.ardoq.model.WorkspaceBranchRequest;
@@ -92,5 +93,13 @@ public class SimpleWorkspaceService implements WorkspaceService{
 
     public Workspace createWorkspaceFromTemplate(String workspaceName, String templateID, String decription) {
         return workspaceService.createWorkspace(new Workspace(workspaceName,templateID,decription));
+    }
+
+    public List<Component> getAllComponents(String id) {
+        return workspaceService.getAllComponents(id);
+    }
+
+    public void getAllComponents(String id, Callback<List<Component>> callback) {
+        workspaceService.getAllComponents(id, callback);
     }
 }
