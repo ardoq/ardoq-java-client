@@ -17,15 +17,15 @@ public class Reference implements BasicModel {
     private Integer type;
     private String source;
     private String target;
-    private String description;
+    private String displayText;
     private String returnValue;
     private String targetWorkspace;
     private Integer order;
 
 
-    public Reference(String rootWorkspace, String description, String source, String target, int type) {
+    public Reference(String rootWorkspace, String displayText, String source, String target, int type) {
         this.rootWorkspace = rootWorkspace;
-        this.description = description;
+        this.displayText = displayText;
         this.source = source;
         this.target = target;
         this.type = type;
@@ -41,7 +41,7 @@ public class Reference implements BasicModel {
         if (_version != null ? !_version.equals(reference._version) : reference._version != null) return false;
         if (created != null ? !created.equals(reference.created) : reference.created != null) return false;
         if (createdBy != null ? !createdBy.equals(reference.createdBy) : reference.createdBy != null) return false;
-        if (description != null ? !description.equals(reference.description) : reference.description != null)
+        if (displayText != null ? !displayText.equals(reference.displayText) : reference.displayText != null)
             return false;
         if (id != null ? !id.equals(reference.id) : reference.id != null) return false;
         if (lastUpdated != null ? !lastUpdated.equals(reference.lastUpdated) : reference.lastUpdated != null)
@@ -71,7 +71,7 @@ public class Reference implements BasicModel {
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (source != null ? source.hashCode() : 0);
         result = 31 * result + (target != null ? target.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (displayText != null ? displayText.hashCode() : 0);
         result = 31 * result + (returnValue != null ? returnValue.hashCode() : 0);
         result = 31 * result + (targetWorkspace != null ? targetWorkspace.hashCode() : 0);
         result = 31 * result + (order != null ? order.hashCode() : 0);
@@ -158,12 +158,12 @@ public class Reference implements BasicModel {
         return targetWorkspace;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDisplayText() {
+        return displayText;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDisplayText(String displayText) {
+        this.displayText = displayText;
     }
 
     public String getReturnValue() {
@@ -194,7 +194,7 @@ public class Reference implements BasicModel {
                 ", type=" + type +
                 ", source='" + source + '\'' +
                 ", target='" + target + '\'' +
-                ", description='" + description + '\'' +
+                ", displayText='" + displayText + '\'' +
                 ", returnValue='" + returnValue + '\'' +
                 ", targetWorkspace='" + targetWorkspace + '\'' +
                 ", order=" + order +
