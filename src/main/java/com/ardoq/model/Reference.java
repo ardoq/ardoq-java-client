@@ -18,6 +18,7 @@ public class Reference implements BasicModel {
     private String source;
     private String target;
     private String description;
+    private String displayText;
     private String returnValue;
     private String targetWorkspace;
     private Integer order;
@@ -42,6 +43,8 @@ public class Reference implements BasicModel {
         if (created != null ? !created.equals(reference.created) : reference.created != null) return false;
         if (createdBy != null ? !createdBy.equals(reference.createdBy) : reference.createdBy != null) return false;
         if (description != null ? !description.equals(reference.description) : reference.description != null)
+            return false;
+        if (displayText != null ? !displayText.equals(reference.displayText) : reference.displayText != null)
             return false;
         if (id != null ? !id.equals(reference.id) : reference.id != null) return false;
         if (lastUpdated != null ? !lastUpdated.equals(reference.lastUpdated) : reference.lastUpdated != null)
@@ -72,6 +75,7 @@ public class Reference implements BasicModel {
         result = 31 * result + (source != null ? source.hashCode() : 0);
         result = 31 * result + (target != null ? target.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (displayText != null ? displayText.hashCode() : 0);
         result = 31 * result + (returnValue != null ? returnValue.hashCode() : 0);
         result = 31 * result + (targetWorkspace != null ? targetWorkspace.hashCode() : 0);
         result = 31 * result + (order != null ? order.hashCode() : 0);
@@ -164,6 +168,14 @@ public class Reference implements BasicModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDisplayText() {
+        return displayText;
+    }
+
+    public void setDisplayText(String displayText) {
+        this.displayText = displayText;
     }
 
     public String getReturnValue() {
