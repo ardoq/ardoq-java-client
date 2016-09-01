@@ -26,7 +26,11 @@ public class AggregatedWorkspace {
     private Date lastUpdated;
     private Integer _version;
     private Collection<Component> components;
+    @SerializedName("incoming-components")
+    private Collection<Component> incomingComponents;
     private Collection<Reference> references;
+    @SerializedName("incoming-references")
+    private Collection<Reference> incomingReferences;
     private Collection<Tag> tags;
     private String type;
     private String description;
@@ -42,6 +46,7 @@ public class AggregatedWorkspace {
         if (componentModel != null ? !componentModel.equals(that.componentModel) : that.componentModel != null)
             return false;
         if (components != null ? !components.equals(that.components) : that.components != null) return false;
+        if (incomingComponents != null ? !incomingComponents.equals(that.incomingComponents) : that.incomingComponents != null) return false;
         if (created != null ? !created.equals(that.created) : that.created != null) return false;
         if (createdBy != null ? !createdBy.equals(that.createdBy) : that.createdBy != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
@@ -49,6 +54,7 @@ public class AggregatedWorkspace {
         if (lastUpdated != null ? !lastUpdated.equals(that.lastUpdated) : that.lastUpdated != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (references != null ? !references.equals(that.references) : that.references != null) return false;
+        if (incomingReferences != null ? !incomingReferences.equals(that.incomingReferences) : that.incomingReferences != null) return false;
         if (tags != null ? !tags.equals(that.tags) : that.tags != null) return false;
         if (type != null ? !type.equals(that.type) : that.type != null) return false;
 
@@ -65,7 +71,9 @@ public class AggregatedWorkspace {
         result = 31 * result + (lastUpdated != null ? lastUpdated.hashCode() : 0);
         result = 31 * result + (_version != null ? _version.hashCode() : 0);
         result = 31 * result + (components != null ? components.hashCode() : 0);
+        result = 31 * result + (incomingComponents != null ? incomingComponents.hashCode() : 0);
         result = 31 * result + (references != null ? references.hashCode() : 0);
+        result = 31 * result + (incomingReferences != null ? incomingReferences.hashCode() : 0);
         result = 31 * result + (tags != null ? tags.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
@@ -135,6 +143,14 @@ public class AggregatedWorkspace {
         return description;
     }
 
+    public Collection<Component> getIncomingComponents() {
+        return incomingComponents;
+    }
+
+    public Collection<Reference> getIncomingReferences() {
+        return incomingReferences;
+    }
+
     @Override
     public String toString() {
         return "AggregatedWorkspace{" +
@@ -146,7 +162,9 @@ public class AggregatedWorkspace {
                 ", lastUpdated=" + lastUpdated +
                 ", _version=" + _version +
                 ", components=" + components +
+                ", incomincComponents=" + incomingComponents +
                 ", references=" + references +
+                ", incomingReferences=" + incomingReferences +
                 ", tags=" + tags +
                 ", type='" + type + '\'' +
                 ", description='" + description + '\'' +
