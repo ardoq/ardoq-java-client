@@ -1,26 +1,36 @@
 package com.ardoq;
 
+import java.io.IOException;
+import java.util.Date;
+import java.util.Properties;
+
+import org.apache.commons.codec.binary.Base64;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+
 import com.ardoq.adapter.ComponentAdapter;
 import com.ardoq.adapter.Iso8601Adapter;
 import com.ardoq.adapter.ModelAdapter;
 import com.ardoq.model.Component;
 import com.ardoq.model.Model;
-import com.ardoq.service.*;
+import com.ardoq.service.AttachmentService;
+import com.ardoq.service.ComponentService;
+import com.ardoq.service.FieldService;
+import com.ardoq.service.ModelService;
+import com.ardoq.service.ReferenceService;
+import com.ardoq.service.SimpleModelService;
+import com.ardoq.service.SimpleWorkspaceService;
+import com.ardoq.service.TagService;
+import com.ardoq.service.WorkspaceService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
+
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.client.ApacheClient;
 import retrofit.client.Client;
 import retrofit.converter.GsonConverter;
-
-import java.io.IOException;
-import java.util.Date;
-import java.util.Properties;
 
 /**
  * ArdoqClient connects to your Ardoq installation via it's REST-apis.
@@ -166,6 +176,7 @@ public class ArdoqClient {
                 .registerTypeAdapter(Date.class, new Iso8601Adapter())
                 .registerTypeAdapter(Component.class, new ComponentAdapter())
                 .registerTypeAdapter(Model.class, new ModelAdapter())
+                .serializeNulls()
                 .create();
 
         return new RestAdapter.Builder()
