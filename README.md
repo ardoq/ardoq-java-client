@@ -12,7 +12,7 @@ Add `ardoq-java-client` to your dependencies.
         <dependency>
             <groupId>com.ardoq</groupId>
             <artifactId>java-api-client</artifactId>
-            <version>1.2</version>
+            <version>1.5</version>
         </dependency>
         ...
     </dependencies>
@@ -22,12 +22,12 @@ Add `ardoq-java-client` to your dependencies.
 ```java
 //Basic auth
 ArdoqClient client = new ArdoqClient("hostname", "username", "password");
-//Token
-ArdoqClient client = new ArdoqClient("hostname", "token");
+//Token (recommended)
+ArdoqClient client = new ArdoqClient("hostname", "mytoken");
 
 //Custom proxy settings
 RequestConfig config = RequestConfig.custom().setProxy(new HttpHost("127.0.0.1", 9090)).build();
-ArdoqClient client = new ArdoqClient("hostname", "token", config);
+ArdoqClient client = new ArdoqClient("hostname", "mytoken", config);
 ```
 The client will operate on the default organization (Personal). To change this
 ```java
@@ -35,7 +35,7 @@ ArdoqClient client = new ArdoqClient("hostname", "username", "password").setOrga
 ```
 ###Starting a small project
 ```java
-ArdoqClient client = new ArdoqClient(host, ardoqUsername, ardoqPassword);
+ArdoqClient client = new ArdoqClient(host, ardoqToken);
 Model template = client.model().getTemplateByName("Application service");
 Workspace workspace = client.workspace().createWorkspace(new Workspace("demo-workspace", template.getId(), "Description"));
 Model model = client.model().getModelById(workspace.getComponentModel());
@@ -72,7 +72,7 @@ The api is pretty straight forward. For more examples, please refer to the [test
 
 ###License
 
-Copyright © 2015 Ardoq AS
+Copyright © 2016 Ardoq AS
 
 Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.
 
