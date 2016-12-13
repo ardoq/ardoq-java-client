@@ -40,7 +40,10 @@ import retrofit.converter.GsonConverter;
  */
 public class ArdoqClient {
     private String org;
-    private final RestAdapter restAdapter;
+    private RestAdapter restAdapter;
+    private String endpoint;
+    private RequestInterceptor requestInterceptor;
+    private Client client;
 
     private RequestInterceptor getRequestInterceptor(String endpoint, final String token) {
         if (endpoint == null || token == null) {
@@ -167,17 +170,41 @@ public class ArdoqClient {
         return (int) l;
     }
 
+    /**
+     * Set log level
+     * @param level
+     */
     public void setLogLevel(RestAdapter.LogLevel level) {
         this.restAdapter.setLogLevel(level);
     }
 
-    private RestAdapter.Builder builderDefaults(String endpoint, RequestInterceptor requestInterceptor) {
-        Gson gson = new GsonBuilder()
+    /**
+     * Configures the restAdapter to serialize null values.
+     * The primary use case for this is to reset component field values.
+     * Without this setting, nulling a component field value would cause it not to be transfered, causing the API to think that the value is unchanged.
+     * @param serializeNulls
+     */
+    public void setSerializeNulls(boolean serializeNulls) {
+        if(this.client != null) {
+            this.restAdapter = initAdapter(this.endpoint, this.requestInterceptor, this.client, serializeNulls);
+        }
+        else {
+            this.restAdapter = initAdapter(this.endpoint, this.requestInterceptor, serializeNulls);
+        }
+    }
+
+    private RestAdapter.Builder builderDefaults(String endpoint, RequestInterceptor requestInterceptor, boolean serializeNulls) {
+        GsonBuilder gsonBuilder =
+                new GsonBuilder()
                 .registerTypeAdapter(Date.class, new Iso8601Adapter())
                 .registerTypeAdapter(Component.class, new ComponentAdapter())
-                .registerTypeAdapter(Model.class, new ModelAdapter())
-                .serializeNulls()
-                .create();
+                .registerTypeAdapter(Model.class, new ModelAdapter());
+
+        if (serializeNulls) {
+            gsonBuilder.serializeNulls();
+        }
+
+        Gson gson = gsonBuilder.create();
 
         return new RestAdapter.Builder()
                 .setLogLevel(RestAdapter.LogLevel.NONE)
@@ -186,12 +213,25 @@ public class ArdoqClient {
                 .setRequestInterceptor(requestInterceptor);
     }
 
-    private RestAdapter initAdapter(String endpoint, RequestInterceptor requestInterceptor, Client client) {
-        return builderDefaults(endpoint, requestInterceptor).setClient(client).build();
+    private RestAdapter initAdapter(String endpoint, RequestInterceptor requestInterceptor) {
+        return initAdapter(endpoint, requestInterceptor, false);
     }
 
-    private RestAdapter initAdapter(String endpoint, RequestInterceptor requestInterceptor) {
-        return builderDefaults(endpoint, requestInterceptor).build();
+    private RestAdapter initAdapter(String endpoint, RequestInterceptor requestInterceptor, Client client) {
+        return initAdapter(endpoint, requestInterceptor, client, false);
+    }
+
+    private RestAdapter initAdapter(String endpoint, RequestInterceptor requestInterceptor, Client client, boolean serializeNulls) {
+        this.endpoint = endpoint;
+        this.requestInterceptor = requestInterceptor;
+        this.client = client;
+        return builderDefaults(endpoint, requestInterceptor, serializeNulls).setClient(client).build();
+    }
+
+    private RestAdapter initAdapter(String endpoint, RequestInterceptor requestInterceptor, boolean serializeNulls) {
+        this.endpoint = endpoint;
+        this.requestInterceptor = requestInterceptor;
+        return builderDefaults(endpoint, requestInterceptor, serializeNulls).build();
     }
 
     private String getVersion() {
