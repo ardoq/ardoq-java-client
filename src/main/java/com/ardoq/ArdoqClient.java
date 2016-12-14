@@ -71,6 +71,16 @@ public class ArdoqClient {
     }
 
     /**
+     * Connects to Ardoq with token authentication, and a custom client
+     * @param endpoint
+     * @param token
+     * @param client
+     */
+    public ArdoqClient(final String endpoint, final String token, final Client client) {
+        this.restAdapter = initAdapter(endpoint, getRequestInterceptor(endpoint, token), client);
+    }
+
+    /**
      * Connects to your Ardoq installation with token authentication.
      *
      * @param endpoint                 The Ardoq installation you wish to connect to (e.g. https://app.ardoq.com)
@@ -114,6 +124,18 @@ public class ArdoqClient {
      */
     public ArdoqClient(final String endpoint, final String username, final String password) {
         this.restAdapter = initAdapter(endpoint, getRequestInterceptorBasicAuth(endpoint, username, password));
+    }
+
+    /**
+     * Connects to Ardoq with username and password, and a custom HTTP client
+     * **We Strongly suggest that you connect with a token instead**
+     *
+     * @param endpoint The Ardoq installation you wish to connect to (e.g. https://app.ardoq.com)
+     * @param username Your username
+     * @param password Your password
+     */
+    public ArdoqClient(final String endpoint, final String username, final String password, final Client client) {
+        this.restAdapter = initAdapter(endpoint, getRequestInterceptorBasicAuth(endpoint, username, password), client);
     }
 
     /**
