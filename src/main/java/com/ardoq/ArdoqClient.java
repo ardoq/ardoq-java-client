@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Properties;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -76,8 +77,8 @@ public class ArdoqClient {
      * @param token
      * @param client
      */
-    public ArdoqClient(final String endpoint, final String token, final Client client) {
-        this.restAdapter = initAdapter(endpoint, getRequestInterceptor(endpoint, token), client);
+    public ArdoqClient(final String endpoint, final String token, final HttpClient client) {
+        this.restAdapter = initAdapter(endpoint, getRequestInterceptor(endpoint, token), new ApacheClient(client));
     }
 
     /**
@@ -134,8 +135,8 @@ public class ArdoqClient {
      * @param username Your username
      * @param password Your password
      */
-    public ArdoqClient(final String endpoint, final String username, final String password, final Client client) {
-        this.restAdapter = initAdapter(endpoint, getRequestInterceptorBasicAuth(endpoint, username, password), client);
+    public ArdoqClient(final String endpoint, final String username, final String password, final HttpClient client) {
+        this.restAdapter = initAdapter(endpoint, getRequestInterceptorBasicAuth(endpoint, username, password), new ApacheClient(client));
     }
 
     /**
