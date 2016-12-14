@@ -12,7 +12,7 @@ Add `ardoq-java-client` to your dependencies.
         <dependency>
             <groupId>com.ardoq</groupId>
             <artifactId>java-api-client</artifactId>
-            <version>1.4</version>
+            <version>1.8</version>
         </dependency>
         ...
     </dependencies>
