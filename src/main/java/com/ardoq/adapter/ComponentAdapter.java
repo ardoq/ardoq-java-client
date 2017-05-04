@@ -7,6 +7,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.Map;
+import java.util.Set;
 
 public class ComponentAdapter implements JsonDeserializer<Component>, JsonSerializer<Component> {
 
@@ -22,11 +23,21 @@ public class ComponentAdapter implements JsonDeserializer<Component>, JsonSerial
         return component;
     }
 
+    private void removeNonNullValues(JsonObject jsonObject) {
+        Set<Map.Entry<String, JsonElement>> entries = jsonObject.entrySet();
+        for (Map.Entry<String, JsonElement> entry : entries) {
+            if (entry.getValue().isJsonNull()) {
+                jsonObject.remove(entry.getKey());
+            }
+        }
+    }
+
     public JsonElement serialize(Component component, Type type, JsonSerializationContext jsonSerializationContext) {
         Map<String, Object> fields = component.getFields();
         JsonElement jsonElement = gson().toJsonTree(component, Component.class);
         JsonObject jsonObject = jsonElement.getAsJsonObject();
         jsonObject.remove("_fields");
+        removeNonNullValues(jsonObject);
         for (Map.Entry<String, Object> s : fields.entrySet()) {
             jsonObject.add(s.getKey(), jsonSerializationContext.serialize(s.getValue()));
         }

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Properties;
 
+import com.ardoq.adapter.ReferenceAdapter;
+import com.ardoq.model.Reference;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
@@ -73,6 +75,7 @@ public class ArdoqClient {
 
     /**
      * Connects to Ardoq with token authentication, and a custom client
+     *
      * @param endpoint
      * @param token
      * @param client
@@ -195,6 +198,7 @@ public class ArdoqClient {
 
     /**
      * Set log level
+     *
      * @param level
      */
     public void setLogLevel(RestAdapter.LogLevel level) {
@@ -205,13 +209,13 @@ public class ArdoqClient {
      * Configures the restAdapter to serialize null values.
      * The primary use case for this is to reset component field values.
      * Without this setting, nulling a component field value would cause it not to be transfered, causing the API to think that the value is unchanged.
+     *
      * @param serializeNulls
      */
     public void setSerializeNulls(boolean serializeNulls) {
-        if(this.client != null) {
+        if (this.client != null) {
             this.restAdapter = initAdapter(this.endpoint, this.requestInterceptor, this.client, serializeNulls);
-        }
-        else {
+        } else {
             this.restAdapter = initAdapter(this.endpoint, this.requestInterceptor, serializeNulls);
         }
     }
@@ -219,9 +223,10 @@ public class ArdoqClient {
     private RestAdapter.Builder builderDefaults(String endpoint, RequestInterceptor requestInterceptor, boolean serializeNulls) {
         GsonBuilder gsonBuilder =
                 new GsonBuilder()
-                .registerTypeAdapter(Date.class, new Iso8601Adapter())
-                .registerTypeAdapter(Component.class, new ComponentAdapter())
-                .registerTypeAdapter(Model.class, new ModelAdapter());
+                        .registerTypeAdapter(Date.class, new Iso8601Adapter())
+                        .registerTypeAdapter(Component.class, new ComponentAdapter())
+                        .registerTypeAdapter(Reference.class, new ReferenceAdapter())
+                        .registerTypeAdapter(Model.class, new ModelAdapter());
 
         if (serializeNulls) {
             gsonBuilder.serializeNulls();

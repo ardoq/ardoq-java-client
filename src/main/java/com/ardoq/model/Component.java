@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+;
+
 /**
  * <p>Represents an Ardoq component or also called a page.</p>
  * <p>Use the ComponentService to update.</p>
@@ -57,8 +59,8 @@ public class Component implements BasicModel {
     }
 
     @Override
-    public Object clone()  {
-        Component c = new Component(name,rootWorkspace,description, typeId, parent);
+    public Object clone() {
+        Component c = new Component(name, rootWorkspace, description, typeId, parent);
         c.setModel(new String(model));
         c.setId(new String(id));
         c.setState(new String(state));
