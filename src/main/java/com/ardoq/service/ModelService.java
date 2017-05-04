@@ -17,6 +17,9 @@ public interface ModelService {
     @GET("/api/model")
     List<Model> getAllModels();
 
+    @GET("/api/model?includeCommon=true")
+    List<Model> getAllModelsIncludingCommonTemplate();
+
     @GET("/api/model/{id}")
     Model getModelById(@Path("id") String id);
 

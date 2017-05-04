@@ -21,6 +21,7 @@ public class ModelAdapter implements JsonDeserializer<Model> {
                 jsonObject.get("_id").getAsString(),
                 jsonObject.get("name").getAsString(),
                 jsonObject.get("description").getAsString(),
+                jsonObject.get("useAsTemplate").getAsBoolean(),
                 componentTypes,
                 referenceTypes);
     }
