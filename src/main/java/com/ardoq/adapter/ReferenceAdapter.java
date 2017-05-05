@@ -8,7 +8,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.Map;
-import java.util.Set;
 
 public class ReferenceAdapter implements JsonDeserializer<Reference>, JsonSerializer<Reference> {
 
@@ -16,15 +15,6 @@ public class ReferenceAdapter implements JsonDeserializer<Reference>, JsonSerial
         return new GsonBuilder()
                 .registerTypeAdapter(Date.class, new Iso8601Adapter())
                 .create();
-    }
-
-    private void removeNonNullValues(JsonObject jsonObject) {
-        Set<Map.Entry<String, JsonElement>> entries = jsonObject.entrySet();
-        for (Map.Entry<String, JsonElement> entry : entries) {
-            if (entry.getValue().isJsonNull()) {
-                jsonObject.remove(entry.getKey());
-            }
-        }
     }
 
     public Reference deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
@@ -41,7 +31,7 @@ public class ReferenceAdapter implements JsonDeserializer<Reference>, JsonSerial
     public JsonElement serialize(Reference reference, Type type, JsonSerializationContext jsonSerializationContext) {
         JsonElement jsonElement = gson().toJsonTree(reference, Reference.class);
         JsonObject jsonObject = jsonElement.getAsJsonObject();
-        removeNonNullValues(jsonObject);
+        JsonUtils.removeReservedNullVaules(jsonObject);
         return jsonElement;
     }
 }
