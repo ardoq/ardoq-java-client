@@ -6,13 +6,15 @@ public class Model {
     private final String id;
     private final String name;
     private final String description;
+    private final Boolean useAsTemplate;
     private final Map<String, String> componentTypes;
     private final Map<String, Integer> referenceTypes;
 
-    public Model(String id, String name, String description, Map<String, String> componentTypes, Map<String, Integer> referenceTypes) {
+    public Model(String id, String name, String description, Boolean useAsTemplate, Map<String, String> componentTypes, Map<String, Integer> referenceTypes) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.useAsTemplate = useAsTemplate;
         this.componentTypes = componentTypes;
         this.referenceTypes = referenceTypes;
     }
@@ -43,5 +45,9 @@ public class Model {
 
     public String getComponentTypeByName(String name) {
         return this.componentTypes.get(name);
+    }
+
+    public Boolean isTemplate() {
+        return this.useAsTemplate;
     }
 }
