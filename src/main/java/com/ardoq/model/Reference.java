@@ -3,6 +3,8 @@ package com.ardoq.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Reference implements BasicModel {
     @SerializedName("_id")
@@ -22,6 +24,7 @@ public class Reference implements BasicModel {
     private String returnValue;
     private String targetWorkspace;
     private Integer order;
+    private Map<String, Object> _fields = new HashMap<String, Object>();
 
 
     public Reference(String rootWorkspace, String description, String source, String target, int type) {
@@ -39,6 +42,7 @@ public class Reference implements BasicModel {
 
         Reference reference = (Reference) o;
 
+        if (_fields != null ? !_fields.equals(reference._fields) : reference._fields != null) return false;
         if (_version != null ? !_version.equals(reference._version) : reference._version != null) return false;
         if (created != null ? !created.equals(reference.created) : reference.created != null) return false;
         if (createdBy != null ? !createdBy.equals(reference.createdBy) : reference.createdBy != null) return false;
@@ -192,6 +196,14 @@ public class Reference implements BasicModel {
 
     public void setOrder(Integer order) {
         this.order = order;
+    }
+
+    public Map<String, Object> getFields() {
+        return _fields;
+    }
+
+    public void setFields(Map<String, Object> fields) {
+        this._fields = fields;
     }
 
     @Override

@@ -24,14 +24,19 @@ public class ReferenceAdapter implements JsonDeserializer<Reference>, JsonSerial
         for (Field field : Component.class.getDeclaredFields()) {
             fields.remove(field.getName());
         }
-        //   reference.setFields(fields);
+        reference.setFields(fields);
         return reference;
     }
 
     public JsonElement serialize(Reference reference, Type type, JsonSerializationContext jsonSerializationContext) {
-        JsonElement jsonElement = gson().toJsonTree(reference, Reference.class);
+        Map<String, Object> fields = reference.getFields();
+        JsonElement jsonElement = gson().toJsonTree(reference, Component.class);
         JsonObject jsonObject = jsonElement.getAsJsonObject();
+        jsonObject.remove("_fields");
         JsonUtils.removeReservedNullVaules(jsonObject);
+        for (Map.Entry<String, Object> s : fields.entrySet()) {
+            jsonObject.add(s.getKey(), jsonSerializationContext.serialize(s.getValue()));
+        }
         return jsonElement;
     }
 }
