@@ -1,13 +1,20 @@
 package com.ardoq.adapter;
 
-import com.ardoq.model.Component;
-import com.ardoq.model.Reference;
-import com.google.gson.*;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.Map;
+
+import com.ardoq.model.Reference;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
 public class ReferenceAdapter implements JsonDeserializer<Reference>, JsonSerializer<Reference> {
 
@@ -21,7 +28,7 @@ public class ReferenceAdapter implements JsonDeserializer<Reference>, JsonSerial
         Gson gson = gson();
         Reference reference = gson.fromJson(jsonElement, Reference.class);
         Map<String, Object> fields = (Map<String, Object>) gson.fromJson(jsonElement, Object.class);
-        for (Field field : Component.class.getDeclaredFields()) {
+        for (Field field : Reference.class.getDeclaredFields()) {
             fields.remove(field.getName());
         }
         reference.setFields(fields);
@@ -30,7 +37,7 @@ public class ReferenceAdapter implements JsonDeserializer<Reference>, JsonSerial
 
     public JsonElement serialize(Reference reference, Type type, JsonSerializationContext jsonSerializationContext) {
         Map<String, Object> fields = reference.getFields();
-        JsonElement jsonElement = gson().toJsonTree(reference, Component.class);
+        JsonElement jsonElement = gson().toJsonTree(reference, Reference.class);
         JsonObject jsonObject = jsonElement.getAsJsonObject();
         jsonObject.remove("_fields");
         JsonUtils.removeReservedNullVaules(jsonObject);

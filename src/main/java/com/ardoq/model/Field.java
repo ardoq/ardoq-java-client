@@ -1,9 +1,10 @@
 package com.ardoq.model;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
+
+import com.google.gson.annotations.SerializedName;
 
 public class Field implements BasicModel {
 
@@ -21,18 +22,28 @@ public class Field implements BasicModel {
     private String defaultValue;
     private FieldType type;
     private String label;
+    private List<String> referenceType;
     private List<String> componentType;
+    private Boolean global;
+    private Boolean globalref;
     private String description;
 
-    public Field(String name, String label, String modelId, List<String> componentType, FieldType type) {
-        this(name, label, modelId, componentType, type, "");
+    public Field(String name, String label, String modelId, FieldType type) {
+        this(name, label, modelId, new LinkedList<String>(), new LinkedList<String>(), type, "");
+        this.setGlobal(true);
+        this.setGlobalref(true);
     }
 
-    public Field(String name, String label, String modelId, List<String> componentType, FieldType type,String defaultValue) {
+    public Field(String name, String label, String modelId, List<String> componentType, FieldType type) {
+        this(name, label, modelId, componentType, new LinkedList<String>(), type, "");
+    }
+
+    public Field(String name, String label, String modelId, List<String> componentType, List<String> referenceType, FieldType type,String defaultValue) {
         this.name = name;
         this.label = label;
         this.model = modelId;
         this.componentType = componentType;
+        this.referenceType = referenceType;
         this.type = type;
         this.defaultValue = defaultValue;
     }
@@ -172,6 +183,30 @@ public class Field implements BasicModel {
         this.description = description;
     }
 
+    public List<String> getReferenceType() {
+        return referenceType;
+    }
+
+    public void setReferenceType(List<String> referenceType) {
+        this.referenceType = referenceType;
+    }
+
+    public Boolean getGlobal() {
+        return global;
+    }
+
+    public void setGlobal(Boolean global) {
+        this.global = global;
+    }
+
+    public Boolean getGlobalref() {
+        return globalref;
+    }
+
+    public void setGlobalref(Boolean globalref) {
+        this.globalref = globalref;
+    }
+
     @Override
     public String toString() {
         return "Field{" +
@@ -185,6 +220,9 @@ public class Field implements BasicModel {
                 ", type=" + type +
                 ", label='" + label + '\'' +
                 ", componentType='" + componentType + '\'' +
+                ", referenceType='" + referenceType + '\'' +
+                ", global='" + global + '\'' +
+                ", globalRef='" + globalref + '\'' +
                 ", description='" + description + '\'' +
                 '}';
     }
