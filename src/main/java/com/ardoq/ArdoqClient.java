@@ -10,13 +10,19 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 
+import com.ardoq.adapter.AttachmentAdapter;
 import com.ardoq.adapter.ComponentAdapter;
+import com.ardoq.adapter.FieldAdapter;
 import com.ardoq.adapter.Iso8601Adapter;
 import com.ardoq.adapter.ModelAdapter;
 import com.ardoq.adapter.ReferenceAdapter;
+import com.ardoq.adapter.WorkspaceAdapter;
+import com.ardoq.model.Attachment;
 import com.ardoq.model.Component;
+import com.ardoq.model.Field;
 import com.ardoq.model.Model;
 import com.ardoq.model.Reference;
+import com.ardoq.model.Workspace;
 import com.ardoq.service.AttachmentService;
 import com.ardoq.service.ComponentService;
 import com.ardoq.service.FieldService;
@@ -205,32 +211,18 @@ public class ArdoqClient {
         this.restAdapter.setLogLevel(level);
     }
 
-    /**
-     * Configures the restAdapter to serialize null values.
-     * The primary use case for this is to reset component field values.
-     * Without this setting, nulling a component field value would cause it not to be transfered, causing the API to think that the value is unchanged.
-     *
-     * @param serializeNulls
-     */
-    public void setSerializeNulls(boolean serializeNulls) {
-        if (this.client != null) {
-            this.restAdapter = initAdapter(this.endpoint, this.requestInterceptor, this.client, serializeNulls);
-        } else {
-            this.restAdapter = initAdapter(this.endpoint, this.requestInterceptor, serializeNulls);
-        }
-    }
-
-    private RestAdapter.Builder builderDefaults(String endpoint, RequestInterceptor requestInterceptor, boolean serializeNulls) {
+    private RestAdapter.Builder builderDefaults(String endpoint, RequestInterceptor requestInterceptor) {
         GsonBuilder gsonBuilder =
                 new GsonBuilder()
                         .registerTypeAdapter(Date.class, new Iso8601Adapter())
                         .registerTypeAdapter(Component.class, new ComponentAdapter())
                         .registerTypeAdapter(Reference.class, new ReferenceAdapter())
+                        .registerTypeAdapter(Workspace.class, new WorkspaceAdapter())
+                        .registerTypeAdapter(Field.class, new FieldAdapter())
+                        .registerTypeAdapter(Attachment.class, new AttachmentAdapter())
                         .registerTypeAdapter(Model.class, new ModelAdapter());
 
-        if (serializeNulls) {
-            gsonBuilder.serializeNulls();
-        }
+        gsonBuilder.serializeNulls();
 
         Gson gson = gsonBuilder.create();
 
@@ -241,25 +233,17 @@ public class ArdoqClient {
                 .setRequestInterceptor(requestInterceptor);
     }
 
-    private RestAdapter initAdapter(String endpoint, RequestInterceptor requestInterceptor) {
-        return initAdapter(endpoint, requestInterceptor, false);
-    }
-
     private RestAdapter initAdapter(String endpoint, RequestInterceptor requestInterceptor, Client client) {
-        return initAdapter(endpoint, requestInterceptor, client, false);
-    }
-
-    private RestAdapter initAdapter(String endpoint, RequestInterceptor requestInterceptor, Client client, boolean serializeNulls) {
         this.endpoint = endpoint;
         this.requestInterceptor = requestInterceptor;
         this.client = client;
-        return builderDefaults(endpoint, requestInterceptor, serializeNulls).setClient(client).build();
+        return builderDefaults(endpoint, requestInterceptor).setClient(client).build();
     }
 
-    private RestAdapter initAdapter(String endpoint, RequestInterceptor requestInterceptor, boolean serializeNulls) {
+    private RestAdapter initAdapter(String endpoint, RequestInterceptor requestInterceptor) {
         this.endpoint = endpoint;
         this.requestInterceptor = requestInterceptor;
-        return builderDefaults(endpoint, requestInterceptor, serializeNulls).build();
+        return builderDefaults(endpoint, requestInterceptor).build();
     }
 
     private String getVersion() {

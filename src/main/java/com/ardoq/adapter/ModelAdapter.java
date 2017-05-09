@@ -1,14 +1,16 @@
 package com.ardoq.adapter;
 
 import com.ardoq.model.Model;
+import com.ardoq.model.Workspace;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class ModelAdapter implements JsonDeserializer<Model> {
+public class ModelAdapter implements JsonDeserializer<Model>, JsonSerializer<Model> {
 
     public Model deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         JsonObject jsonObject = jsonElement.getAsJsonObject();
@@ -50,6 +52,19 @@ public class ModelAdapter implements JsonDeserializer<Model> {
             }
         }
         return references;
+    }
+
+    private Gson gson() {
+        return new GsonBuilder()
+                .registerTypeAdapter(Date.class, new Iso8601Adapter())
+                .create();
+    }
+
+    public JsonElement serialize(Model reference, Type type, JsonSerializationContext jsonSerializationContext) {
+        JsonElement jsonElement = gson().toJsonTree(reference, Model.class);
+        JsonObject jsonObject = jsonElement.getAsJsonObject();
+        JsonUtils.removeReservedNullVaules(jsonObject);
+        return jsonElement;
     }
 
 }
