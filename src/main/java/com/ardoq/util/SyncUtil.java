@@ -28,6 +28,7 @@ import retrofit.RestAdapter;
  * Created by magnulf on 23.04.14.
  */
 public class SyncUtil {
+    public static final String SPLIT_CHARACTER = "\u0000"; //NULL
     private final ArdoqClient client;
     private final WorkspaceService workspaceService;
     private Workspace workspace;
@@ -130,7 +131,7 @@ public class SyncUtil {
         String name = c.getName();
         Component parent = this.currentComponents.get(c.getParent());
         while (parent != null) {
-            name = parent.getName() + "." + name;
+            name = parent.getName() + SPLIT_CHARACTER + name;
             parent = this.currentComponents.get(parent.getParent());
         }
         return name;
