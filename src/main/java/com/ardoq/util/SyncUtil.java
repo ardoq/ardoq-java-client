@@ -245,7 +245,7 @@ public class SyncUtil {
      * @return a String with the report.
      */
     public String getReport() {
-        return "Report\n - Created " + newComponents.size() + " components\n - Updated " + this.updatedComponentCount + " components\n - Created " + newRefs.size() + " references\n - Updated " + this.updatedRefCount + " references\n - DELETED " + this.deletedComponents + " components\n - DELETED " + this.deletedRefs + " references";
+        return "Report\n - Created " + newComponents.size() + " components\n - Updated " + this.updatedComponentCount + " components\n - Created " + newRefs.size() + " references\n - Updated " + this.updatedRefCount + " references\n - Deleted " + this.deletedComponents + " components\n - Deleted " + this.deletedRefs + " references";
     }
 
 
