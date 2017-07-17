@@ -65,7 +65,6 @@ public class SyncUtil {
 
     public SyncUtil(ArdoqClient client, Workspace workspace) {
         this.client = client;
-        this.client.setLogLevel(RestAdapter.LogLevel.NONE);
         this.workspaceService = client.workspace();
         this.componentService = client.component();
         this.referenceService = client.reference();
