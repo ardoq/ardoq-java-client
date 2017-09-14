@@ -345,17 +345,17 @@ public class SyncUtil {
             //TODO: Check arrayt list v.s. gson array
             if (val != null && oldVal != null && !oldVal.equals(val)) {
                 isDifferent = true;
-            } else if (null != oldVal && val == null) {
+            } else if (null != oldVal && !newMap.containsKey(key)) {
                 newMap.put(key, oldVal);
             }
         }
         for (Object key : newMap.keySet()) {
-            if (!oldMap.containsKey(key)) {
+            Object val = newMap.get(key);
+            Object oldVal = oldMap.get(key);
+            if ((val != null && !val.equals(oldVal)) || (oldVal != null && !oldVal.equals(val))) {
                 isDifferent = true;
             }
         }
         return isDifferent;
     }
-
-
 }
