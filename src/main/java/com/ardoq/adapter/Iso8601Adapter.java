@@ -2,23 +2,20 @@ package com.ardoq.adapter;
 
 import com.google.gson.*;
 
-import javax.xml.bind.DatatypeConverter;
+import org.joda.time.format.ISODateTimeFormat;
+import org.joda.time.DateTime;
 import java.lang.reflect.Type;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class Iso8601Adapter implements JsonDeserializer<Date>, JsonSerializer<Date> {
 
     public Date deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-        Calendar calendar = DatatypeConverter.parseDateTime(jsonElement.getAsString());
-        return calendar.getTime();
+        DateTime dt = ISODateTimeFormat.dateTimeParser().parseDateTime(jsonElement.getAsString());
+        return dt.toDate();
     }
 
     public JsonElement serialize(Date date, Type type, JsonSerializationContext jsonSerializationContext) {
-        GregorianCalendar gregorianCalendar = new GregorianCalendar();
-        gregorianCalendar.setTime(date);
-        String s = DatatypeConverter.printDateTime(gregorianCalendar);
+        String s = ISODateTimeFormat.dateTime().print(new DateTime(date));
         return new JsonPrimitive(s);
     }
 }
