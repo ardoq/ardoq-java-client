@@ -12,7 +12,7 @@ Add `ardoq-java-client` to your dependencies.
         <dependency>
             <groupId>com.ardoq</groupId>
             <artifactId>java-api-client</artifactId>
-            <version>1.11</version>
+            <version>1.14</version>
         </dependency>
         ...
     </dependencies>
@@ -72,7 +72,7 @@ The api is pretty straight forward. For more examples, please refer to the [test
 
 ### License
 
-Copyright © 2016 Ardoq AS
+Copyright © 2017 Ardoq AS
 
 Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.
 
