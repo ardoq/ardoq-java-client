@@ -26,8 +26,10 @@ import com.ardoq.model.Workspace;
 import com.ardoq.service.AttachmentService;
 import com.ardoq.service.ComponentService;
 import com.ardoq.service.FieldService;
+import com.ardoq.service.GraphService;
 import com.ardoq.service.ModelService;
 import com.ardoq.service.ReferenceService;
+import com.ardoq.service.SimpleGraphService;
 import com.ardoq.service.SimpleModelService;
 import com.ardoq.service.SimpleWorkspaceService;
 import com.ardoq.service.TagService;
@@ -296,6 +298,10 @@ public class ArdoqClient {
 
     public AttachmentService attachment() {
         return restAdapter.create(AttachmentService.class);
+    }
+
+    public SimpleGraphService graphService() {
+        return new SimpleGraphService(restAdapter.create(GraphService.class));
     }
 
     public SimpleModelService model() {
