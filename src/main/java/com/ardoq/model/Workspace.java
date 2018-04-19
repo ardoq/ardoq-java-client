@@ -24,6 +24,7 @@ public class Workspace implements BasicModel {
     private String description;
     private Origin origin;
     private Collection<String> views;
+    private String folder;
 
     public Workspace(String name, String description) {
         this.name = name;
@@ -67,6 +68,7 @@ public class Workspace implements BasicModel {
         if (tags != null ? !tags.equals(workspace.tags) : workspace.tags != null) return false;
         if (type != null ? !type.equals(workspace.type) : workspace.type != null) return false;
         if (views != null ? !views.equals(workspace.views) : workspace.views != null) return false;
+        if (folder != null ? !folder.equals(workspace.folder) : workspace.folder != null) return false;
 
         return true;
     }
@@ -87,6 +89,7 @@ public class Workspace implements BasicModel {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (origin != null ? origin.hashCode() : 0);
         result = 31 * result + (views !=null ? views.hashCode() : 0);
+        result = 31 * result + (folder !=null ? folder.hashCode() : 0);
         return result;
     }
 
@@ -210,6 +213,14 @@ public class Workspace implements BasicModel {
         this.views = views;
     }
 
+    public String getFolder() {
+        return folder;
+    }
+
+    public void setFolder(String folder) {
+        this.folder = folder;
+    }
+
     @Override
     public String toString() {
         return "Workspace{" +
@@ -224,10 +235,12 @@ public class Workspace implements BasicModel {
                 ", components=" + components +
                 ", references=" + references +
                 ", tags=" + tags +
+                ", folder=" + folder +
                 ", type='" + type + '\'' +
                 ", description='" + description + '\'' +
                 ", origin=" + origin +
                 ", views=" + views +
+                ", folder=" + folder +
                 '}';
     }
 }
