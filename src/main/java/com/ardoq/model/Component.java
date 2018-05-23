@@ -21,7 +21,6 @@ public class Component implements BasicModel {
     private String id;
     private String name;
     private String model;
-    private String state;
     private Date created;
     @SerializedName("created-by")
     private String createdBy;
@@ -63,7 +62,6 @@ public class Component implements BasicModel {
         Component c = new Component(name, rootWorkspace, description, typeId, parent);
         c.setModel(new String(model));
         c.setId(new String(id));
-        c.setState(new String(state));
         c.setCreated(new Date(created.getTime()));
         c.setCreatedBy(new String(createdBy));
         c.setLastUpdated(new Date(lastUpdated.getTime()));
@@ -96,7 +94,6 @@ public class Component implements BasicModel {
         if (parent != null ? !parent.equals(component.parent) : component.parent != null) return false;
         if (rootWorkspace != null ? !rootWorkspace.equals(component.rootWorkspace) : component.rootWorkspace != null)
             return false;
-        if (state != null ? !state.equals(component.state) : component.state != null) return false;
         if (type != null ? !type.equals(component.type) : component.type != null) return false;
         if (typeId != null ? !typeId.equals(component.typeId) : component.typeId != null) return false;
         if (version != null ? !version.equals(component.version) : component.version != null) return false;
@@ -109,7 +106,6 @@ public class Component implements BasicModel {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (model != null ? model.hashCode() : 0);
-        result = 31 * result + (state != null ? state.hashCode() : 0);
         result = 31 * result + (created != null ? created.hashCode() : 0);
         result = 31 * result + (createdBy != null ? createdBy.hashCode() : 0);
         result = 31 * result + (lastUpdated != null ? lastUpdated.hashCode() : 0);
@@ -147,14 +143,6 @@ public class Component implements BasicModel {
 
     public void setModel(String model) {
         this.model = model;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
     }
 
     public Date getCreated() {
@@ -259,7 +247,6 @@ public class Component implements BasicModel {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", model='" + model + '\'' +
-                ", state='" + state + '\'' +
                 ", created=" + created +
                 ", createdBy='" + createdBy + '\'' +
                 ", lastUpdated=" + lastUpdated +
