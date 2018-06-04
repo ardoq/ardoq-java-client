@@ -61,7 +61,7 @@ public interface WorkspaceService {
     @DELETE("/api/workspace/{id}")
     void deleteWorkspace(@Path("id") String id, Callback<Response> callback);
 
-    @GET("/api/workspace/search")
+    @GET("/api/workspace/by-name")
     List<Workspace> findWorkspacesByName(@Query("name") String workspaceName);
 
     Workspace createWorkspaceWithModel(String workspaceName, String modelID, String description);
