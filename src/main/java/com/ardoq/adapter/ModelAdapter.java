@@ -5,10 +5,7 @@ import com.ardoq.model.Workspace;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class ModelAdapter implements JsonDeserializer<Model>, JsonSerializer<Model> {
 
@@ -17,7 +14,7 @@ public class ModelAdapter implements JsonDeserializer<Model>, JsonSerializer<Mod
         Map<String, Integer> referenceTypes = getReferenceTypes(jsonObject);
         JsonObject root = jsonObject.getAsJsonObject("root");
         Map<String, Object> document = (Map<String, Object>) new Gson().fromJson(root, Object.class);
-        Map<String, String> componentTypes = getComponentTypes(document);
+        Map<String, Collection<String>> componentTypes = getComponentTypeNames(document);
 
         return new Model(
                 jsonObject.get("_id").getAsString(),
@@ -28,14 +25,30 @@ public class ModelAdapter implements JsonDeserializer<Model>, JsonSerializer<Mod
                 referenceTypes);
     }
 
-    private Map<String, String> getComponentTypes(Map<String, Object> document) {
-        HashMap<String, String> componentTypes = new HashMap<String, String>();
-        for (Map.Entry<String, Object> entries : document.entrySet()) {
-            Map<String, Object> value = (Map<String, Object>) entries.getValue();
-            componentTypes.put((String) value.get("name"), entries.getKey());
-            componentTypes.putAll(getComponentTypes((Map<String, Object>) value.get("children")));
+    private Map<String, Collection<String>> getComponentTypeNames(Map<String, Object> document) {
+        return getComponentTypeNamesRecursive(document, new HashMap<String, Collection<String>>());
+    }
+
+    private Map<String, Collection<String>> getComponentTypeNamesRecursive
+            (Map<String, Object> document, Map<String,Collection<String>> extracted) {
+        HashMap<String, Collection<String>> componentTypes = new HashMap<String, Collection<String>>();
+        String component_name;
+        String component_id;
+        Collection<String> xs;
+        for (Map.Entry<String, Object> entry : document.entrySet()) {
+            Map<String, Object> value = (Map<String, Object>) entry.getValue();
+            component_name = (String)(value.get("name"));
+            component_id   = entry.getKey();
+            if (extracted.containsKey(component_name)) {
+                extracted.get(component_name).add(component_id);
+            } else {
+                xs = new ArrayList<String>();
+                xs.add(component_id);
+                extracted.put(component_name, xs);
+            }
+            extracted = getComponentTypeNamesRecursive((Map<String, Object>) value.get("children"), extracted);
         }
-        return componentTypes;
+        return extracted;
     }
 
     private Map<String, Integer> getReferenceTypes(JsonObject jsonObject) {
