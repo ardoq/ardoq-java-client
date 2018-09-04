@@ -7,8 +7,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-;
-
 /**
  * <p>Represents an Ardoq component or also called a page.</p>
  * <p>Use the ComponentService to update.</p>
@@ -19,6 +17,7 @@ import java.util.Map;
 public class Component implements BasicModel {
     @SerializedName("_id")
     private String id;
+    private String batchId;
     private String name;
     private String model;
     private Date created;
@@ -57,11 +56,19 @@ public class Component implements BasicModel {
         this.typeId = typeId;
     }
 
+    public Component(String name, String description, String typeId, Component parent) {
+        this(name, parent.getRootWorkspace(), description);
+        this.setParent(parent.getContextualId());
+        this.typeId = typeId;
+    }
+
+
     @Override
     public Object clone() {
         Component c = new Component(name, rootWorkspace, description, typeId, parent);
         c.setModel(new String(model));
         c.setId(new String(id));
+        c.setBatchId(new String(batchId));
         c.setCreated(new Date(created.getTime()));
         c.setCreatedBy(new String(createdBy));
         c.setLastUpdated(new Date(lastUpdated.getTime()));
@@ -87,6 +94,7 @@ public class Component implements BasicModel {
         if (description != null ? !description.equals(component.description) : component.description != null)
             return false;
         if (id != null ? !id.equals(component.id) : component.id != null) return false;
+        if (batchId != null ? !batchId.equals(component.batchId) : component.batchId != null) return false;
         if (lastUpdated != null ? !lastUpdated.equals(component.lastUpdated) : component.lastUpdated != null)
             return false;
         if (model != null ? !model.equals(component.model) : component.model != null) return false;
@@ -104,6 +112,7 @@ public class Component implements BasicModel {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (batchId != null ? batchId.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (model != null ? model.hashCode() : 0);
         result = 31 * result + (created != null ? created.hashCode() : 0);
@@ -121,12 +130,24 @@ public class Component implements BasicModel {
         return result;
     }
 
+    // package private access
+    public String getContextualId() {
+        if (id != null) {
+            return id;
+        }
+        return batchId;
+    }
+
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public void setBatchId(String id) {
+        this.batchId = id;
     }
 
     public String getName() {
@@ -245,6 +266,7 @@ public class Component implements BasicModel {
     public String toString() {
         return "Component{" +
                 "id='" + id + '\'' +
+                "'batchId='" + batchId + '\'' +
                 ", name='" + name + '\'' +
                 ", model='" + model + '\'' +
                 ", created=" + created +
@@ -261,4 +283,6 @@ public class Component implements BasicModel {
                 ", _fields=" + _fields +
                 '}';
     }
+
 }
+

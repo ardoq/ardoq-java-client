@@ -4,34 +4,21 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Properties;
 
+import com.ardoq.adapter.*;
+import com.ardoq.batch.BatchCreateRequest;
+import com.ardoq.service.*;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 
-import com.ardoq.adapter.AttachmentAdapter;
-import com.ardoq.adapter.ComponentAdapter;
-import com.ardoq.adapter.FieldAdapter;
-import com.ardoq.adapter.Iso8601Adapter;
-import com.ardoq.adapter.ModelAdapter;
-import com.ardoq.adapter.ReferenceAdapter;
-import com.ardoq.adapter.WorkspaceAdapter;
 import com.ardoq.model.Attachment;
 import com.ardoq.model.Component;
 import com.ardoq.model.Field;
 import com.ardoq.model.Model;
 import com.ardoq.model.Reference;
 import com.ardoq.model.Workspace;
-import com.ardoq.service.AttachmentService;
-import com.ardoq.service.ComponentService;
-import com.ardoq.service.FieldService;
-import com.ardoq.service.ModelService;
-import com.ardoq.service.ReferenceService;
-import com.ardoq.service.SimpleModelService;
-import com.ardoq.service.SimpleWorkspaceService;
-import com.ardoq.service.TagService;
-import com.ardoq.service.WorkspaceService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -216,6 +203,7 @@ public class ArdoqClient {
                 new GsonBuilder()
                         .registerTypeAdapter(Date.class, new Iso8601Adapter())
                         .registerTypeAdapter(Component.class, new ComponentAdapter())
+                        .registerTypeAdapter(BatchCreateRequest.class, new BatchCreateAdapter())
                         .registerTypeAdapter(Reference.class, new ReferenceAdapter())
                         .registerTypeAdapter(Workspace.class, new WorkspaceAdapter())
                         .registerTypeAdapter(Field.class, new FieldAdapter())
@@ -281,6 +269,8 @@ public class ArdoqClient {
     public ComponentService component() {
         return restAdapter.create(ComponentService.class);
     }
+
+    public BatchService batch() { return restAdapter.create(BatchService.class); }
 
     public ReferenceService reference() {
         return restAdapter.create(ReferenceService.class);

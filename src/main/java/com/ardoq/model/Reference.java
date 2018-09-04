@@ -9,6 +9,7 @@ import java.util.Map;
 public class Reference implements BasicModel {
     @SerializedName("_id")
     private String id;
+    private String batchId;
     private Date created;
     @SerializedName("created-by")
     private String createdBy;
@@ -26,7 +27,6 @@ public class Reference implements BasicModel {
     private Integer order;
     private Map<String, Object> _fields = new HashMap<String, Object>();
 
-
     public Reference(String rootWorkspace, String description, String source, String target, int type) {
         this.rootWorkspace = rootWorkspace;
         this.description = description;
@@ -41,7 +41,7 @@ public class Reference implements BasicModel {
         if (o == null || getClass() != o.getClass()) return false;
 
         Reference reference = (Reference) o;
-
+        if (batchId != null ? !batchId.equals(reference.batchId) : reference.batchId != null) return false;
         if (_fields != null ? !_fields.equals(reference._fields) : reference._fields != null) return false;
         if (_version != null ? !_version.equals(reference._version) : reference._version != null) return false;
         if (created != null ? !created.equals(reference.created) : reference.created != null) return false;
@@ -70,6 +70,7 @@ public class Reference implements BasicModel {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (batchId != null ? batchId.hashCode() : 0);
         result = 31 * result + (created != null ? created.hashCode() : 0);
         result = 31 * result + (createdBy != null ? createdBy.hashCode() : 0);
         result = 31 * result + (lastUpdated != null ? lastUpdated.hashCode() : 0);
@@ -92,6 +93,14 @@ public class Reference implements BasicModel {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getBatchId() {
+        return batchId;
+    }
+
+    public void setBatchId(String id) {
+        this.batchId = id;
     }
 
     public Date getCreated() {
@@ -210,6 +219,7 @@ public class Reference implements BasicModel {
     public String toString() {
         return "Reference{" +
                 "id='" + id + '\'' +
+                "'batchId='" + batchId + '\'' +
                 ", created=" + created +
                 ", createdBy='" + createdBy + '\'' +
                 ", lastUpdated=" + lastUpdated +
@@ -224,4 +234,6 @@ public class Reference implements BasicModel {
                 ", order=" + order +
                 '}';
     }
+
 }
+
