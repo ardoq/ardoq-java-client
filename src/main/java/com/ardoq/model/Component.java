@@ -130,7 +130,6 @@ public class Component implements BasicModel {
         return result;
     }
 
-    // package private access
     public String getContextualId() {
         if (id != null) {
             return id;
