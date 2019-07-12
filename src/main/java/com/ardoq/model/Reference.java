@@ -25,6 +25,9 @@ public class Reference implements BasicModel {
     private String returnValue;
     private String targetWorkspace;
     private Integer order;
+    private String typeName;
+    private String sourceName;
+    private String targetName;
     private Map<String, Object> _fields = new HashMap<String, Object>();
 
     public Reference(String rootWorkspace, String description, String source, String target, int type) {
@@ -63,6 +66,9 @@ public class Reference implements BasicModel {
         if (targetWorkspace != null ? !targetWorkspace.equals(reference.targetWorkspace) : reference.targetWorkspace != null)
             return false;
         if (type != null ? !type.equals(reference.type) : reference.type != null) return false;
+        if (typeName != null ? !typeName.equals(reference.typeName) : reference.typeName != null) return false;
+        if (sourceName != null ? !sourceName.equals(reference.sourceName) : reference.sourceName != null) return false;
+        if (targetName != null ? !targetName.equals(reference.targetName) : reference.targetName != null) return false;
 
         return true;
     }
@@ -84,6 +90,9 @@ public class Reference implements BasicModel {
         result = 31 * result + (returnValue != null ? returnValue.hashCode() : 0);
         result = 31 * result + (targetWorkspace != null ? targetWorkspace.hashCode() : 0);
         result = 31 * result + (order != null ? order.hashCode() : 0);
+        result = 31 * result + (typeName != null ? typeName.hashCode() : 0);
+        result = 31 * result + (sourceName != null ? sourceName.hashCode() : 0);
+        result = 31 * result + (targetName != null ? targetName.hashCode() : 0);
         return result;
     }
 
@@ -207,6 +216,18 @@ public class Reference implements BasicModel {
         this.order = order;
     }
 
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public String getSourceName() {
+        return sourceName;
+    }
+
+    public String getTargetName() {
+        return targetName;
+    }
+
     public Map<String, Object> getFields() {
         return _fields;
     }
@@ -232,6 +253,9 @@ public class Reference implements BasicModel {
                 ", returnValue='" + returnValue + '\'' +
                 ", targetWorkspace='" + targetWorkspace + '\'' +
                 ", order=" + order +
+                ", typeName=" + typeName +
+                ", sourceName=" + sourceName +
+                ", targetName=" + targetName +
                 '}';
     }
 
