@@ -25,12 +25,13 @@ public class ReferenceAdapter implements JsonDeserializer<Reference>, JsonSerial
     }
 
     public Reference deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-        Gson gson = gson();
         JsonObject jsonObject = jsonElement.getAsJsonObject();
         jsonObject.add("typeName", jsonObject.get("ardoq").getAsJsonObject().get("typeName"));
         jsonObject.add("sourceName", jsonObject.get("ardoq").getAsJsonObject().get("sourceName"));
         jsonObject.add("targetName", jsonObject.get("ardoq").getAsJsonObject().get("targetName"));
-        Reference reference = gson.fromJson(jsonElement, Reference.class);
+
+        Gson gson = gson();
+        Reference reference = gson.fromJson(jsonObject, Reference.class);
 
         Map<String, Object> fields = (Map<String, Object>) gson.fromJson(jsonElement, Object.class);
         for (Field field : Reference.class.getDeclaredFields()) {
