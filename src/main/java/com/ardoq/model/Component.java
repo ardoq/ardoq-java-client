@@ -2,10 +2,7 @@ package com.ardoq.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>Represents an Ardoq component or also called a page.</p>
@@ -29,6 +26,7 @@ public class Component implements BasicModel {
     private Integer _version;
     private String rootWorkspace;
     private Collection<String> children;
+    private References references;
     private String parent;
     private String type;
     private String typeId;
@@ -74,6 +72,7 @@ public class Component implements BasicModel {
         c.setLastUpdated(new Date(lastUpdated.getTime()));
         c.setRootWorkspace(new String(rootWorkspace));
         c.setChildren(children);
+        c.setReferences(references);
         c.setType(new String(type));
         c.setFields(new HashMap<String, Object>(_fields));
         return c;
@@ -89,6 +88,7 @@ public class Component implements BasicModel {
         if (_fields != null ? !_fields.equals(component._fields) : component._fields != null) return false;
         if (_version != null ? !_version.equals(component._version) : component._version != null) return false;
         if (children != null ? !children.equals(component.children) : component.children != null) return false;
+        if (references != null ? !references.equals(component.references) : component.references != null) return false;
         if (created != null ? !created.equals(component.created) : component.created != null) return false;
         if (createdBy != null ? !createdBy.equals(component.createdBy) : component.createdBy != null) return false;
         if (description != null ? !description.equals(component.description) : component.description != null)
@@ -122,6 +122,7 @@ public class Component implements BasicModel {
         result = 31 * result + (_version != null ? _version.hashCode() : 0);
         result = 31 * result + (rootWorkspace != null ? rootWorkspace.hashCode() : 0);
         result = 31 * result + (children != null ? children.hashCode() : 0);
+        result = 31 * result + (references != null ? references.hashCode() : 0);
         result = 31 * result + (parent != null ? parent.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (typeId != null ? typeId.hashCode() : 0);
@@ -221,6 +222,14 @@ public class Component implements BasicModel {
         this.children = children;
     }
 
+    public References getReferences() {
+        return references;
+    }
+
+    public void setReferences(References references) {
+        this.references = references;
+    }
+
     public String getParent() {
         return parent;
     }
@@ -275,12 +284,70 @@ public class Component implements BasicModel {
                 ", _version=" + _version +
                 ", rootWorkspace='" + rootWorkspace + '\'' +
                 ", children=" + children +
+                ", references=" + references +
                 ", parent='" + parent + '\'' +
                 ", type='" + type + '\'' +
                 ", typeId='" + typeId + '\'' +
                 ", description='" + description + '\'' +
                 ", _fields=" + _fields +
                 '}';
+    }
+
+
+    public static class References {
+        private Collection<Reference> in;
+        private Collection<Reference> out;
+
+        public References(Collection<Reference> in, Collection<Reference> out) {
+            this.in = in;
+            this.out = out;
+        }
+
+        public static References empty() {
+            return new References(new LinkedList<Reference>(), new LinkedList<Reference>());
+        }
+
+        public Collection<Reference> getIn() {
+            return in;
+        }
+
+        public void setIn(Collection<Reference> in) {
+            this.in = in;
+        }
+
+        public Collection<Reference> getOut() {
+            return out;
+        }
+
+        public void setOut(Collection<Reference> out) {
+            this.out = out;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            References that = (References) o;
+
+            if (in != null ? !in.equals(that.in) : that.in != null) return false;
+            return out != null ? out.equals(that.out) : that.out == null;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = in != null ? in.hashCode() : 0;
+            result = 31 * result + (out != null ? out.hashCode() : 0);
+            return result;
+        }
+
+        @Override
+        public String toString() {
+            return "References{" +
+                "in=" + in +
+                ", out=" + out +
+                '}';
+        }
     }
 
 }
