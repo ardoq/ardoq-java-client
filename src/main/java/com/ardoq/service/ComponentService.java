@@ -22,6 +22,12 @@ public interface ComponentService {
     @GET("/api/component/{id}")
     void getComponentById(@Path("id") String id, Callback<Component> callback);
 
+    @GET("/api/component/{id}")
+    Component getComponentById(@Path("id") String id, @QueryMap Map<String, String> queryParams);
+
+    @GET("/api/component/{id}")
+    void getComponentById(@Path("id") String id, @QueryMap Map<String, String> queryParams, Callback<Component> callback);
+
     /**
      * Find components by one or more fields. A field matches if the field equals the query (partial matches are not returned).
      * If multiple fields are passed it will return components where all fields match.
