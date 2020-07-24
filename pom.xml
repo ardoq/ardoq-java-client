@@ -7,7 +7,7 @@
 
     <groupId>com.ardoq</groupId>
     <artifactId>java-api-client</artifactId>
-    <version>1.22-SNAPSHOT</version>
+    <version>1.21-SNAPSHOT</version>
     <licenses>
         <license>
             <name>Eclipse Public License, Version 1.0 or (at your option) any later version</name>
@@ -203,7 +203,6 @@
     <reporting>
         <excludeDefaults>true</excludeDefaults>
         <plugins>
-            <!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -231,7 +230,6 @@
                     </reportSet>
                 </reportSets>
             </plugin>
-        -->
         </plugins>
     </reporting>
 </project>
