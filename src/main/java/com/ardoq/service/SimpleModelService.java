@@ -83,10 +83,10 @@ public class SimpleModelService {
      * Tries to lookup the model by name, and returns it if it's found.
      * If not, it is created from the provided JSON input stream.
      *
-     * @param name
-     * @param modelJson
-     * @return model
-     * @throws IOException
+     * @param name name of template
+     * @param modelJson stream of JSON representation of template
+     * @return model the model
+     * @throws IOException exception if parsing the model from the input stream fails
      */
     public Model findOrCreateTemplate(String name, InputStream modelJson) throws IOException {
         try {

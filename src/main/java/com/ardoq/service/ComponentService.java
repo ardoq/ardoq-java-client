@@ -33,6 +33,7 @@ public interface ComponentService {
      * If multiple fields are passed it will return components where all fields match.
      *
      * @param fields Map&lt;String,String&gt; fieldName -&gt; expectedFieldValue
+     * @return list of components 
      */
     @GET("/api/component/fieldsearch")
     List<Component> findComponentsByFields(@QueryMap Map<String, String> fields);

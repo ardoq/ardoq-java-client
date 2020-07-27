@@ -69,9 +69,9 @@ public class ArdoqClient {
     /**
      * Connects to Ardoq with token authentication, and a custom client
      *
-     * @param endpoint
-     * @param token
-     * @param client
+     * @param endpoint The Ardoq installation you wish to connect to (e.g. https://app.ardoq.com)
+     * @param token    The token generated via Profile -&gt; APIS token that you wish to authenticate with
+     * @param client   pre-instantiated HttpClient 
      */
     public ArdoqClient(final String endpoint, final String token, final HttpClient client) {
         this.restAdapter = initAdapter(endpoint, getRequestInterceptor(endpoint, token), new ApacheClient(client));
@@ -130,6 +130,7 @@ public class ArdoqClient {
      * @param endpoint The Ardoq installation you wish to connect to (e.g. https://app.ardoq.com)
      * @param username Your username
      * @param password Your password
+     * @param client   pre-instantiated HttpClient 
      */
     public ArdoqClient(final String endpoint, final String username, final String password, final HttpClient client) {
         this.restAdapter = initAdapter(endpoint, getRequestInterceptorBasicAuth(endpoint, username, password), new ApacheClient(client));
@@ -192,7 +193,7 @@ public class ArdoqClient {
     /**
      * Set log level
      *
-     * @param level
+     * @param level log level
      */
     public void setLogLevel(RestAdapter.LogLevel level) {
         this.restAdapter.setLogLevel(level);

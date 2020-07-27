@@ -11,7 +11,7 @@ public class JsonUtils {
     /**
      * Removes keys from json object if they have null values. Won't touch fields as users may want to explicitly set them to null
      *
-     * @param jsonObject
+     * @param jsonObject json object to be cleaned
      */
     public static void removeReservedNullVaules(JsonObject jsonObject) {
         Set<Map.Entry<String, JsonElement>> entries = jsonObject.entrySet();
