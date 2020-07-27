@@ -7,7 +7,7 @@
 
     <groupId>com.ardoq</groupId>
     <artifactId>java-api-client</artifactId>
-    <version>1.23-SNAPSHOT</version>
+    <version>1.24-SNAPSHOT</version>
     <licenses>
         <license>
             <name>Eclipse Public License, Version 1.0 or (at your option) any later version</name>
