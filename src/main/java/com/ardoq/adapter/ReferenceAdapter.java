@@ -47,10 +47,12 @@ public class ReferenceAdapter implements JsonDeserializer<Reference>, JsonSerial
         JsonElement jsonElement = gson().toJsonTree(reference, Reference.class);
         JsonObject jsonObject = jsonElement.getAsJsonObject();
         jsonObject.remove("_fields");
-        JsonUtils.removeReservedNullVaules(jsonObject);
-        for (Map.Entry<String, Object> s : fields.entrySet()) {
-            jsonObject.add(s.getKey(), jsonSerializationContext.serialize(s.getValue()));
-        }
+		JsonUtils.removeReservedNullVaules(jsonObject);
+		if (fields != null) {
+	        for (Map.Entry<String, Object> s : fields.entrySet()) {
+	            jsonObject.add(s.getKey(), jsonSerializationContext.serialize(s.getValue()));
+			}
+		}
         return jsonElement;
     }
 }
