@@ -1,6 +1,8 @@
 ardoq-java-client
 =================
 
+ℹ️ _This library is now deprecated in favour of our upcoming improved REST API. The API will be well-documented with accompanying OpenAPI specs. We encourage direct use of the REST API. Client-code can alternatively be [generated](https://openapi-generator.tech) from the OpenAPI specs._
+
 Small Java wrapper for the [Ardoq](http://ardoq.com) REST-api.
 
 ### Install
